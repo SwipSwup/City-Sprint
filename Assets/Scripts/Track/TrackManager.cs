@@ -28,6 +28,8 @@ public class TrackManager : MonoBehaviour
 
     private void Update()
     {
+
+
     }
 
     private void InstaniateTrack()

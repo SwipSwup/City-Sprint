@@ -7,14 +7,17 @@ public class InGameUIHandler : MonoBehaviour
 {
     public TextMeshProUGUI score;
 
-
     private void Start()
     {
-        
+        GameManager.OnScoreUpdate += UpdateScore;
+        score.text = "0";
     }
 
     private void UpdateScore(int score)
     {
-        this.score.text = score.ToString();
+        for (int i = 0; i < score; i++)
+        {
+            this.score.text = (int.Parse(this.score.text) + 1).ToString();
+        }
     }
 }
