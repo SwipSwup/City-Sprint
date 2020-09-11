@@ -242,12 +242,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9e85314ed27837745b9fef2e1c3899ee, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  TICK_SEC_INTERVAL: 5
   tilePrefabs:
   - {fileID: 7630272393235097935, guid: 5883978eade92004aaf46ce6538da7a1, type: 3}
   - {fileID: 3463213696338937174, guid: 973cc7da43cb5fc48804cdcbacadb080, type: 3}
+  - {fileID: 2375552326583867989, guid: cfdd5597b50db464c8ee1b355c38f17d, type: 3}
+  - {fileID: 4564324565705282710, guid: 1366994a372a7ae4da8a03a4be95fe8f, type: 3}
+  tileSpacer: {fileID: 8167762735177730070, guid: 0d1f2c6e45bd282478885b56e081fbba,
+    type: 3}
   activeTiles:
   - {fileID: 1931176276}
-  maxTiles: 20
+  maxTiles: 10
+  tileSpeed: 5
+  tileSpeedMultiplyer: 1.05
+  maxTileSpeed: 25
 --- !u!4 &1071436615
 Transform:
   m_ObjectHideFlags: 0
@@ -470,6 +478,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1931176276, guid: 5883978eade92004aaf46ce6538da7a1, type: 3}
+      propertyPath: tileSpeed
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7630272393235097935, guid: 5883978eade92004aaf46ce6538da7a1,
         type: 3}
       propertyPath: m_Name

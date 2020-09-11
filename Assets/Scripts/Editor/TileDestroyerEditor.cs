@@ -19,6 +19,4 @@ public class TileDestroyerEditor : Editor
     private void OnInspectorGUI()
     {
     }
-
-
 }

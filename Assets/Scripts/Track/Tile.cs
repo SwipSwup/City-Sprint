@@ -4,16 +4,23 @@ using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
-    public float tileSpeed = 1f;
+    public bool isSpacer;
+
     public Transform frontPoint;
     public Transform backPoint;
+    private void UpdatedTileSpeed(float tileSpeed) => this.tileSpeed = tileSpeed;
+    public float tileSpeed;
 
-
-    private void Start()
+    private void Awake()
     {
-        Debug.Log(Vector3.Distance(transform.position, frontPoint.position));
+        TrackManager.OnUpdateTileSpeed += UpdatedTileSpeed;
     }
+
     private void Update()
+    {
+        Move();
+    }
+    private void Move()
     {
         transform.Translate(new Vector3(tileSpeed * Time.deltaTime, 0f));
     }

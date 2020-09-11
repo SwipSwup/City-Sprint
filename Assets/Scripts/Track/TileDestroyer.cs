@@ -5,11 +5,11 @@ using UnityEngine;
 
 public class TileDestroyer : MonoBehaviour
 {
-    public static Action OnTileDelete;
+    public static Action<Tile> OnTileDelete;
     public void OnTriggerExit(Collider other)
     {
         if(other.tag == "Tile")
-            OnTileDelete?.Invoke();
+            OnTileDelete?.Invoke(other.GetComponent<Tile>());
         Destroy(other.gameObject);
     }
 }

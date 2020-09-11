@@ -1,28 +1,67 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
 using UnityEngine;
 
 public class TrackManager : MonoBehaviour
 {
+    public int maxTickCount;
+    private int tickCounter;
+
     public GameObject[] tilePrefabs;
+    public GameObject tileSpacer;
     public List<Tile> activeTiles = new List<Tile>();
+
     public int maxTiles = 10;
+    public float tileSpeed = 5f;
+    public float tileSpeedMultiplyer = 1.05f;
+    public float maxTileSpeed = 25f;
 
     private void Start()
     {
-        TileDestroyer.OnTileDelete += SpawnTile;
-        for(int i = 0; i < maxTiles; i++)
+        GameManager.OnTick += UpdateTileSpeed;
+        TileDestroyer.OnTileDelete += TileDestroyed;
+
+        InstaniateTrack();
+    }
+
+    private void Update()
+    {
+    }
+
+    private void InstaniateTrack()
+    {
+        for (int i = 0; i < maxTiles; i++)
+            SpawnTile(tilePrefabs[(int)UnityEngine.Random.Range(0f, tilePrefabs.Length)]);
+        OnUpdateTileSpeed?.Invoke(tileSpeed);
+    }
+
+    public static Action<float> OnUpdateTileSpeed;
+    public void UpdateTileSpeed()
+    {
+        if (++tickCounter % maxTickCount == 0)
         {
-            SpawnTile();
+            tileSpeed = Mathf.Clamp(tileSpeed += tileSpeedMultiplyer, 0f, maxTileSpeed);
+            OnUpdateTileSpeed?.Invoke(tileSpeed);
         }
     }
 
-    private void SpawnTile()
+    private void TileDestroyed(Tile tile)
     {
-        GameObject prefab = tilePrefabs[(int)Random.Range(0f, tilePrefabs.Length)];
+        activeTiles.Remove(tile);
+        if (!tile.isSpacer)
+            SpawnTile(tilePrefabs[(int)UnityEngine.Random.Range(0f, tilePrefabs.Length)]);
+    }
 
-        GameObject newTile = Instantiate(prefab, calculateNewTilePosition(prefab), transform.rotation);
+    private void SpawnTile(GameObject prefab)
+    {
+        GameObject newTile = Instantiate(tileSpacer, calculateNewTilePosition(tileSpacer), transform.rotation);
+        newTile.GetComponent<Tile>().tileSpeed = tileSpeed;
+        activeTiles.Add(newTile.GetComponent<Tile>());
+
+        newTile = Instantiate(prefab, calculateNewTilePosition(prefab), transform.rotation);
+        newTile.GetComponent<Tile>().tileSpeed = tileSpeed;
         activeTiles.Add(newTile.GetComponent<Tile>());
     }
 
