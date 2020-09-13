@@ -10,14 +10,21 @@ public class InGameUIHandler : MonoBehaviour
     private void Start()
     {
         GameManager.OnScoreUpdate += UpdateScore;
-        score.text = "0";
     }
 
     private void UpdateScore(int score)
     {
+        this.score.text = "Score: " + score;
+    }
+
+    private IEnumerator CountUp(int score)
+    {
         for (int i = 0; i < score; i++)
         {
-            this.score.text = (int.Parse(this.score.text) + 1).ToString();
+            string scoreText = "Score: " + (int.Parse(this.score.text) + 1); 
+
+            this.score.text = scoreText;
+            yield return new WaitForSeconds(.3f);
         }
     }
 }

@@ -16,7 +16,4 @@ public class TileDestroyerEditor : Editor
         Gizmos.DrawWireCube(destroyer.transform.position, collider.size);
         Gizmos.color = Color.green;
     }
-    private void OnInspectorGUI()
-    {
-    }
 }

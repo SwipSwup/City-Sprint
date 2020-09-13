@@ -26,7 +26,8 @@ public class GameManager : MonoBehaviour
     private void UpdateScore()
     {
         int os = score;
-        OnScoreUpdate?.Invoke((score += (int)tManager.tileSpeed) - os);
+        //OnScoreUpdate?.Invoke((score += (int)tManager.tileSpeed) - os);
+        OnScoreUpdate?.Invoke(score += (int)tManager.tileSpeed);
     }
 
     public static Action OnTick;
