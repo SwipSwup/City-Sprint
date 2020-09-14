@@ -89,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
         if (movement != 0 && curLane + movement >= 0 && curLane + movement <= lanes.Length - 1)
         {
             curLane += movement;
-            target = transform.position + new Vector3(movement * laneWidth, 0, 0);
+            target = transform.position + new Vector3(0, 0, movement * laneWidth);
             isMoving = true;
 
             return;
