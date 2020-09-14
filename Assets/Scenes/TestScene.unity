@@ -178,7 +178,7 @@ PrefabInstance:
     - target: {fileID: 7630272393235097939, guid: 5883978eade92004aaf46ce6538da7a1,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 7630272393235097939, guid: 5883978eade92004aaf46ce6538da7a1,
         type: 3}
@@ -715,6 +715,16 @@ PrefabInstance:
       propertyPath: activeTiles.Array.data[0]
       value: 
       objectReference: {fileID: 1548749047}
+    - target: {fileID: 2437460862845126353, guid: bebe7fd820a60014aa5f6f0448b89a43,
+        type: 3}
+      propertyPath: maxTileSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 2437460862845126353, guid: bebe7fd820a60014aa5f6f0448b89a43,
+        type: 3}
+      propertyPath: tileSpeed
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 2437460862845126354, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
       propertyPath: m_Name

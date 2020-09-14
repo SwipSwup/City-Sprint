@@ -12,6 +12,7 @@ public class Tile : MonoBehaviour
 
     [Range(1, 10)]
     public int tileSize = 1;
+    public GameObject TilePrefab;
 
     private void UpdatedTileSpeed(float tileSpeed) => this.tileSpeed = tileSpeed;
     public float tileSpeed;
@@ -28,7 +29,10 @@ public class Tile : MonoBehaviour
 
     private void AddTile()
     {
-
+        for (int i = 0; i < tileSize; i++)
+        {
+            //Instantiate(TilePrefab, Vector3.Scale(transform.position, (Vector3.left * 1.5f), transform.rotation);
+        }
     }
 
     private void Update()
