@@ -141,6 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 508e824929474f0419e0aae2b51c1465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isSpacer: 0
   frontPoint: {fileID: 2375552326098091750}
   backPoint: {fileID: 2375552327082339018}
   tileSpeed: 5
@@ -188,7 +189,7 @@ GameObject:
   - component: {fileID: 2746166589312840411}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -281,7 +282,7 @@ GameObject:
   - component: {fileID: 8614662985060349960}
   m_Layer: 0
   m_Name: Cube (1)
-  m_TagString: Untagged
+  m_TagString: Obstacle
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -294,7 +295,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8942829368701511427}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2.36, y: 1, z: 1.57}
+  m_LocalPosition: {x: 2.36, y: 1, z: -0}
   m_LocalScale: {x: 3.6233, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2375552326583867977}

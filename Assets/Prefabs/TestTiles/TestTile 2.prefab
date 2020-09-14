@@ -110,9 +110,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 508e824929474f0419e0aae2b51c1465, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tileSpeed: 5
+  isSpacer: 0
   frontPoint: {fileID: 3463213696791306725}
   backPoint: {fileID: 3463213697922954697}
+  tileSpeed: 5
 --- !u!1 &3463213696791306722
 GameObject:
   m_ObjectHideFlags: 0
@@ -187,7 +188,7 @@ GameObject:
   - component: {fileID: 6998547069413510648}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Coin
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

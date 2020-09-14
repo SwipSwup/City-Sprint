@@ -8,8 +8,8 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody Rigidbody;
     public Collider collider;
 
-    public int speed = 30;
-    public int jumpHeight = 3;
+    public int speed = 20;
+    public int jumpHeight = 30;
     public int laneWidth = 3;
     public float distToGround = 0.1f;
     public float gravity = 9.81f;
@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     private int curLane;
     private int movement = 0;
     private bool isMoving = false;
-    private bool controlsLocked = false;
+    private bool jumpingLocked = false;
     private Vector3 target;
 
     void Start()
@@ -52,27 +52,26 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-
+        
         if (isMoving)
         {
+            target = new Vector3(target.x, transform.position.y, target.z);
+            
             transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-
-
-            if (Vector3.Distance(transform.position, target) < 0.01f)
+            
+            if (Math.Abs(transform.position.z - target.z) < 0.01f && Math.Abs(transform.position.x - target.x) < 0.01f)
             {
                 transform.position = target;
                 isMoving = false;
-                controlsLocked = true;
             }
 
 
-            return;
+            //return;
         }
-
-        if (controlsLocked)
+        
+        if (jumpingLocked && Rigidbody.velocity.y < 1)
         {
-            controlsLocked = !IsGrounded();
-            return;
+            jumpingLocked = !IsGrounded();
         }
 
 
@@ -89,7 +88,7 @@ public class PlayerMovement : MonoBehaviour
         if (movement != 0 && curLane + movement >= 0 && curLane + movement <= lanes.Length - 1)
         {
             curLane += movement;
-            target = transform.position + new Vector3(0, 0, movement * laneWidth);
+            target = new Vector3(lanes[curLane].position.x, transform.position.y, lanes[curLane].position.z);
             isMoving = true;
 
             return;
@@ -98,10 +97,13 @@ public class PlayerMovement : MonoBehaviour
 
 
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) && !jumpingLocked)
         {
-            target = lanes[curLane].position + Vector3.up * jumpHeight;
-            isMoving = true;
+            Debug.Log("jump");
+            Rigidbody.AddForce(Vector3.up * jumpHeight + Vector3.up * gravity, ForceMode.VelocityChange);
+            //target = lanes[curLane].position + Vector3.up * jumpHeight;
+            //isMoving = true;
+            jumpingLocked = true;
 
             return;
 
@@ -138,7 +140,7 @@ public class PlayerMovement : MonoBehaviour
 
     private bool IsGrounded()
     {
-        return Physics.Raycast(transform.position + Vector3.up * 0.01f, Vector3.down, distToGround);
+        return Physics.Raycast(transform.position + Vector3.up * 0.0001f, Vector3.down, distToGround);
     }
 
     public static Action onGameOver;
