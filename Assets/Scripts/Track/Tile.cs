@@ -21,7 +21,9 @@ public class Tile : MonoBehaviour
 
     private void OnValidate()
     {
-        UpdateTileSize();
+#if UNITY_EDITOR
+        if(!Application.isPlaying) UpdateTileSize();
+#endif
     }
 
     private void Awake()
@@ -59,24 +61,24 @@ public class Tile : MonoBehaviour
 
     private Vector3 CalculateMiddlePoint()
     {
-        return (tiles[tiles.Count - 1].transform.position + tiles[0].transform.position) / 2;
+        return (tiles[tiles.Count - 1].transform.localPosition + tiles[0].transform.localPosition) / 2;
     }
 
     private void AddTiles()
     {
-            for (int i = 0; i < tileSize - tiles.Count; i++)
-            {
-                GameObject tmp = Instantiate(
-                    TilePrefab,
-                    new Vector3((
-                    tiles.Count < 1 ? transform.position.x : tiles[tiles.Count - 1].transform.position.x) + 1.5f,
-                    transform.position.y,
-                    transform.position.z),
-                    transform.rotation
-                    );
-                tiles.Add(tmp);
-                tmp.transform.parent = transform;
-            }
+        for (int i = 0; i < tileSize - tiles.Count; i++)
+        {
+            GameObject tmp = Instantiate(
+                TilePrefab,
+                new Vector3((
+                tiles.Count < 1 ? transform.position.x : tiles[tiles.Count - 1].transform.position.x) + 1.5f,
+                transform.position.y,
+                transform.position.z),
+                transform.rotation
+                );
+            tiles.Add(tmp);
+            tmp.transform.parent = transform;
+        }
     }
 
     private void RemoveTiles()
