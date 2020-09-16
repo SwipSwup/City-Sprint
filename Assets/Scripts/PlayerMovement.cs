@@ -10,7 +10,9 @@ public class PlayerMovement : MonoBehaviour
     public float jumpSpeed = 10f;
     public float jumpHeight = 2f;
     public float gravity = 9.81f;
-    public float distToGround = 0.15f;
+    public float distToGround = 0.01f;
+
+    public bool controlsLocked = false;
 
     private Rigidbody Rigidbody;
     private Collider Collider;
@@ -59,6 +61,10 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
+        if (controlsLocked)
+        {
+            return;
+        }
         
         if (isMoving)
         {
@@ -92,8 +98,6 @@ public class PlayerMovement : MonoBehaviour
             curLane += movement;
             movementTarget = new Vector3(lanes[curLane].position.x, transform.position.y, lanes[curLane].position.z);
             isMoving = true;
-
-            return;
         }
 
         if (isJumping)
@@ -109,9 +113,10 @@ public class PlayerMovement : MonoBehaviour
                 applyGravity = true;
             }
         }
+        /*
         else if (!IsGrounded())
         {
-            /*
+            
             transform.position = Vector3.MoveTowards(transform.position, 
                 new Vector3(transform.position.x, jumpingTarget.y - jumpHeight, transform.position.z), 
                 jumpSpeed * Time.deltaTime);
@@ -120,11 +125,11 @@ public class PlayerMovement : MonoBehaviour
             {
                 applyGravity = true;
             }
-            */
+            
 
             return;
             
-        }
+        }*/
 
         if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded())
         {
@@ -148,7 +153,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!IsGrounded() && applyGravity)
+        if (!IsGrounded() && applyGravity && !controlsLocked)
         {
             Rigidbody.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
         }
@@ -161,21 +166,22 @@ public class PlayerMovement : MonoBehaviour
             Destroy(target.gameObject);
 
             onCollectCoin?.Invoke();
-            return;
         }
 
         if (target.gameObject.tag.Equals("Obstacle"))
         {
             Rigidbody.constraints = RigidbodyConstraints.None;
+            Rigidbody.useGravity = true;
+
+            controlsLocked = true;
 
             onGameOver?.Invoke();
-            return;
         }
     }
 
     private bool IsGrounded()
     {
-        return Physics.Raycast(transform.position + Vector3.up * 0.1f, Vector3.down, distToGround);
+        return Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, distToGround + 0.2f);
     }
 
     public static Action onGameOver;
