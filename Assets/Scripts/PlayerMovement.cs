@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
 
     public Transform[] lanes;
+    public Transform Camera;
 
     public float speed = 20f;
     public float jumpSpeed = 10f;
@@ -176,7 +177,7 @@ public class PlayerMovement : MonoBehaviour
 
             controlsLocked = true;
 
-            Rigidbody.AddForce(Vector3.Normalize(target.transform.position - transform.position + Vector3.up * 3) * collisionForce, ForceMode.VelocityChange);
+            Rigidbody.AddForce(Vector3.Normalize(Camera.position - transform.position) * collisionForce, ForceMode.VelocityChange);
 
             onGameOver?.Invoke();
         }
