@@ -22,7 +22,7 @@ public class Tile : MonoBehaviour
     private void OnValidate()
     {
 #if UNITY_EDITOR
-        if(!Application.isPlaying) UpdateTileSize();
+        if (!Application.isPlaying) UpdateTileSize();
 #endif
     }
 
@@ -85,17 +85,20 @@ public class Tile : MonoBehaviour
     {
         for (int i = 0; i < tiles.Count - tileSize; i++)
         {
-            GameObject tmp = tiles[tiles.Count - 1];
-            tiles.Remove(tmp);
-            StartCoroutine(Destroy(tmp));
+            StartCoroutine(Destroy(tiles[tiles.Count - 1]));
         }
     }
 
     IEnumerator Destroy(GameObject tile)
     {
-        yield return new WaitForEndOfFrame();
+        yield return new WaitForSeconds(.1f);
         DestroyImmediate(tile);
+        tiles.Remove(tile);
+        UpdateCollider();
+        UpdatePoints();
     }
+
+
 
     private void Move()
     {
