@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public Collider collider;
 
     public int speed = 20;
-    public int jumpHeight = 30;
+    public float jumpHeight = 1f;
     public int laneWidth = 3;
     public float distToGround = 0.1f;
     public float gravity = 9.81f;
@@ -100,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow) && !jumpingLocked)
         {
             Debug.Log("jump");
-            Rigidbody.AddForce(Vector3.up * jumpHeight + Vector3.up * gravity, ForceMode.VelocityChange);
+            Rigidbody.AddForce(Vector3.up * jumpHeight, ForceMode.VelocityChange);
             //target = lanes[curLane].position + Vector3.up * jumpHeight;
             //isMoving = true;
             jumpingLocked = true;
