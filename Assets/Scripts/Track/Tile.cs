@@ -18,7 +18,6 @@ public class Tile : MonoBehaviour
     private void UpdatedTileSpeed(float tileSpeed) => this.tileSpeed = tileSpeed;
     public float tileSpeed;
 
-
     private void OnValidate()
     {
 #if UNITY_EDITOR
@@ -31,10 +30,8 @@ public class Tile : MonoBehaviour
         TrackManager.OnUpdateTileSpeed += UpdatedTileSpeed;
     }
 
-    private void Update()
-    {
-        Move();
-    }
+    private void Move() => transform.Translate(new Vector3(tileSpeed * Time.deltaTime, 0f));
+    private void Update() => Move();
 
     private void UpdateTileSize()
     {
@@ -100,8 +97,4 @@ public class Tile : MonoBehaviour
 
 
 
-    private void Move()
-    {
-        transform.Translate(new Vector3(tileSpeed * Time.deltaTime, 0f));
-    }
 }
