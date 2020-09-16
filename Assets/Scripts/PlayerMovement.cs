@@ -11,6 +11,7 @@ public class PlayerMovement : MonoBehaviour
     public float jumpHeight = 2f;
     public float gravity = 9.81f;
     public float distToGround = 0.01f;
+    public float collisionForce = 10f;
 
     public bool controlsLocked = false;
 
@@ -174,6 +175,8 @@ public class PlayerMovement : MonoBehaviour
             Rigidbody.useGravity = true;
 
             controlsLocked = true;
+
+            Rigidbody.AddForce(Vector3.Normalize(target.transform.position - transform.position + Vector3.up * 3) * collisionForce, ForceMode.VelocityChange);
 
             onGameOver?.Invoke();
         }

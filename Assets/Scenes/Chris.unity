@@ -734,6 +734,11 @@ PrefabInstance:
       propertyPath: jumpSpeed
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 9103716929365151360, guid: 409bd38650786d142b3c9d26dd7bb6a0,
+        type: 3}
+      propertyPath: collisionForce
+      value: 50
+      objectReference: {fileID: 0}
     - target: {fileID: 9174919730189480792, guid: 409bd38650786d142b3c9d26dd7bb6a0,
         type: 3}
       propertyPath: m_LocalPosition.x
