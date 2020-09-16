@@ -75,6 +75,7 @@ Material:
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
+    - Color_CC4B4BDA: {r: 256, g: 0, b: 0, a: 0}
     - Color_EF220336: {r: 1, g: 0.016675822, b: 0, a: 0.09411765}
     - Vector2_E997419A: {r: 1, g: 3, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
