@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 20f;
     public float jumpSpeed = 10f;
     public float jumpHeight = 2f;
+    public float gravity = 9.81f;
     public float distToGround = 0.15f;
 
     private Rigidbody Rigidbody;
@@ -99,16 +100,18 @@ public class PlayerMovement : MonoBehaviour
         {
             jumpingTarget = new Vector3(transform.position.x, jumpingTarget.y, transform.position.z);
 
-            transform.position = Vector3.MoveTowards(transform.position, jumpingTarget, jumpSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, jumpingTarget, jumpSpeed * (Math.Abs(jumpingTarget.y - transform.position.y) / jumpHeight + 0.2f) * Time.deltaTime);
 
             if (Math.Abs(transform.position.y - jumpingTarget.y) < 0.01f)
             {
                 transform.position = jumpingTarget;
                 isJumping = false;
+                applyGravity = true;
             }
         }
         else if (!IsGrounded())
         {
+            /*
             transform.position = Vector3.MoveTowards(transform.position, 
                 new Vector3(transform.position.x, jumpingTarget.y - jumpHeight, transform.position.z), 
                 jumpSpeed * Time.deltaTime);
@@ -117,8 +120,10 @@ public class PlayerMovement : MonoBehaviour
             {
                 applyGravity = true;
             }
+            */
 
-                return;
+            return;
+            
         }
 
         if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded())
@@ -143,9 +148,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (IsGrounded() && applyGravity)
+        if (!IsGrounded() && applyGravity)
         {
-            Rigidbody.AddForce(Vector3.down * jumpSpeed, ForceMode.Acceleration);
+            Rigidbody.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
         }
     }
 
