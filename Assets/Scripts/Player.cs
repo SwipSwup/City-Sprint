@@ -61,55 +61,12 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (controlsLocked)
-        {
-            return;
-        }
+        if (controlsLocked) return;
         
-        if (isMoving)
-        {
-            movementTarget = new Vector3(movementTarget.x, transform.position.y, movementTarget.z);
-            
-            transform.position = Vector3.MoveTowards(transform.position, movementTarget, speed * Time.deltaTime);
-            
-            if (Math.Abs(transform.position.z - movementTarget.z) < 0.01f && Math.Abs(transform.position.x - movementTarget.x) < 0.01f)
-            {
-                transform.position = movementTarget;
-                isMoving = false;
-            }
-        }
+        if (isMoving) applyMovement();
+        getMovementInput();
 
-
-        movement = 0;
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            movement -= 1;
-        }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            movement += 1;
-        }
-
-        if (movement != 0 && curLane + movement >= 0 && curLane + movement <= lanes.Length - 1)
-        {
-            curLane += movement;
-            movementTarget = new Vector3(lanes[curLane].position.x, transform.position.y, lanes[curLane].position.z);
-            isMoving = true;
-        }
-
-        if (isJumping)
-        {
-            jumpingTarget = new Vector3(transform.position.x, jumpingTarget.y, transform.position.z);
-
-            transform.position = Vector3.MoveTowards(transform.position, jumpingTarget, jumpSpeed * (Math.Abs(jumpingTarget.y - transform.position.y) / jumpHeight + 0.2f) * Time.deltaTime);
-
-            if (Math.Abs(transform.position.y - jumpingTarget.y) < 0.01f)
-            {
-                transform.position = jumpingTarget;
-                isJumping = false;
-                applyGravity = true;
-            }
-        }
+        if (isJumping) applyJumpingMovement();
 
         if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded())
         {
@@ -149,6 +106,51 @@ public class Player : MonoBehaviour
 
     }
 
+    private void applyMovement()
+    {
+        movementTarget = new Vector3(movementTarget.x, transform.position.y, movementTarget.z);
+        transform.position = Vector3.MoveTowards(transform.position, movementTarget, speed * Time.deltaTime);
+
+        if (Math.Abs(transform.position.z - movementTarget.z) < 0.01f && 
+            Math.Abs(transform.position.x - movementTarget.x) < 0.01f)
+        {
+            transform.position = movementTarget;
+            isMoving = false;
+        }
+    }
+
+    private void getMovementInput()
+    {
+        movement = 0;
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
+        if (Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
+
+        if (movement != 0 && curLane + movement >= 0 && curLane + movement <= lanes.Length - 1)
+        {
+            curLane += movement;
+            movementTarget = new Vector3(lanes[curLane].position.x, transform.position.y, lanes[curLane].position.z);
+            isMoving = true;
+        }
+    }
+
+    private void applyJumpingMovement()
+    {
+        jumpingTarget = new Vector3(transform.position.x, jumpingTarget.y, transform.position.z);
+        transform.position = Vector3.MoveTowards(transform.position, jumpingTarget, jumpSpeed * (Math.Abs(jumpingTarget.y - transform.position.y) / jumpHeight + 0.2f) * Time.deltaTime);
+
+        if (Math.Abs(transform.position.y - jumpingTarget.y) < 0.01f)
+        {
+            transform.position = jumpingTarget;
+            isJumping = false;
+            applyGravity = true;
+        }
+    }
+
+
+
+
+
+
     private void FixedUpdate()
     {
         if (!IsGrounded() && applyGravity && !controlsLocked)
@@ -163,7 +165,7 @@ public class Player : MonoBehaviour
         {
             Destroy(target.gameObject);
 
-            onCollectCoin?.Invoke();
+            OnCollectCoin?.Invoke();
         }
 
         if (target.gameObject.tag.Equals("Obstacle"))
@@ -176,7 +178,7 @@ public class Player : MonoBehaviour
 
             Rigidbody.AddForce(Vector3.Normalize(Camera.position - transform.position) * collisionForce, ForceMode.VelocityChange);
 
-            onGameOver?.Invoke();
+            OnGameOver?.Invoke();
         }
     }
 
