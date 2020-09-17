@@ -159,6 +159,13 @@ public class PlayerMovement : MonoBehaviour
             {
                 Rigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
             }
+
+            transform.LeanScaleY(0.5f, 0);
+        }
+
+        if (Input.GetKeyUp(KeyCode.DownArrow))
+        {
+            transform.LeanScaleY(1f, 0);
         }
 
     }
