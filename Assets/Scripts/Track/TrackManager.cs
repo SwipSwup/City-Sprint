@@ -51,7 +51,6 @@ public class TrackManager : MonoBehaviour
 
     private void TileDestroyed(Tile tile)
     {
-        Debug.Log((int)UnityEngine.Random.Range(0f, tilePrefabs.Length));
         activeTiles.Remove(tile);
         if (!tile.isSpacer)
             SpawnTile(tilePrefabs[(int)UnityEngine.Random.Range(0f, tilePrefabs.Length)]);
