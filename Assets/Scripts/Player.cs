@@ -164,7 +164,7 @@ public class Player : MonoBehaviour
             OnCollectCoin?.Invoke();
         }
 
-        if (target.gameObject.tag.Equals("Obstacle"))
+        if (target.gameObject.tag.Equals("Obstacle") && !controlsLocked)
         {
 
             Rigidbody.constraints = RigidbodyConstraints.None;
