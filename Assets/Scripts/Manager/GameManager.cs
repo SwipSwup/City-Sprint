@@ -37,7 +37,8 @@ public class GameManager : MonoBehaviour
     public static Action<int> OnCoinUpdate;
     private void UpdateCoins()
     {
-        OnCoinUpdate?.Invoke(playerData.coins);
+        coins++;
+        OnCoinUpdate?.Invoke(coins);
     }
 
     public static Action<int> OnScoreUpdate;
