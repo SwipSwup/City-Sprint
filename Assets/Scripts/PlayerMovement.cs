@@ -58,7 +58,7 @@ public class PlayerMovement : MonoBehaviour
         transform.position = lanes[curLane].position;
         movementTarget = transform.position;
 
-        Collider = GetComponent<Collider>();
+        //Collider = GetComponent<Collider>();
     }
 
     void Update()
@@ -180,6 +180,29 @@ public class PlayerMovement : MonoBehaviour
             onCollectCoin?.Invoke();
         }
 
+        
+
+        Debug.Log("----------------------");
+        Debug.Log(target.gameObject);
+        Debug.Log(target.gameObject.tag);
+        if (target.gameObject.tag.Equals("Obstacle"))
+        {
+            Debug.Log("yey");
+
+            Rigidbody.constraints = RigidbodyConstraints.None;
+            Rigidbody.useGravity = true;
+
+            controlsLocked = true;
+
+            Rigidbody.AddForce(Vector3.Normalize(Camera.position - transform.position) * collisionForce, ForceMode.VelocityChange);
+
+            onGameOver?.Invoke();
+        }
+    }
+
+    /*
+    void OnCollisionExit(Collision target)
+    {
         if (target.gameObject.tag.Equals("Obstacle"))
         {
             Rigidbody.constraints = RigidbodyConstraints.None;
@@ -191,7 +214,7 @@ public class PlayerMovement : MonoBehaviour
 
             onGameOver?.Invoke();
         }
-    }
+    }*/
 
     private bool IsGrounded()
     {
