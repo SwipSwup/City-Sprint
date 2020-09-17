@@ -5,21 +5,39 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [SerializeField]
+    private PlayerData playerData;
+
     [SerializeField] 
     private float TICK_SEC_INTERVAL;
     private float tickTimer;
 
     [SerializeField] private TrackManager tManager;
     private int score;
+    private int coins;
 
     private void Start()
     {
         OnTick += UpdateScore;
+        Player.OnCollectCoin += UpdateCoins;
+        Player.OnGameOver += GameOver;
     }
 
     private void Update()
     {
         UpdateTick();
+    }
+
+    private void GameOver()
+    {
+        if(playerData.highscore < score) playerData.highscore = score;
+        playerData.coins += coins;
+    }
+
+    public static Action<int> OnCoinUpdate;
+    private void UpdateCoins()
+    {
+        OnCoinUpdate?.Invoke(playerData.coins);
     }
 
     public static Action<int> OnScoreUpdate;
