@@ -10,7 +10,7 @@ public class Tile : MonoBehaviour
 
     public bool isSpacer;
 
-    [Range(1, 10)]
+    [Range(1, 50)]
     public int tileSize = 1;
     public GameObject TilePrefab;
     public List<GameObject> tiles = new List<GameObject>();
