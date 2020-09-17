@@ -17,7 +17,6 @@ public class Player : MonoBehaviour
     public bool controlsLocked = false;
 
     private Rigidbody Rigidbody;
-    private Collider Collider;
 
     private int curLane;
     private int movement = 0;
@@ -61,28 +60,76 @@ public class Player : MonoBehaviour
 
     void Update()
     {
+        ManageMovement();
+    }
+
+    private void ManageMovement()
+    {
         if (controlsLocked) return;
-        
-        if (isMoving) applyMovement();
-        getMovementInput();
 
-        if (isJumping) applyJumpingMovement();
+        if (isMoving) ApplyMovement();
+        GetMovementInput();
 
-        if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded())
+        if (isJumping) ApplyJumpingMovement();
+        HandleJumping();
+
+        HandleSneaking();
+    }
+
+    private void ApplyMovement()
+    {
+        movementTarget = new Vector3(movementTarget.x, transform.position.y, movementTarget.z);
+        transform.position = Vector3.MoveTowards(transform.position, movementTarget, speed * Time.deltaTime);
+
+        if (Math.Abs(transform.position.z - movementTarget.z) < 0.01f &&
+            Math.Abs(transform.position.x - movementTarget.x) < 0.01f)
         {
-
-            if (!isJumping)
-            {
-                jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
-                isJumping = true;
-                applyGravity = false;
-                transform.LeanScaleY(1f, 0.05f);
-
-                return;
-            }
-
+            transform.position = movementTarget;
+            isMoving = false;
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow))
+    }
+
+    private void GetMovementInput()
+    {
+        movement = 0;
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
+        if (Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
+
+        if (movement != 0 && curLane + movement >= 0 && curLane + movement <= lanes.Length - 1)
+        {
+            curLane += movement;
+            movementTarget = new Vector3(lanes[curLane].position.x, transform.position.y, lanes[curLane].position.z);
+            isMoving = true;
+        }
+    }
+
+    private void ApplyJumpingMovement()
+    {
+        jumpingTarget = new Vector3(transform.position.x, jumpingTarget.y, transform.position.z);
+        transform.position = Vector3.MoveTowards(transform.position, jumpingTarget, jumpSpeed * (Math.Abs(jumpingTarget.y - transform.position.y) / jumpHeight + 0.2f) * Time.deltaTime);
+
+        if (Math.Abs(transform.position.y - jumpingTarget.y) < 0.01f)
+        {
+            transform.position = jumpingTarget;
+            isJumping = false;
+            applyGravity = true;
+        }
+    }
+
+    private void HandleJumping()
+    {
+        if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded() && !isJumping)
+        {
+            jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
+            isJumping = true;
+            applyGravity = false;
+            transform.LeanScaleY(1f, 0.05f);
+        }
+    }
+
+    private void HandleSneaking()
+    {
+        if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             if (isJumping)
             {
@@ -99,64 +146,13 @@ public class Player : MonoBehaviour
             transform.LeanScaleY(0.5f, 0.1f);
         }
 
-        if (Input.GetKeyUp(KeyCode.DownArrow))
-        {
-            transform.LeanScaleY(1f, 0.1f);
-        }
-
+        if (Input.GetKeyUp(KeyCode.DownArrow)) transform.LeanScaleY(1f, 0.1f);
     }
-
-    private void applyMovement()
-    {
-        movementTarget = new Vector3(movementTarget.x, transform.position.y, movementTarget.z);
-        transform.position = Vector3.MoveTowards(transform.position, movementTarget, speed * Time.deltaTime);
-
-        if (Math.Abs(transform.position.z - movementTarget.z) < 0.01f && 
-            Math.Abs(transform.position.x - movementTarget.x) < 0.01f)
-        {
-            transform.position = movementTarget;
-            isMoving = false;
-        }
-    }
-
-    private void getMovementInput()
-    {
-        movement = 0;
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
-        if (Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
-
-        if (movement != 0 && curLane + movement >= 0 && curLane + movement <= lanes.Length - 1)
-        {
-            curLane += movement;
-            movementTarget = new Vector3(lanes[curLane].position.x, transform.position.y, lanes[curLane].position.z);
-            isMoving = true;
-        }
-    }
-
-    private void applyJumpingMovement()
-    {
-        jumpingTarget = new Vector3(transform.position.x, jumpingTarget.y, transform.position.z);
-        transform.position = Vector3.MoveTowards(transform.position, jumpingTarget, jumpSpeed * (Math.Abs(jumpingTarget.y - transform.position.y) / jumpHeight + 0.2f) * Time.deltaTime);
-
-        if (Math.Abs(transform.position.y - jumpingTarget.y) < 0.01f)
-        {
-            transform.position = jumpingTarget;
-            isJumping = false;
-            applyGravity = true;
-        }
-    }
-
-
-
-
-
 
     private void FixedUpdate()
     {
-        if (!IsGrounded() && applyGravity && !controlsLocked)
-        {
+        if (!IsGrounded() && applyGravity && !controlsLocked) 
             Rigidbody.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
-        }
     }
 
     void OnCollisionEnter(Collision target)
@@ -173,10 +169,8 @@ public class Player : MonoBehaviour
 
             Rigidbody.constraints = RigidbodyConstraints.None;
             Rigidbody.useGravity = true;
-
-            controlsLocked = true;
-
             Rigidbody.AddForce(Vector3.Normalize(Camera.position - transform.position) * collisionForce, ForceMode.VelocityChange);
+            controlsLocked = true;
 
             OnGameOver?.Invoke();
         }
