@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-public class PlayerMovement : MonoBehaviour
+public class Player : MonoBehaviour
 {
 
     public Transform[] lanes;
@@ -115,23 +115,6 @@ public class PlayerMovement : MonoBehaviour
                 applyGravity = true;
             }
         }
-        /*
-        else if (!IsGrounded())
-        {
-            
-            transform.position = Vector3.MoveTowards(transform.position, 
-                new Vector3(transform.position.x, jumpingTarget.y - jumpHeight, transform.position.z), 
-                jumpSpeed * Time.deltaTime);
-
-            if (IsGrounded())
-            {
-                applyGravity = true;
-            }
-            
-
-            return;
-            
-        }*/
 
         if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded())
         {
@@ -141,6 +124,7 @@ public class PlayerMovement : MonoBehaviour
                 jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
                 isJumping = true;
                 applyGravity = false;
+                transform.LeanScaleY(1f, 0.05f);
 
                 return;
             }
@@ -160,12 +144,12 @@ public class PlayerMovement : MonoBehaviour
                 Rigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
             }
 
-            transform.LeanScaleY(0.5f, 0);
+            transform.LeanScaleY(0.5f, 0.1f);
         }
 
         if (Input.GetKeyUp(KeyCode.DownArrow))
         {
-            transform.LeanScaleY(1f, 0);
+            transform.LeanScaleY(1f, 0.1f);
         }
 
     }
@@ -187,14 +171,8 @@ public class PlayerMovement : MonoBehaviour
             onCollectCoin?.Invoke();
         }
 
-        
-
-        Debug.Log("----------------------");
-        Debug.Log(target.gameObject);
-        Debug.Log(target.gameObject.tag);
         if (target.gameObject.tag.Equals("Obstacle"))
         {
-            Debug.Log("yey");
 
             Rigidbody.constraints = RigidbodyConstraints.None;
             Rigidbody.useGravity = true;
