@@ -148,7 +148,17 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.DownArrow))
         {
+            if (isJumping)
+            {
+                isJumping = false;
+                applyGravity = true;
 
+                Rigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
+            }
+            else if (!IsGrounded())
+            {
+                Rigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
+            }
         }
 
     }

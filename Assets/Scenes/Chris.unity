@@ -543,7 +543,7 @@ PrefabInstance:
     - target: {fileID: 2437460862845126353, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
       propertyPath: tileSpeedMultiplyer
-      value: 0.5
+      value: 0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2437460862845126354, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
