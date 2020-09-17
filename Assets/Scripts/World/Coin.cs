@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class Coin : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [Range(0f, 5f)]
+    [SerializeField] private float spinSpeed;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField] private float bounceHeight;
+    [SerializeField] private float bounceDuration;
+    [SerializeField] private LeanTweenType easeType;
+
+    private void Awake() => LeanTween.moveY(gameObject, transform.position.y + bounceHeight, bounceDuration).setLoopPingPong().setEase(easeType);
+
+    private void Update() => Spin();
+
+    private void Spin()
     {
-        
+        Vector3 angle = transform.rotation.eulerAngles;
+        transform.rotation = Quaternion.Euler(angle.x, angle.y + spinSpeed, angle.z);
     }
 }
