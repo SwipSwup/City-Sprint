@@ -57,8 +57,6 @@ public class Player : MonoBehaviour
         curLane = (lanes.Length - 1) / 2;
         transform.position = lanes[curLane].position;
         movementTarget = transform.position;
-
-        //Collider = GetComponent<Collider>();
     }
 
     void Update()
@@ -79,9 +77,6 @@ public class Player : MonoBehaviour
                 transform.position = movementTarget;
                 isMoving = false;
             }
-
-
-            //return;
         }
 
 
@@ -185,28 +180,12 @@ public class Player : MonoBehaviour
         }
     }
 
-    /*
-    void OnCollisionExit(Collision target)
-    {
-        if (target.gameObject.tag.Equals("Obstacle"))
-        {
-            Rigidbody.constraints = RigidbodyConstraints.None;
-            Rigidbody.useGravity = true;
-
-            controlsLocked = true;
-
-            Rigidbody.AddForce(Vector3.Normalize(Camera.position - transform.position) * collisionForce, ForceMode.VelocityChange);
-
-            onGameOver?.Invoke();
-        }
-    }*/
-
     private bool IsGrounded()
     {
         return Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, distToGround + 0.2f);
     }
 
-    public static Action onGameOver;
+    public static Action OnGameOver;
 
-    public static Action onCollectCoin;
+    public static Action OnCollectCoin;
 }
