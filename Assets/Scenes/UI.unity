@@ -847,3 +847,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   score: {fileID: 99600727}
+  coins: {fileID: 258825480}
