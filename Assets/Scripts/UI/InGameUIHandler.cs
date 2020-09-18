@@ -5,16 +5,31 @@ using TMPro;
 
 public class InGameUIHandler : MonoBehaviour
 {
-    public TextMeshProUGUI score;
+    [SerializeField] private TextMeshProUGUI score;
+    [SerializeField] private TextMeshProUGUI coins;
 
     private void Start()
     {
         GameManager.OnScoreUpdate += UpdateScore;
+        GameManager.OnCoinUpdate += UpdateCoins;
+
+        ResetUI();
+    }
+
+    private void ResetUI()
+    {
+        UpdateScore(0);
+        UpdateCoins(0);
     }
 
     private void UpdateScore(int score)
     {
         this.score.text = "Score: " + score;
+    }
+
+    private void UpdateCoins(int coins)
+    {
+        this.coins.text = "Coins: " + coins;
     }
 
     private IEnumerator CountUp(int score)

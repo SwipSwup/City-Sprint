@@ -58,16 +58,16 @@ public class TrackManager : MonoBehaviour
 
     private void SpawnTile(GameObject prefab)
     {
-        GameObject newTile = Instantiate(tileSpacer, calculateNewTilePosition(tileSpacer), transform.rotation);
+        GameObject newTile = Instantiate(tileSpacer, CalculateNewTilePosition(tileSpacer), transform.rotation);
         newTile.GetComponent<Tile>().tileSpeed = tileSpeed;
         activeTiles.Add(newTile.GetComponent<Tile>());
 
-        newTile = Instantiate(prefab, calculateNewTilePosition(prefab), transform.rotation);
+        newTile = Instantiate(prefab, CalculateNewTilePosition(prefab), transform.rotation);
         newTile.GetComponent<Tile>().tileSpeed = tileSpeed;
         activeTiles.Add(newTile.GetComponent<Tile>());
     }
 
-    private Vector3 calculateNewTilePosition(GameObject prefab)
+    private Vector3 CalculateNewTilePosition(GameObject prefab)
     {
         Vector3 lastBackPoint = activeTiles[activeTiles.Count - 1].backPoint.position;
         return new Vector3(lastBackPoint.x + (prefab.transform.position.x - prefab.GetComponent<Tile>().frontPoint.position.x), lastBackPoint.y, lastBackPoint.z);

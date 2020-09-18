@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69f9be913fe840942a02321fd9f235fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: 9113d08f2acb99d42b1a7da9e193b029, type: 2}
   TICK_SEC_INTERVAL: 0.2
   tManager: {fileID: 2437460862845126353}
 --- !u!114 &2437460862845126353
