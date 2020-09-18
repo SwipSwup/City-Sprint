@@ -210,7 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   frontPoint: {fileID: 5846515047170704628}
   backPoint: {fileID: 3706046926767009350}
-  isSpacer: 0
+  isSpacer: 1
   tileSize: 3
   TilePrefab: {fileID: 3572603892552668162, guid: b5ea2697d9e6c824081c006fdd96b1c8,
     type: 3}
