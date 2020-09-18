@@ -10,6 +10,7 @@ public class Player : MonoBehaviour
     public float speed = 20f;
     public float jumpSpeed = 10f;
     public float jumpHeight = 2f;
+    public float sneakDuration = 10f;
     public float gravity = 9.81f;
     public float distToGround = 0.01f;
     public float collisionForce = 10f;
@@ -22,6 +23,8 @@ public class Player : MonoBehaviour
     private int movement = 0;
     private bool isMoving = false;
     private bool isJumping = false;
+    private bool isSneaking = false;
+    private float sneakDurationLeft = 0f;
     private bool applyGravity = true;
 
     private Vector3 movementTarget;
@@ -129,6 +132,20 @@ public class Player : MonoBehaviour
 
     private void HandleSneaking()
     {
+        if (isSneaking)
+        {
+            Debug.Log(sneakDuration);
+            if (sneakDurationLeft > 0)
+            {
+                sneakDurationLeft -= Time.deltaTime * 10;
+            }
+            else
+            {
+                isSneaking = false;
+                transform.LeanScaleY(1f, 0.1f);
+            }
+        }
+
         if (Input.GetKeyDown(KeyCode.DownArrow))
         {
             if (isJumping)
@@ -144,9 +161,9 @@ public class Player : MonoBehaviour
             }
 
             transform.LeanScaleY(0.5f, 0.1f);
+            sneakDurationLeft = sneakDuration;
+            isSneaking = true;
         }
-
-        if (Input.GetKeyUp(KeyCode.DownArrow)) transform.LeanScaleY(1f, 0.1f);
     }
 
     private void FixedUpdate()
