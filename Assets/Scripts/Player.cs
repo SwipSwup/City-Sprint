@@ -143,7 +143,6 @@ public class Player : MonoBehaviour
     {
         if (isSneaking)
         {
-            Debug.Log(sneakDuration);
             if (sneakDurationLeft > 0)
             {
                 sneakDurationLeft -= Time.deltaTime * 10;
