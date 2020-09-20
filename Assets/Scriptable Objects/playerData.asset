@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce9e76377a733d46b6effb0fde320e2, type: 3}
   m_Name: playerData
   m_EditorClassIdentifier: 
+  place: 1000
+  playerName: Test player
   highscore: 6825
-  coins: 774
+  coins: 786
