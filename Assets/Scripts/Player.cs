@@ -34,6 +34,18 @@ public class Player : MonoBehaviour
     {
         Rigidbody = GetComponent<Rigidbody>();
 
+        CheckRigidbody();
+        CheckLanes();
+
+        Rigidbody.useGravity = false;
+
+        curLane = (lanes.Length - 1) / 2;
+        transform.position = lanes[curLane].position;
+        movementTarget = transform.position;
+    }
+
+    private void CheckRigidbody()
+    {
         if (Rigidbody == null)
         {
             Debug.LogError("Player does not have an assigned Rigidbody! Quitting Application.");
@@ -43,7 +55,10 @@ public class Player : MonoBehaviour
             UnityEditor.EditorApplication.isPlaying = false;
             #endif
         }
+    }
 
+    private void CheckLanes()
+    {
         if (lanes == null || lanes.Length < 1)
         {
             Debug.LogError("Player does not have enough lanes! Quitting Application.");
@@ -53,12 +68,6 @@ public class Player : MonoBehaviour
             UnityEditor.EditorApplication.isPlaying = false;
             #endif
         }
-
-        Rigidbody.useGravity = false;
-
-        curLane = (lanes.Length - 1) / 2;
-        transform.position = lanes[curLane].position;
-        movementTarget = transform.position;
     }
 
     void Update()
@@ -134,7 +143,6 @@ public class Player : MonoBehaviour
     {
         if (isSneaking)
         {
-            Debug.Log(sneakDuration);
             if (sneakDurationLeft > 0)
             {
                 sneakDurationLeft -= Time.deltaTime * 10;
@@ -183,20 +191,21 @@ public class Player : MonoBehaviour
 
         if (target.gameObject.tag.Equals("Obstacle") && !controlsLocked)
         {
-
-            Rigidbody.constraints = RigidbodyConstraints.None;
-            Rigidbody.useGravity = true;
-            Rigidbody.AddForce(Vector3.Normalize(Camera.position - transform.position) * collisionForce, ForceMode.VelocityChange);
-            controlsLocked = true;
-
-            OnGameOver?.Invoke();
+            GameOver();
         }
     }
 
-    private bool IsGrounded()
+    private void GameOver()
     {
-        return Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, distToGround + 0.2f);
+        Rigidbody.constraints = RigidbodyConstraints.None;
+        Rigidbody.useGravity = true;
+        Rigidbody.AddForce(Vector3.Normalize(Camera.position - transform.position) * collisionForce, ForceMode.VelocityChange);
+        controlsLocked = true;
+
+        OnGameOver?.Invoke();
     }
+
+    private bool IsGrounded() => Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, distToGround + 0.2f);
 
     public static Action OnGameOver;
 
