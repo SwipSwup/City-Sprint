@@ -28,6 +28,13 @@ public class GameManager : MonoBehaviour
         UpdateTick();
     }
 
+    private void EndRun()
+    {
+
+
+
+    }
+
     private void GameOver()
     {
         if(playerData.highscore < score) playerData.highscore = score;

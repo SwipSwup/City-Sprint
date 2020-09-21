@@ -22,6 +22,7 @@ public class TrackManager : MonoBehaviour
     {
         GameManager.OnTick += UpdateTileSpeed;
         TileDestroyer.OnTileDelete += TileDestroyed;
+        Player.OnGameOver += EndRun;
 
         InstaniateTrack();
     }
@@ -30,6 +31,11 @@ public class TrackManager : MonoBehaviour
     {
 
 
+    }
+
+    private void EndRun()
+    {
+        tileSpeedMultiplyer = .5f;
     }
 
     private void InstaniateTrack()
