@@ -20,6 +20,7 @@ public class Player : MonoBehaviour
     private Rigidbody Rigidbody;
 
     private int curLane;
+    private int oldLane;
     private int movement = 0;
     private bool isMoving = false;
     private bool isJumping = false;
@@ -28,6 +29,7 @@ public class Player : MonoBehaviour
     private bool applyGravity = true;
 
     private Vector3 movementTarget;
+    private Vector3 oldLocation;
     private Vector3 jumpingTarget;
 
     void Start()
@@ -109,7 +111,9 @@ public class Player : MonoBehaviour
 
         if (movement != 0 && curLane + movement >= 0 && curLane + movement <= lanes.Length - 1)
         {
+            oldLane = curLane;
             curLane += movement;
+            oldLocation = transform.position;
             movementTarget = new Vector3(lanes[curLane].position.x, transform.position.y, lanes[curLane].position.z);
             isMoving = true;
         }
@@ -191,8 +195,21 @@ public class Player : MonoBehaviour
 
         if (target.gameObject.tag.Equals("Obstacle") && !controlsLocked)
         {
-            GameOver();
+            ObstacleCollision();
         }
+    }
+
+    private void ObstacleCollision()
+    {
+        if (!isMoving)
+        {
+            GameOver();
+            return;
+        }
+        curLane = oldLane;
+        movementTarget = oldLocation;
+
+        OnObstacleCollision?.Invoke();
     }
 
     private void GameOver()
@@ -210,4 +227,6 @@ public class Player : MonoBehaviour
     public static Action OnGameOver;
 
     public static Action OnCollectCoin;
+
+    public static Action OnObstacleCollision;
 }
