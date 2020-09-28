@@ -23,6 +23,7 @@ public class TrackManager : MonoBehaviour
         GameManager.OnTick += UpdateTileSpeed;
         TileDestroyer.OnTileDelete += TileDestroyed;
         Player.OnGameOver += EndRun;
+       
 
         InstaniateTrack();
     }
