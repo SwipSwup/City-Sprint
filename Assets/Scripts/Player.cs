@@ -217,15 +217,20 @@ public class Player : MonoBehaviour
     {
         if (target.gameObject.tag.Equals("Coin"))
         {
-            Destroy(target.gameObject);
-
-            OnCollectCoin?.Invoke();
+            CollectCoin(target.gameObject);
         }
 
         if (target.gameObject.tag.Equals("Obstacle") && !controlsLocked)
         {
             ObstacleCollision(target.gameObject);
         }
+    }
+
+    private void CollectCoin(GameObject coin)
+    {
+        //animation
+        Destroy(coin);
+        OnCollectCoin?.Invoke();
     }
 
     private void ObstacleCollision(GameObject obstacle)
