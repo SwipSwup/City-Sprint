@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
     [Header("Movement Settings")]
 
-    [Range(0f, 10000f)]
+    [Range(0f, 1000f)]
     [Tooltip("Distance after wich swipe is detected")]
     public float swipeDetection = 10f;
 
@@ -195,16 +195,30 @@ public class Player : MonoBehaviour
             return;
         }
 
-        if (touch.phase == TouchPhase.Moved)
+        if (touch.phase == TouchPhase.Moved && inputValid)
         {
             deltaPosition = touch.position - startTouch;
 
-            if (deltaPosition.x < swipeDetection) movement -= 1;
-            if (deltaPosition.x > swipeDetection) movement += 1;
+            Debug.Log("touch:" + touch.position);
+            Debug.Log("start:" + startTouch);
+            Debug.Log("delta:" + deltaPosition);
+            Debug.Log("");
 
-            if (deltaPosition.y > swipeDetection && IsGrounded() && !isJumping) HandleJumping();
+            if (deltaPosition.x < -swipeDetection)movement -= 1;
+            if (deltaPosition.x > swipeDetection)movement += 1;
+            if (movement != 0) inputValid = false;
 
-            if (deltaPosition.y < swipeDetection) HandleSneaking();
+            if (deltaPosition.y > swipeDetection && IsGrounded() && !isJumping)
+            {
+                HandleJumping();
+                inputValid = false;
+            }
+
+            if (deltaPosition.y < -swipeDetection)
+            {
+                HandleSneaking();
+                inputValid = false;
+            }
         }
 
         ManageMovementInput();
