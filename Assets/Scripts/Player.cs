@@ -14,6 +14,10 @@ public class Player : MonoBehaviour
 
     [Header("Movement Settings")]
 
+    [Range(0f, 100f)]
+    [Tooltip("Distance after wich swipe is detected")]
+    public float swipeDetection = 10f;
+
     [Range(1f, 100f)]
     [Tooltip("Speed at wich the players moves between the lanes")]
     public float speed = 20f;
@@ -56,6 +60,12 @@ public class Player : MonoBehaviour
     private bool isSneaking = false;
     private float sneakDurationLeft = 0f;
     private bool applyGravity = true;
+
+    //Input
+    private Vector2 startTouch;
+    private Vector2 deltaPosition;
+    private Touch touch;
+    private bool inputValid;
 
     private Vector3 movementTarget;
     private Vector3 oldLocation;
@@ -164,19 +174,37 @@ public class Player : MonoBehaviour
         //if (Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
         //if (Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
 
-        foreach (Touch touch in Input.touches)
+
+        if (Input.touches.Length < 1)
         {
-            if (touch.phase == TouchPhase.Moved)
-            {
-                Vector2 deltaPosition = touch.deltaPosition;
+            inputValid = false;
+            return;
+        }
+        touch = Input.touches[0];
 
-                if (deltaPosition.x < 0) movement -= 1;
-                if (deltaPosition.x > 0) movement += 1;
+        if (touch.phase == TouchPhase.Canceled || touch.phase == TouchPhase.Ended)
+        {
+            inputValid = false;
+            return;
+        }
 
-                if (deltaPosition.y > 0 && IsGrounded() && !isJumping) HandleJumping();
+        if (touch.phase == TouchPhase.Began)
+        {
+            inputValid = true;
+            startTouch = touch.position;
+            return;
+        }
 
-                if (deltaPosition.y < 0) HandleSneaking();
-            }
+        if (touch.phase == TouchPhase.Moved)
+        {
+            deltaPosition = startTouch - touch.position;
+
+            if (deltaPosition.x < swipeDetection) movement -= 1;
+            if (deltaPosition.x > swipeDetection) movement += 1;
+
+            if (deltaPosition.y > swipeDetection && IsGrounded() && !isJumping) HandleJumping();
+
+            if (deltaPosition.y < swipeDetection) HandleSneaking();
         }
 
         ManageMovementInput();
