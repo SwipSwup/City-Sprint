@@ -21,6 +21,10 @@ public class TrackManager : MonoBehaviour
     [SerializeField] private float hitMultiplyer = 5f;
     [SerializeField] private float hitStep = .5f;
 
+    [SerializeField] private int slowDownSteps = 10;
+    [SerializeField] private float slowDownInterval = 5f;
+
+
     private void Start()
     {
         GameManager.OnTick += UpdateTileSpeed;
@@ -53,7 +57,16 @@ public class TrackManager : MonoBehaviour
 
     private void EndRun()
     {
-        tileSpeedMultiplyer = .5f;
+        GameManager.OnTick -= UpdateTileSpeed;
+    }
+
+    private IEnumerator SmoothStopTrack()
+    {
+        while (tileSpeed > 0)
+        {
+            tileSpeed -= slowDownInterval;
+            yield return new WaitForSeconds(.5f);
+        }
     }
 
     private void InstaniateTrack()

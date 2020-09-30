@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
 
     private void GameOver()
     {
+        EndRun();
         if(playerData.highscore < score) playerData.highscore = score;
         playerData.coins += coins;
     }
