@@ -18,12 +18,15 @@ public class TrackManager : MonoBehaviour
     public float tileSpeedMultiplyer = 1.05f;
     public float maxTileSpeed = 25f;
 
+    [SerializeField] private float hitMultiplyer = 5f;
+    [SerializeField] private float hitStep = .5f;
+
     private void Start()
     {
         GameManager.OnTick += UpdateTileSpeed;
         TileDestroyer.OnTileDelete += TileDestroyed;
         Player.OnGameOver += EndRun;
-       
+        Player.OnObstacleCollision += ObstacleHit;
 
         InstaniateTrack();
     }
@@ -32,6 +35,20 @@ public class TrackManager : MonoBehaviour
     {
 
 
+    }
+
+    private void ObstacleHit()
+    {
+        StartCoroutine(SmoothUpTileSpeed());
+    }
+
+    private IEnumerator SmoothUpTileSpeed()
+    {
+        for (float i = hitMultiplyer; i > 0; i -= hitStep)
+        {
+            tileSpeed += hitStep;
+            yield return new WaitForSeconds(.5f);
+        }
     }
 
     private void EndRun()
@@ -49,7 +66,7 @@ public class TrackManager : MonoBehaviour
     public static Action<float> OnUpdateTileSpeed;
     public void UpdateTileSpeed()
     {
-        if (++tickCounter % maxTickCount == 0)
+        if (tileSpeed < maxTileSpeed && ++tickCounter % maxTickCount == 0)
         {
             tileSpeed = Mathf.Clamp(tileSpeed += tileSpeedMultiplyer, 0f, maxTileSpeed);
             OnUpdateTileSpeed?.Invoke(tileSpeed);
