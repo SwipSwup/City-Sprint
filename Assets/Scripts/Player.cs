@@ -16,7 +16,7 @@ public class Player : MonoBehaviour
 
     [Range(0f, 1000f)]
     [Tooltip("Distance after wich swipe is detected")]
-    public float swipeDetection = 10f;
+    public float swipeDetection = 50f;
 
     [Range(1f, 100f)]
     [Tooltip("Speed at wich the players moves between the lanes")]
@@ -206,18 +206,24 @@ public class Player : MonoBehaviour
 
             if (deltaPosition.x < -swipeDetection)movement -= 1;
             if (deltaPosition.x > swipeDetection)movement += 1;
-            if (movement != 0) inputValid = false;
+            if (movement != 0)
+            {
+                inputValid = false;
+                return;
+            }
 
             if (deltaPosition.y > swipeDetection && IsGrounded() && !isJumping)
             {
                 HandleJumping();
                 inputValid = false;
+                return;
             }
 
             if (deltaPosition.y < -swipeDetection)
             {
                 HandleSneaking();
                 inputValid = false;
+                return;
             }
         }
 
