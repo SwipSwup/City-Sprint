@@ -103,6 +103,11 @@ PrefabInstance:
       propertyPath: m_CastShadows
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -3064096851221316655, guid: 7c330879575f6d2458cfd613f0f21333,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 882129737928793925, guid: 7c330879575f6d2458cfd613f0f21333,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -112,6 +117,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: street 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5148817236446094103, guid: 7c330879575f6d2458cfd613f0f21333,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c330879575f6d2458cfd613f0f21333, type: 3}
