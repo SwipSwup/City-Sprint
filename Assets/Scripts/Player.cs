@@ -173,6 +173,29 @@ public class Player : MonoBehaviour
     private void ManagePlayerInput()
     {
         movement = 0;
+        
+        //--------------PC
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
+        if (Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
+        if (movement != 0)
+        {
+            ManageMovementInput();
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            if (IsGrounded() && !isJumping) HandleJumping();
+            return;
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            HandleSneaking();
+            return;
+        }
+        //---------------PC
+
 
         if (Input.touches.Length < 1)
         {
@@ -266,7 +289,7 @@ public class Player : MonoBehaviour
     private void ApplyGravity()
     {
         if (!IsGrounded() && applyGravity && !controlsLocked)
-            Rigidbody.AddForce(Vector3.down * gravity * Time.deltaTime, ForceMode.Acceleration);
+            Rigidbody.AddForce(Vector3.down * gravity * Time.deltaTime * 60, ForceMode.Acceleration);
     }
 
     void OnCollisionEnter(Collision target)
@@ -284,7 +307,7 @@ public class Player : MonoBehaviour
 
     private void CollectCoin(GameObject coin)
     {
-        //animation
+        //TODO: animation
         Destroy(coin);
         OnCollectCoin?.Invoke();
     }
