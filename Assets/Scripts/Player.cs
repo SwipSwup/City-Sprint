@@ -44,7 +44,7 @@ public class Player : MonoBehaviour
     [Tooltip("The distance the player checks below itsself to decide whether its touching the ground")]
     public float distToGround = 0.01f;
 
-    [Range(0f, 100f)]
+    [Range(0f, 10000f)]
     [Tooltip("The force at wich the player gets shot away when the game is over")]
     public float collisionForce = 10f;
 
@@ -197,7 +197,7 @@ public class Player : MonoBehaviour
 
         if (touch.phase == TouchPhase.Moved)
         {
-            deltaPosition = startTouch - touch.position;
+            deltaPosition = touch.position - startTouch;
 
             if (deltaPosition.x < swipeDetection) movement -= 1;
             if (deltaPosition.x > swipeDetection) movement += 1;
