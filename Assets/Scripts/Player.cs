@@ -127,6 +127,8 @@ public class Player : MonoBehaviour
         if (isJumping) ApplyJumpingMovement();
 
         if (isSneaking) ApplySneaking();
+
+        ApplyGravity();
     }
 
     private void ApplyMovement()
@@ -171,9 +173,6 @@ public class Player : MonoBehaviour
     private void ManagePlayerInput()
     {
         movement = 0;
-        //if (Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
-        //if (Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
-
 
         if (Input.touches.Length < 1)
         {
@@ -199,13 +198,8 @@ public class Player : MonoBehaviour
         {
             deltaPosition = touch.position - startTouch;
 
-            Debug.Log("touch:" + touch.position);
-            Debug.Log("start:" + startTouch);
-            Debug.Log("delta:" + deltaPosition);
-            Debug.Log("");
-
-            if (deltaPosition.x < -swipeDetection)movement -= 1;
-            if (deltaPosition.x > swipeDetection)movement += 1;
+            if (deltaPosition.x < -swipeDetection || Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
+            if (deltaPosition.x > swipeDetection || Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
             if (movement != 0)
             {
                 ManageMovementInput();
@@ -213,14 +207,15 @@ public class Player : MonoBehaviour
                 return;
             }
 
-            if (deltaPosition.y > swipeDetection && IsGrounded() && !isJumping)
+            if (deltaPosition.y > swipeDetection || Input.GetKeyDown(KeyCode.UpArrow))
             {
-                HandleJumping();
+                if (IsGrounded() && !isJumping) HandleJumping();
+
                 inputValid = false;
                 return;
             }
 
-            if (deltaPosition.y < -swipeDetection)
+            if (deltaPosition.y < -swipeDetection|| Input.GetKeyDown(KeyCode.DownArrow))
             {
                 HandleSneaking();
                 inputValid = false;
@@ -268,10 +263,10 @@ public class Player : MonoBehaviour
         isSneaking = true;
     }
 
-    private void FixedUpdate()
+    private void ApplyGravity()
     {
         if (!IsGrounded() && applyGravity && !controlsLocked)
-            Rigidbody.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
+            Rigidbody.AddForce(Vector3.down * gravity * Time.deltaTime, ForceMode.Acceleration);
     }
 
     void OnCollisionEnter(Collision target)
