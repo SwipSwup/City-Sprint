@@ -82,9 +82,9 @@ public class Player : MonoBehaviour
             Debug.LogError("Player does not have an assigned Rigidbody! Quitting Application.");
             Application.Quit(-1);
 
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-            #endif
+#endif
         }
     }
 
@@ -95,9 +95,9 @@ public class Player : MonoBehaviour
             Debug.LogError("Player does not have enough lanes! Quitting Application.");
             Application.Quit(-1);
 
-            #if UNITY_EDITOR
+#if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;
-            #endif
+#endif
         }
     }
 
@@ -110,13 +110,13 @@ public class Player : MonoBehaviour
     {
         if (controlsLocked) return;
 
+        ManagePlayerInput();
+
         if (isMoving) ApplyMovement();
-        GetMovementInput();
 
         if (isJumping) ApplyJumpingMovement();
-        HandleJumping();
 
-        HandleSneaking();
+        if (isSneaking) ApplySneaking();
     }
 
     private void ApplyMovement()
@@ -129,22 +129,6 @@ public class Player : MonoBehaviour
         {
             transform.position = movementTarget;
             isMoving = false;
-        }
-    }
-
-    private void GetMovementInput()
-    {
-        movement = 0;
-        if (Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
-        if (Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
-
-        if (movement != 0 && curLane + movement >= 0 && curLane + movement <= lanes.Length - 1)
-        {
-            oldLane = curLane;
-            curLane += movement;
-            oldLocation = transform.position;
-            movementTarget = new Vector3(lanes[curLane].position.x, transform.position.y, lanes[curLane].position.z);
-            isMoving = true;
         }
     }
 
@@ -161,55 +145,85 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void ApplySneaking()
+    {
+        if (sneakDurationLeft > 0)
+        {
+            sneakDurationLeft -= Time.deltaTime * 10;
+        }
+        else
+        {
+            isSneaking = false;
+            transform.LeanScaleY(1f, 0.1f);
+        }
+    }
+
+    private void ManagePlayerInput()
+    {
+        movement = 0;
+        //if (Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
+        //if (Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
+
+        foreach (Touch touch in Input.touches)
+        {
+            if (touch.phase == TouchPhase.Moved)
+            {
+                Vector2 deltaPosition = touch.deltaPosition;
+
+                if (deltaPosition.x < 0) movement -= 1;
+                if (deltaPosition.x > 0) movement += 1;
+
+                if (deltaPosition.y > 0 && IsGrounded() && !isJumping) HandleJumping();
+
+                if (deltaPosition.y < 0) HandleSneaking();
+            }
+        }
+
+        ManageMovementInput();
+    }
+
+    private void ManageMovementInput()
+    {
+        if (movement != 0 && curLane + movement >= 0 && curLane + movement <= lanes.Length - 1)
+        {
+            oldLane = curLane;
+            curLane += movement;
+            oldLocation = transform.position;
+            movementTarget = new Vector3(lanes[curLane].position.x, transform.position.y, lanes[curLane].position.z);
+            isMoving = true;
+        }
+    }
+
     private void HandleJumping()
     {
-        if (Input.GetKeyDown(KeyCode.UpArrow) && IsGrounded() && !isJumping)
-        {
-            jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
-            isJumping = true;
-            applyGravity = false;
-            transform.LeanScaleY(1f, 0.05f);
-        }
+        jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
+        isJumping = true;
+        applyGravity = false;
+        transform.LeanScaleY(1f, 0.05f);
     }
 
     private void HandleSneaking()
     {
-        if (isSneaking)
+        if (isJumping)
         {
-            if (sneakDurationLeft > 0)
-            {
-                sneakDurationLeft -= Time.deltaTime * 10;
-            }
-            else
-            {
-                isSneaking = false;
-                transform.LeanScaleY(1f, 0.1f);
-            }
+            isJumping = false;
+            applyGravity = true;
+
+            Rigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
+        }
+        else if (!IsGrounded())
+        {
+            Rigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
-        {
-            if (isJumping)
-            {
-                isJumping = false;
-                applyGravity = true;
-
-                Rigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
-            }
-            else if (!IsGrounded())
-            {
-                Rigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
-            }
-
-            transform.LeanScaleY(0.5f, 0.1f);
-            sneakDurationLeft = sneakDuration;
-            isSneaking = true;
-        }
+        transform.LeanScaleY(0.5f, 0.1f);
+        sneakDurationLeft = sneakDuration;
+        isSneaking = true;
     }
 
     private void FixedUpdate()
     {
-        if (!IsGrounded() && applyGravity && !controlsLocked) 
+        if (!IsGrounded() && applyGravity && !controlsLocked)
             Rigidbody.AddForce(Vector3.down * gravity, ForceMode.Acceleration);
     }
 
