@@ -253,7 +253,12 @@ PrefabInstance:
     - target: {fileID: 2947612652131071234, guid: 409bd38650786d142b3c9d26dd7bb6a0,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5265120360260242210, guid: 409bd38650786d142b3c9d26dd7bb6a0,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5602779628279183518, guid: 409bd38650786d142b3c9d26dd7bb6a0,
         type: 3}
@@ -318,7 +323,7 @@ PrefabInstance:
     - target: {fileID: 9174919730189480792, guid: 409bd38650786d142b3c9d26dd7bb6a0,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.25315
+      value: 0.155
       objectReference: {fileID: 0}
     - target: {fileID: 9174919730189480792, guid: 409bd38650786d142b3c9d26dd7bb6a0,
         type: 3}
@@ -923,6 +928,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Blender_Mustang_v1.0
       objectReference: {fileID: 0}
+    - target: {fileID: 1705740085586032577, guid: c9fad3a76fdaa9b419a97d707de68a0e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2082863419363405179, guid: c9fad3a76fdaa9b419a97d707de68a0e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1100,6 +1110,11 @@ PrefabInstance:
         type: 3}
       propertyPath: maxTileSpeed
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 2437460862845126353, guid: bebe7fd820a60014aa5f6f0448b89a43,
+        type: 3}
+      propertyPath: tileSpeedMultiplyer
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2437460862845126354, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
