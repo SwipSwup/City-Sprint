@@ -4,15 +4,44 @@ using System;
 public class Player : MonoBehaviour
 {
 
-    public Transform[] lanes;
+    [Header("Required Objects")]
+
+    [Tooltip("Positions of the lanes the players moves between")]
+    public Transform[] lanes = new Transform[2];
+    [Tooltip("The camera of the player")]
     public Transform Camera;
 
+
+    [Header("Movement Settings")]
+
+    [Range(1f, 100f)]
+    [Tooltip("Speed at wich the players moves between the lanes")]
     public float speed = 20f;
+
+    [Range(1f, 100f)]
+    [Tooltip("Speed at wich the players moves up when jumping")]
     public float jumpSpeed = 10f;
+
+    [Range(0f, 100f)]
+    [Tooltip("Height the player jumps at")]
     public float jumpHeight = 2f;
+
+    [Range(0f, 100f)]
+    [Tooltip("Duration the player sneaks when pressing the sneak button")]
     public float sneakDuration = 10f;
+
+    [Range(0f, 100f)]
+    [Tooltip("Gravity applied to the player when falling (ignored when jumping)")]
     public float gravity = 9.81f;
+
+    [Space]
+
+    [Range(0f, 1f)]
+    [Tooltip("The distance the player checks below itsself to decide whether its touching the ground")]
     public float distToGround = 0.01f;
+
+    [Range(0f, 100f)]
+    [Tooltip("The force at wich the player gets shot away when the game is over")]
     public float collisionForce = 10f;
 
     public bool controlsLocked = false;
@@ -61,7 +90,7 @@ public class Player : MonoBehaviour
 
     private void CheckLanes()
     {
-        if (lanes == null || lanes.Length < 1)
+        if (lanes == null || lanes.Length < 2)
         {
             Debug.LogError("Player does not have enough lanes! Quitting Application.");
             Application.Quit(-1);
@@ -188,22 +217,28 @@ public class Player : MonoBehaviour
     {
         if (target.gameObject.tag.Equals("Coin"))
         {
-            Destroy(target.gameObject);
-
-            OnCollectCoin?.Invoke();
+            CollectCoin(target.gameObject);
         }
 
         if (target.gameObject.tag.Equals("Obstacle") && !controlsLocked)
         {
-            ObstacleCollision();
+            ObstacleCollision(target.gameObject);
         }
     }
 
-    private void ObstacleCollision()
+    private void CollectCoin(GameObject coin)
     {
-        if (!isMoving)
+        //animation
+        Destroy(coin);
+        OnCollectCoin?.Invoke();
+    }
+
+    private void ObstacleCollision(GameObject obstacle)
+    {
+        if (!isMoving || Math.Abs(obstacle.transform.position.z - oldLocation.z) < 0.5f)
         {
             GameOver();
+            OnGameOver?.Invoke();
             return;
         }
         curLane = oldLane;
@@ -212,14 +247,12 @@ public class Player : MonoBehaviour
         OnObstacleCollision?.Invoke();
     }
 
-    private void GameOver()
+    public void GameOver()
     {
         Rigidbody.constraints = RigidbodyConstraints.None;
         Rigidbody.useGravity = true;
         Rigidbody.AddForce(Vector3.Normalize(Camera.position - transform.position) * collisionForce, ForceMode.VelocityChange);
         controlsLocked = true;
-
-        OnGameOver?.Invoke();
     }
 
     private bool IsGrounded() => Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, distToGround + 0.2f);
