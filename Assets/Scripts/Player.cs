@@ -208,6 +208,7 @@ public class Player : MonoBehaviour
             if (deltaPosition.x > swipeDetection)movement += 1;
             if (movement != 0)
             {
+                ManageMovementInput();
                 inputValid = false;
                 return;
             }
@@ -226,8 +227,6 @@ public class Player : MonoBehaviour
                 return;
             }
         }
-
-        ManageMovementInput();
     }
 
     private void ManageMovementInput()
