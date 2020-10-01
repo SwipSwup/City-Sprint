@@ -18,6 +18,10 @@ public class Player : MonoBehaviour
     [Tooltip("Distance after wich swipe is detected")]
     public float swipeDetection = 50f;
 
+    [Range(0f, 100f)]
+    [Tooltip("Distance up to wich it still counts as a tab")]
+    public float tabDistance = 10f;
+
     [Range(1f, 100f)]
     [Tooltip("Speed at wich the players moves between the lanes")]
     public float speed = 20f;
@@ -210,6 +214,10 @@ public class Player : MonoBehaviour
 
         if (touch.phase == TouchPhase.Canceled || touch.phase == TouchPhase.Ended)
         {
+            if (deltaPosition.x < tabDistance && deltaPosition.x > -tabDistance &&
+                deltaPosition.y < tabDistance && deltaPosition.y > -tabDistance &&
+                inputValid) OnScreenTab?.Invoke();
+
             inputValid = false;
             return;
         }
@@ -225,8 +233,8 @@ public class Player : MonoBehaviour
         {
             deltaPosition = touch.position - startTouch;
 
-            if (deltaPosition.x < -swipeDetection || Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
-            if (deltaPosition.x > swipeDetection || Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
+            if (deltaPosition.x < -swipeDetection) movement -= 1;
+            if (deltaPosition.x > swipeDetection) movement += 1;
             if (movement != 0)
             {
                 ManageMovementInput();
@@ -234,7 +242,7 @@ public class Player : MonoBehaviour
                 return;
             }
 
-            if (deltaPosition.y > swipeDetection || Input.GetKeyDown(KeyCode.UpArrow))
+            if (deltaPosition.y > swipeDetection)
             {
                 if (IsGrounded() && !isJumping) HandleJumping();
 
@@ -242,7 +250,7 @@ public class Player : MonoBehaviour
                 return;
             }
 
-            if (deltaPosition.y < -swipeDetection|| Input.GetKeyDown(KeyCode.DownArrow))
+            if (deltaPosition.y < -swipeDetection)
             {
                 HandleSneaking();
                 inputValid = false;
@@ -349,4 +357,6 @@ public class Player : MonoBehaviour
     public static Action OnCollectCoin;
 
     public static Action OnObstacleCollision;
+
+    public static Action OnScreenTab;
 }
