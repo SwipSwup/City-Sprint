@@ -118,6 +118,8 @@ public class Player : MonoBehaviour
 
     private void ManageMovement()
     {
+        ApplyGravity();
+
         if (controlsLocked) return;
 
         ManagePlayerInput();
@@ -127,8 +129,6 @@ public class Player : MonoBehaviour
         if (isJumping) ApplyJumpingMovement();
 
         if (isSneaking) ApplySneaking();
-
-        ApplyGravity();
     }
 
     private void ApplyMovement()
@@ -147,7 +147,7 @@ public class Player : MonoBehaviour
     private void ApplyJumpingMovement()
     {
         jumpingTarget = new Vector3(transform.position.x, jumpingTarget.y, transform.position.z);
-        transform.position = Vector3.MoveTowards(transform.position, jumpingTarget, jumpSpeed * (Math.Abs(jumpingTarget.y - transform.position.y) / jumpHeight + 0.2f) * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, jumpingTarget, jumpSpeed * (Math.Abs(jumpingTarget.y - transform.position.y) / jumpingTarget.y + 0.2f) * Time.deltaTime);
 
         if (Math.Abs(transform.position.y - jumpingTarget.y) < 0.01f)
         {
@@ -155,6 +155,8 @@ public class Player : MonoBehaviour
             isJumping = false;
             applyGravity = true;
         }
+
+        Debug.Log(Rigidbody.velocity);
     }
 
     private void ApplySneaking()
@@ -175,6 +177,7 @@ public class Player : MonoBehaviour
         movement = 0;
         
         //--------------PC
+
         if (Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
         if (Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
         if (movement != 0)
@@ -194,8 +197,9 @@ public class Player : MonoBehaviour
             HandleSneaking();
             return;
         }
-        //---------------PC
 
+
+        //---------------MOBILE
 
         if (Input.touches.Length < 1)
         {
@@ -261,6 +265,10 @@ public class Player : MonoBehaviour
 
     private void HandleJumping()
     {
+        Debug.Log(Rigidbody.velocity);
+        Rigidbody.AddForce(-Rigidbody.velocity, ForceMode.VelocityChange);
+        Debug.Log(Rigidbody.velocity);
+
         jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
         isJumping = true;
         applyGravity = false;
