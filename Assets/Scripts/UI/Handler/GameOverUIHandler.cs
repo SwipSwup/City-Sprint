@@ -30,6 +30,8 @@ public class GameOverUIHandler : MonoBehaviour
         ChangeCoins(data.lastCoins);
     }
 
+
+
     private void ChangeScore(int score)
     {
         this.score.text = "Score: " + score;

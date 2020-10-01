@@ -65,7 +65,7 @@ public class TrackManager : MonoBehaviour
     {
         while (tileSpeed > 0)
         {
-            tileSpeed -= slowDownInterval;
+            tileSpeed = Mathf.Clamp(tileSpeed - slowDownInterval, 0, maxTileSpeed);
             OnUpdateTileSpeed?.Invoke(tileSpeed);
             yield return new WaitForSeconds(slowDownStepTime);
         }

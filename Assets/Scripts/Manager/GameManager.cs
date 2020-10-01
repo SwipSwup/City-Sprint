@@ -2,19 +2,25 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private PlayerData playerData;
 
-    [SerializeField] 
+    [SerializeField]
     private float TICK_SEC_INTERVAL;
     private float tickTimer;
 
     [SerializeField] private TrackManager tManager;
     private int score;
     private int coins;
+
+    private void Awake()
+    {
+        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+    }
 
     private void Start()
     {
@@ -30,18 +36,16 @@ public class GameManager : MonoBehaviour
 
     private void EndRun()
     {
-
-
-
     }
 
     private void GameOver()
     {
-        EndRun();
+        Player.OnScreenTab += EndRun;
         playerData.lastScore = score;
-        if(playerData.highscore < score) playerData.highscore = score;
+        if (playerData.highscore < score) playerData.highscore = score;
         playerData.coins += coins;
         playerData.lastCoins = coins;
+        EndRun();
     }
 
     public static Action<int> OnCoinUpdate;
