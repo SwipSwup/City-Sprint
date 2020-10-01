@@ -8,6 +8,8 @@ public class PlayerData : ScriptableObject
     public int place;
     public string playerName;
 
+    public int lastScore;
     public int highscore;
+    public int lastCoins;
     public int coins;
 }

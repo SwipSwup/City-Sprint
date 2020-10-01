@@ -6,18 +6,37 @@ using UnityEngine.UI;
 
 public class GameOverUIHandler : MonoBehaviour
 {
-    [SerializeField] private Image expandCircle;
-    [SerializeField] private Vector3 circleSize;
-    [SerializeField] private LeanTweenType easeType;
+    [SerializeField] private PlayerData data;
 
-    [SerializeField] private Canvas GameOverCanvas;
+    [SerializeField] private TextMeshProUGUI score;
+    [SerializeField] private TextMeshProUGUI coins;
+
+    [SerializeField] private Canvas gameOverCanvas;
 
     private void Start()
     {
         Player.OnGameOver += OpenGameOverMenu;
     }
 
+    private void CloseGameOverMenu()
+    {
+        gameOverCanvas.enabled = false;
+    }
+
     private void OpenGameOverMenu()
     {
+        gameOverCanvas.enabled = true;
+        ChangeScore(data.lastScore);
+        ChangeCoins(data.lastCoins);
+    }
+
+    private void ChangeScore(int score)
+    {
+        this.score.text = "Score: " + score;
+    }
+
+    private void ChangeCoins(int coins)
+    {
+        this.coins.text = "Coins: " + data.lastCoins;
     }
 }

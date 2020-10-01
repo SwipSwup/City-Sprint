@@ -38,8 +38,10 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         EndRun();
+        playerData.lastScore = score;
         if(playerData.highscore < score) playerData.highscore = score;
         playerData.coins += coins;
+        playerData.lastCoins = coins;
     }
 
     public static Action<int> OnCoinUpdate;

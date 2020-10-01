@@ -12,6 +12,8 @@ public class InGameUIHandler : MonoBehaviour
     {
         GameManager.OnScoreUpdate += UpdateScore;
         GameManager.OnCoinUpdate += UpdateCoins;
+        Player.OnGameOver += DisableUI;
+
 
         ResetUI();
     }
@@ -20,6 +22,16 @@ public class InGameUIHandler : MonoBehaviour
     {
         UpdateScore(0);
         UpdateCoins(0);
+    }
+
+    private void DisableUI()
+    {
+        enabled = false;
+    }
+
+    private void EnableUI()
+    {
+        enabled = true;
     }
 
     private void UpdateScore(int score)
