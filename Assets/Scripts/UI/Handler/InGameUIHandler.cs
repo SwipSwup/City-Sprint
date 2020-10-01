@@ -7,13 +7,13 @@ public class InGameUIHandler : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI score;
     [SerializeField] private TextMeshProUGUI coins;
+    [SerializeField] private Canvas inGameUICanvas;
 
     private void Start()
     {
         GameManager.OnScoreUpdate += UpdateScore;
         GameManager.OnCoinUpdate += UpdateCoins;
         Player.OnGameOver += DisableUI;
-
 
         ResetUI();
     }
@@ -26,12 +26,13 @@ public class InGameUIHandler : MonoBehaviour
 
     private void DisableUI()
     {
-        enabled = false;
+        Debug.Log("bruh");
+        inGameUICanvas.enabled = false;
     }
 
     private void EnableUI()
     {
-        enabled = true;
+        inGameUICanvas.enabled = true;
     }
 
     private void UpdateScore(int score)
