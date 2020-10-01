@@ -18,6 +18,10 @@ public class Player : MonoBehaviour
     [Tooltip("Distance after wich swipe is detected")]
     public float swipeDetection = 50f;
 
+    [Range(0f, 100f)]
+    [Tooltip("Distance up to wich it still counts as a tab")]
+    public float tabDistance = 10f;
+
     [Range(1f, 100f)]
     [Tooltip("Speed at wich the players moves between the lanes")]
     public float speed = 20f;
@@ -118,6 +122,8 @@ public class Player : MonoBehaviour
 
     private void ManageMovement()
     {
+        ApplyGravity();
+
         if (controlsLocked) return;
 
         ManagePlayerInput();
@@ -127,8 +133,6 @@ public class Player : MonoBehaviour
         if (isJumping) ApplyJumpingMovement();
 
         if (isSneaking) ApplySneaking();
-
-        ApplyGravity();
     }
 
     private void ApplyMovement()
@@ -147,7 +151,7 @@ public class Player : MonoBehaviour
     private void ApplyJumpingMovement()
     {
         jumpingTarget = new Vector3(transform.position.x, jumpingTarget.y, transform.position.z);
-        transform.position = Vector3.MoveTowards(transform.position, jumpingTarget, jumpSpeed * (Math.Abs(jumpingTarget.y - transform.position.y) / jumpHeight + 0.2f) * Time.deltaTime);
+        transform.position = Vector3.MoveTowards(transform.position, jumpingTarget, jumpSpeed * (Math.Abs(jumpingTarget.y - transform.position.y) / jumpingTarget.y + 0.2f) * Time.deltaTime);
 
         if (Math.Abs(transform.position.y - jumpingTarget.y) < 0.01f)
         {
@@ -155,6 +159,8 @@ public class Player : MonoBehaviour
             isJumping = false;
             applyGravity = true;
         }
+
+        Debug.Log(Rigidbody.velocity);
     }
 
     private void ApplySneaking()
@@ -175,6 +181,7 @@ public class Player : MonoBehaviour
         movement = 0;
         
         //--------------PC
+
         if (Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
         if (Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
         if (movement != 0)
@@ -194,8 +201,9 @@ public class Player : MonoBehaviour
             HandleSneaking();
             return;
         }
-        //---------------PC
 
+
+        //---------------MOBILE
 
         if (Input.touches.Length < 1)
         {
@@ -206,6 +214,10 @@ public class Player : MonoBehaviour
 
         if (touch.phase == TouchPhase.Canceled || touch.phase == TouchPhase.Ended)
         {
+            if (deltaPosition.x < tabDistance && deltaPosition.x > -tabDistance &&
+                deltaPosition.y < tabDistance && deltaPosition.y > -tabDistance &&
+                inputValid) OnScreenTab?.Invoke();
+
             inputValid = false;
             return;
         }
@@ -221,8 +233,8 @@ public class Player : MonoBehaviour
         {
             deltaPosition = touch.position - startTouch;
 
-            if (deltaPosition.x < -swipeDetection || Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
-            if (deltaPosition.x > swipeDetection || Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
+            if (deltaPosition.x < -swipeDetection) movement -= 1;
+            if (deltaPosition.x > swipeDetection) movement += 1;
             if (movement != 0)
             {
                 ManageMovementInput();
@@ -230,7 +242,7 @@ public class Player : MonoBehaviour
                 return;
             }
 
-            if (deltaPosition.y > swipeDetection || Input.GetKeyDown(KeyCode.UpArrow))
+            if (deltaPosition.y > swipeDetection)
             {
                 if (IsGrounded() && !isJumping) HandleJumping();
 
@@ -238,7 +250,7 @@ public class Player : MonoBehaviour
                 return;
             }
 
-            if (deltaPosition.y < -swipeDetection|| Input.GetKeyDown(KeyCode.DownArrow))
+            if (deltaPosition.y < -swipeDetection)
             {
                 HandleSneaking();
                 inputValid = false;
@@ -261,6 +273,10 @@ public class Player : MonoBehaviour
 
     private void HandleJumping()
     {
+        Debug.Log(Rigidbody.velocity);
+        Rigidbody.AddForce(-Rigidbody.velocity, ForceMode.VelocityChange);
+        Debug.Log(Rigidbody.velocity);
+
         jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
         isJumping = true;
         applyGravity = false;
@@ -341,4 +357,6 @@ public class Player : MonoBehaviour
     public static Action OnCollectCoin;
 
     public static Action OnObstacleCollision;
+
+    public static Action OnScreenTab;
 }

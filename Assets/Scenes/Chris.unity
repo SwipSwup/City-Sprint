@@ -767,12 +767,17 @@ PrefabInstance:
     - target: {fileID: 9103716929365151360, guid: 409bd38650786d142b3c9d26dd7bb6a0,
         type: 3}
       propertyPath: distToGround
-      value: 1
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 9103716929365151360, guid: 409bd38650786d142b3c9d26dd7bb6a0,
         type: 3}
       propertyPath: sneakDuration
       value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 9103716929365151360, guid: 409bd38650786d142b3c9d26dd7bb6a0,
+        type: 3}
+      propertyPath: swipeDetection
+      value: 75
       objectReference: {fileID: 0}
     - target: {fileID: 9174919730189480792, guid: 409bd38650786d142b3c9d26dd7bb6a0,
         type: 3}
