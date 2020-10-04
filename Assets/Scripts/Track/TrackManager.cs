@@ -108,7 +108,7 @@ public class TrackManager : MonoBehaviour
 
     private Vector3 CalculateNewTilePosition(GameObject prefab)
     {
-        Vector3 lastBackPoint = activeTiles[activeTiles.Count - 1].backPoint.position;
-        return new Vector3(lastBackPoint.x + (prefab.transform.position.x - prefab.GetComponent<Tile>().frontPoint.position.x), lastBackPoint.y, lastBackPoint.z);
+        Vector3 lastBackPoint = activeTiles[activeTiles.Count - 1].endPoint.position;
+        return new Vector3(lastBackPoint.x + (prefab.transform.position.x - prefab.GetComponent<Tile>().startPoint.position.x), lastBackPoint.y, lastBackPoint.z);
     }
 }
