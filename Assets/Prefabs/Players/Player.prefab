@@ -49,6 +49,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   lanes: []
   Camera: {fileID: 0}
+  swipeDetection: 50
+  tabDistance: 10
   speed: 30
   jumpSpeed: 10
   jumpHeight: 5
@@ -72,7 +74,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 122
-  m_CollisionDetection: 3
+  m_CollisionDetection: 2
 --- !u!136 &7080494096445183943
 CapsuleCollider:
   m_ObjectHideFlags: 0
