@@ -36,6 +36,7 @@ public class GameManager : MonoBehaviour
 
     private void EndRun()
     {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void GameOver()
@@ -45,7 +46,6 @@ public class GameManager : MonoBehaviour
         if (playerData.highscore < score) playerData.highscore = score;
         playerData.coins += coins;
         playerData.lastCoins = coins;
-        EndRun();
     }
 
     public static Action<int> OnCoinUpdate;

@@ -26,6 +26,7 @@ public class TileEditor : Editor
 
     private bool showSettings = true;
     private bool changeSize = true;
+    private bool isSpacer;
 
     private GameObject GetLastTilePart() => tileParts[tileParts.Count - 1];
     private GameObject GetFirstTilePart() => tileParts[0];
@@ -56,7 +57,7 @@ public class TileEditor : Editor
             tileParts.Add(tile.transform.GetChild(0).GetChild(0).gameObject);
 
         collider = tile.GetComponent<BoxCollider>();
-        tileSize = tileParts.Count;
+        tileSize = tile.tileParts.Count;
 
         UpdateCollider();
         UpdateStartAndEndPoint();
@@ -68,11 +69,11 @@ public class TileEditor : Editor
         GUILayout.Label("StartPoint");
         GUILayout.Label("EndPoint");
         GUILayout.EndHorizontal();
-
+            
         GUILayout.BeginHorizontal();
-        EditorGUILayout.PropertyField(startPointProp, new GUIContent(""));
+        EditorGUILayout.PropertyField(startPointProp, new GUIContent(string.Empty));
         _startPoint = startPointProp.objectReferenceValue as Transform;
-        EditorGUILayout.PropertyField(endPointProp, new GUIContent(""));
+        EditorGUILayout.PropertyField(endPointProp, new GUIContent(string.Empty));
         _endPoint = endPointProp.objectReferenceValue as Transform;
         GUILayout.EndHorizontal();
 
@@ -88,6 +89,8 @@ public class TileEditor : Editor
         {
             EditorGUILayout.PropertyField(tilePrefabProp, new GUIContent("Tilepart prefab"));
             tilePartPrefab = tilePrefabProp.objectReferenceValue as GameObject;
+
+            tile.isSpacer = EditorGUILayout.Toggle("Is spacer", tile.isSpacer);
 
             tileSize = EditorGUILayout.IntSlider("Tile size", tileSize, 1, 30);
             if (EditorGUI.EndChangeCheck()) UpdateTileSize();
