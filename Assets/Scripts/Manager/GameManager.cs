@@ -34,18 +34,23 @@ public class GameManager : MonoBehaviour
         UpdateTick();
     }
 
+    private void print()
+    {
+        Debug.Log("pressed");
+    }
+
     private void EndRun()
     {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void GameOver()
     {
-        Player.OnScreenTab += EndRun;
+        Player.OnScreenTab += print;
         playerData.lastScore = score;
         if (playerData.highscore < score) playerData.highscore = score;
         playerData.coins += coins;
         playerData.lastCoins = coins;
-        EndRun();
     }
 
     public static Action<int> OnCoinUpdate;

@@ -44,7 +44,8 @@ public class TileEditor : Editor
         DrawTileSettings();
     }
 
-    private void Initialize() {
+    private void Initialize()
+    {
         tilePrefabProp = serializedObject.FindProperty("tilePrefab");
         tilePartsProp = serializedObject.FindProperty("tileParts");
 
@@ -52,11 +53,11 @@ public class TileEditor : Editor
         endPointProp = serializedObject.FindProperty("endPoint");
 
         tileParts = tile.tileParts;
-        if(!tileParts.Contains(tile.transform.GetChild(0).GetChild(0).gameObject)) 
+        if (!tileParts.Contains(tile.transform.GetChild(0).GetChild(0).gameObject))
             tileParts.Add(tile.transform.GetChild(0).GetChild(0).gameObject);
 
         collider = tile.GetComponent<BoxCollider>();
-        tileSize = tileParts.Count;
+        tileSize = tile.tileParts.Count;
 
         UpdateCollider();
         UpdateStartAndEndPoint();
@@ -84,7 +85,7 @@ public class TileEditor : Editor
         showSettings = EditorGUILayout.Foldout(showSettings, "Tile settings", true);
 
         EditorGUI.BeginChangeCheck();
-        if(showSettings)
+        if (showSettings)
         {
             EditorGUILayout.PropertyField(tilePrefabProp, new GUIContent("Tilepart prefab"));
             tilePartPrefab = tilePrefabProp.objectReferenceValue as GameObject;
@@ -105,7 +106,7 @@ public class TileEditor : Editor
         UpdateStartAndEndPoint();
     }
 
-    private Vector3 CalculateMidPoint() => 
+    private Vector3 CalculateMidPoint() =>
         (tileParts[tileParts.Count - 1].transform.localPosition + tileParts[0].transform.localPosition) / 2;
     private void UpdateCollider()
     {
@@ -121,7 +122,7 @@ public class TileEditor : Editor
 
     private void AddTileParts()
     {
-        while(tileSize > tileParts.Count)
+        while (tileSize > tileParts.Count)
         {
             GameObject newTilePart = Instantiate(tilePartPrefab, GetNewTilePartPosition(), tile.transform.rotation);
             newTilePart.transform.parent = tile.transform.GetChild(0);
@@ -131,7 +132,7 @@ public class TileEditor : Editor
 
     private void RemoveTileParts()
     {
-        while(tileSize < tileParts.Count)
+        while (tileSize < tileParts.Count)
         {
             GameObject lastTilePart = GetLastTilePart();
             tileParts.Remove(lastTilePart);

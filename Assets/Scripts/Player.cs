@@ -175,7 +175,7 @@ public class Player : MonoBehaviour
             transform.LeanScaleY(1f, 0.1f);
         }
     }
-
+    
     private void ManagePlayerInput()
     {
         movement = 0;
