@@ -27,6 +27,7 @@ public class ConnectPointController : MonoBehaviour
         pointRight = new GameObject("Point_right").transform;
         pointRight.parent = rootpointTransform;
 
+
         SetSpacing();
     }
 
