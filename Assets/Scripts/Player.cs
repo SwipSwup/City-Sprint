@@ -122,17 +122,18 @@ public class Player : MonoBehaviour
 
     private void ManageMovement()
     {
-        ApplyGravity();
+        ManagePlayerInput();
 
         if (controlsLocked) return;
 
-        ManagePlayerInput();
 
         if (isMoving) ApplyMovement();
 
         if (isJumping) ApplyJumpingMovement();
 
         if (isSneaking) ApplySneaking();
+
+        ApplyGravity();
     }
 
     private void ApplyMovement()
@@ -184,19 +185,19 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
         if (Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
-        if (movement != 0)
+        if (movement != 0 && !controlsLocked)
         {
             ManageMovementInput();
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetKeyDown(KeyCode.UpArrow) && !controlsLocked)
         {
             if (IsGrounded() && !isJumping) HandleJumping();
             return;
         }
 
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetKeyDown(KeyCode.DownArrow) && !controlsLocked)
         {
             HandleSneaking();
             return;
@@ -237,12 +238,20 @@ public class Player : MonoBehaviour
             if (deltaPosition.x > swipeDetection) movement += 1;
             if (movement != 0)
             {
-                ManageMovementInput();
+                if (controlsLocked)
+                {
+                    movement = 0;
+                }
+                else
+                {
+                    ManageMovementInput();
+                }
+
                 inputValid = false;
                 return;
             }
 
-            if (deltaPosition.y > swipeDetection)
+            if (deltaPosition.y > swipeDetection && !controlsLocked)
             {
                 if (IsGrounded() && !isJumping) HandleJumping();
 
@@ -250,7 +259,7 @@ public class Player : MonoBehaviour
                 return;
             }
 
-            if (deltaPosition.y < -swipeDetection)
+            if (deltaPosition.y < -swipeDetection && !controlsLocked)
             {
                 HandleSneaking();
                 inputValid = false;
