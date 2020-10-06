@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO.IsolatedStorage;
 using UnityEngine;
 
+[ExecuteInEditMode]
 public class Tile : MonoBehaviour
 {
     public Transform startPoint;

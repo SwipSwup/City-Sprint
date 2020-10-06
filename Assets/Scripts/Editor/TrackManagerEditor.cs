@@ -3,12 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+[CustomEditor(typeof(TrackManager))]
+[ExecuteInEditMode]
 public class TrackManagerEditor : Editor
 {
     private TrackManager manager;
 
-    private SerializedProperty starterTileProp;
-    private GameObject starterTile;
+    private SerializedProperty startTileProp;
+    private SerializedProperty tileSpacerProp;
+    private SerializedProperty activeTilesProp;
+
+    private GameObject _startTile;
+    private GameObject _tileSpacer;
 
     private bool showSettings = true;
 
@@ -16,24 +22,26 @@ public class TrackManagerEditor : Editor
     {
         manager = (TrackManager)target;
 
+        SetData();
     }
 
     public override void OnInspectorGUI()
     {
+        DrawInfo();
         DrawSettings();
 
-        DrawInfo();
+        serializedObject.ApplyModifiedProperties();
     }
 
-    private void Initialize()
+    private void SetData()
     {
-        starterTileProp = serializedObject.FindProperty("starterTile");
+        startTileProp = serializedObject.FindProperty("startTile");
+        tileSpacerProp = serializedObject.FindProperty("tileSpacer");
+        activeTilesProp = serializedObject.FindProperty("activeTiles");
     }
-
 
     private void DrawInfo()
     {
-
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label("Current tile speed");
         GUILayout.Label("Current amount of tiles");
@@ -44,6 +52,24 @@ public class TrackManagerEditor : Editor
         EditorGUILayout.IntField(manager.activeTiles.Count);
         EditorGUILayout.EndHorizontal();
 
+
+        EditorGUILayout.BeginHorizontal();
+        GUILayout.Label("Starting tile");
+        GUILayout.Label("Spacer prefab");
+        EditorGUILayout.EndHorizontal();
+
+        GUILayout.BeginHorizontal();
+        EditorGUILayout.PropertyField(startTileProp, new GUIContent(string.Empty));
+        _startTile = startTileProp.objectReferenceValue as GameObject;
+        EditorGUILayout.PropertyField(tileSpacerProp, new GUIContent(string.Empty));
+        _tileSpacer = tileSpacerProp.objectReferenceValue as GameObject;
+        GUILayout.EndHorizontal();
+
+        GUILayout.Space(10);
+
+        EditorGUILayout.PropertyField(activeTilesProp, new GUIContent("Active Tiles"));
+
+        GUILayout.Space(10);
     }
 
     private void DrawSettings()
@@ -85,10 +111,9 @@ public class TrackManagerEditor : Editor
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
-            manager.slowDownInterval = EditorGUILayout.FloatField(manager.slowDownInterval);
-            manager.slowDownStepTime = EditorGUILayout.FloatField(manager.slowDownStepTime);
+            manager.stopDownInterval = EditorGUILayout.FloatField(manager.stopDownInterval);
+            manager.stopDownStepTime = EditorGUILayout.FloatField(manager.stopDownStepTime);
             EditorGUILayout.EndHorizontal();
-
         }
     }
 }
