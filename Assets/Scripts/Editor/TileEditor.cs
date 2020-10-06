@@ -22,7 +22,7 @@ public class TileEditor : Editor
     private Transform _endPoint;
 
     private int tileSize;
-    private float tilePartSize = 1.5f;
+    private float tilePartSize = 3f;
 
     private bool showSettings = true;
     private bool changeSize = true;
@@ -90,7 +90,10 @@ public class TileEditor : Editor
             EditorGUILayout.PropertyField(tilePrefabProp, new GUIContent("Tilepart prefab"));
             tilePartPrefab = tilePrefabProp.objectReferenceValue as GameObject;
 
+            EditorGUILayout.BeginHorizontal();
+            tilePartSize = EditorGUILayout.FloatField("Part size", tilePartSize);
             tile.isSpacer = EditorGUILayout.Toggle("Is spacer", tile.isSpacer);
+            EditorGUILayout.EndHorizontal();
 
             tileSize = EditorGUILayout.IntSlider("Tile size", tileSize, 1, 30);
             if (EditorGUI.EndChangeCheck()) UpdateTileSize();

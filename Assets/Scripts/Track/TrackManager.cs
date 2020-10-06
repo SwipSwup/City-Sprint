@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
 
 public class TrackManager : MonoBehaviour
@@ -18,11 +17,11 @@ public class TrackManager : MonoBehaviour
     public float tileSpeedMultiplyer = 1.05f;
     public float maxTileSpeed = 25f;
 
-    [SerializeField] private float hitMultiplyer = 5f;
-    [SerializeField] private float hitStep = .5f;
+    public float hitMultiplyer = 5f;
+    public float hitStep = .5f;
 
-    [SerializeField] private float slowDownInterval = 1f;
-    [SerializeField] private float slowDownStepTime = .01f;
+    public float slowDownInterval = 1f;
+    public float slowDownStepTime = .01f;
 
 
     private void Start()
