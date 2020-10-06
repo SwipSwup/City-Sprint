@@ -160,8 +160,6 @@ public class Player : MonoBehaviour
             isJumping = false;
             applyGravity = true;
         }
-
-        Debug.Log(Rigidbody.velocity);
     }
 
     private void ApplySneaking()
@@ -282,9 +280,7 @@ public class Player : MonoBehaviour
 
     private void HandleJumping()
     {
-        Debug.Log(Rigidbody.velocity);
         Rigidbody.AddForce(-Rigidbody.velocity, ForceMode.VelocityChange);
-        Debug.Log(Rigidbody.velocity);
 
         jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
         isJumping = true;
