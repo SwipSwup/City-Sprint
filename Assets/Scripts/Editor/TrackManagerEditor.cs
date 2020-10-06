@@ -9,9 +9,20 @@ public class TrackManagerEditor : Editor
 {
     private TrackManager manager;
 
+    private SerializedProperty activeTilesProp;
     private SerializedProperty startTileProp;
     private SerializedProperty tileSpacerProp;
-    private SerializedProperty activeTilesProp;
+
+    private SerializedProperty maxTilesProp;
+    private SerializedProperty maxTileSpeedProp;
+    private SerializedProperty tileSpeedProp;
+    private SerializedProperty tileSpeedMultiplyerProp;
+
+    private SerializedProperty hitMultiplyerProp;
+    private SerializedProperty hitStepProp;
+
+    private SerializedProperty stopDownIntervalProp;
+    private SerializedProperty stopDownStepTimeProp;
 
     private GameObject _startTile;
     private GameObject _tileSpacer;
@@ -35,9 +46,20 @@ public class TrackManagerEditor : Editor
 
     private void SetData()
     {
+        activeTilesProp = serializedObject.FindProperty("activeTiles");
         startTileProp = serializedObject.FindProperty("startTile");
         tileSpacerProp = serializedObject.FindProperty("tileSpacer");
-        activeTilesProp = serializedObject.FindProperty("activeTiles");
+
+        maxTilesProp = serializedObject.FindProperty("maxTiles");
+        maxTileSpeedProp = serializedObject.FindProperty("maxTileSpeed");
+        tileSpeedProp = serializedObject.FindProperty("tileSpeed");
+        tileSpeedMultiplyerProp = serializedObject.FindProperty("tileSpeedMultiplyer");
+
+        hitMultiplyerProp = serializedObject.FindProperty("hitMultiplyer");
+        hitStepProp = serializedObject.FindProperty("hitStep");
+
+        stopDownIntervalProp = serializedObject.FindProperty("stopDownInterval");
+        stopDownStepTimeProp = serializedObject.FindProperty("stopDownStepTime");
     }
 
     private void DrawInfo()
@@ -48,7 +70,7 @@ public class TrackManagerEditor : Editor
         EditorGUILayout.EndHorizontal();
 
         EditorGUILayout.BeginHorizontal();
-        manager.tileSpeed = EditorGUILayout.FloatField(manager.tileSpeed);
+        EditorGUILayout.PropertyField(tileSpeedProp, new GUIContent(string.Empty));
         EditorGUILayout.IntField(manager.activeTiles.Count);
         EditorGUILayout.EndHorizontal();
 
@@ -83,11 +105,11 @@ public class TrackManagerEditor : Editor
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
-            manager.maxTiles = EditorGUILayout.IntField(manager.maxTiles);
-            manager.maxTileSpeed = EditorGUILayout.FloatField(manager.maxTileSpeed);
+            EditorGUILayout.PropertyField(maxTilesProp, new GUIContent(string.Empty));
+            EditorGUILayout.PropertyField(maxTileSpeedProp, new GUIContent(string.Empty));
             EditorGUILayout.EndHorizontal();
 
-            manager.tileSpeedMultiplyer = EditorGUILayout.Slider("Tile speed multiplyer", manager.tileSpeedMultiplyer, 0f, 2f);
+            EditorGUILayout.Slider(tileSpeedMultiplyerProp, 0f, 2f, new GUIContent("Tile speed Multiplyer"));
 
             GUILayout.Space(10);
 
@@ -97,8 +119,8 @@ public class TrackManagerEditor : Editor
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
-            manager.hitStep = EditorGUILayout.FloatField(manager.hitStep);
-            manager.hitMultiplyer = EditorGUILayout.FloatField(manager.hitMultiplyer);
+            EditorGUILayout.PropertyField(hitStepProp, new GUIContent(string.Empty));
+            EditorGUILayout.PropertyField(hitMultiplyerProp, new GUIContent(string.Empty));
             EditorGUILayout.EndHorizontal();
 
             GUILayout.Space(10);
@@ -111,8 +133,8 @@ public class TrackManagerEditor : Editor
             EditorGUILayout.EndHorizontal();
 
             EditorGUILayout.BeginHorizontal();
-            manager.stopDownInterval = EditorGUILayout.FloatField(manager.stopDownInterval);
-            manager.stopDownStepTime = EditorGUILayout.FloatField(manager.stopDownStepTime);
+            EditorGUILayout.PropertyField(stopDownIntervalProp, new GUIContent(string.Empty));
+            EditorGUILayout.PropertyField(stopDownStepTimeProp, new GUIContent(string.Empty));
             EditorGUILayout.EndHorizontal();
         }
     }

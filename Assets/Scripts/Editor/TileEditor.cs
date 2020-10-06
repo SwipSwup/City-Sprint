@@ -44,14 +44,11 @@ public class TileEditor : Editor
 
     public override void OnInspectorGUI()
     {
-        base.OnInspectorGUI();
-
         DrawTileInfo();
         EditorGUILayout.Space(5);
         DrawTileSettings();
 
         serializedObject.ApplyModifiedProperties();
-
     }
 
     private void Initialize() {
