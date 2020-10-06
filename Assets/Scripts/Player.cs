@@ -319,14 +319,17 @@ public class Player : MonoBehaviour
 
     void OnCollisionEnter(Collision target)
     {
-        if (target.gameObject.tag.Equals("Coin"))
-        {
-            CollectCoin(target.gameObject);
-        }
-
         if (target.gameObject.tag.Equals("Obstacle") && !controlsLocked)
         {
             ObstacleCollision(target.gameObject);
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag.Equals("Coin"))
+        {
+            CollectCoin(other.gameObject);
         }
     }
 
