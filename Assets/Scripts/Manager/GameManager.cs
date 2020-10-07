@@ -38,7 +38,7 @@ public class GameManager : MonoBehaviour
     {
         Player.OnScreenTab -= EndRun;
         SceneManager.UnloadSceneAsync("UI");
-        SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
+        SceneManager.LoadSceneAsync(2, LoadSceneMode.Single);
     }
 
     private void GameOver()
