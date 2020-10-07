@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 [CustomEditor(typeof(Tile))]
 [ExecuteInEditMode]
@@ -15,17 +16,12 @@ public class TileEditor : Editor
 
     private BoxCollider collider;
 
-    private Transform _startPoint;
-    private Transform _endPoint;
-
     private SerializedProperty endPointProp;
     private SerializedProperty startPointProp;
     private SerializedProperty isSpacerProp;
     private SerializedProperty tileSizeProp;
     private SerializedProperty tilePrefabProp;
     private SerializedProperty tilePartsProp;
-
-
 
     private float tilePartSize;
 
@@ -80,9 +76,7 @@ public class TileEditor : Editor
             
         GUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(startPointProp, new GUIContent(string.Empty));
-        _startPoint = startPointProp.objectReferenceValue as Transform;
         EditorGUILayout.PropertyField(endPointProp, new GUIContent(string.Empty));
-        _endPoint = endPointProp.objectReferenceValue as Transform;
         GUILayout.EndHorizontal();
 
         EditorGUILayout.PropertyField(tilePartsProp, new GUIContent("Tile parts"));
@@ -106,14 +100,15 @@ public class TileEditor : Editor
             EditorGUILayout.IntSlider(tileSizeProp, 1, 30, new GUIContent("Tile size"));
             if (EditorGUI.EndChangeCheck()) UpdateTileSize();
         }
-
     }
 
     private void UpdateTileSize()
     {
-        if (tileSizeProp.intValue == tileParts.Count) return;
-        if (tileSizeProp.intValue > tileParts.Count) AddTileParts();
-        if (tileSizeProp.intValue < tileParts.Count) RemoveTileParts();
+        //Debug.Log(tileSizeProp.intValue);
+        //Debug.Log(tileParts.Count);
+        if (tile.tileSize == tileParts.Count) return;
+        if (tile.tileSize > tileParts.Count) AddTileParts();
+        if (tile.tileSize < tileParts.Count) RemoveTileParts();
         UpdateCollider();
         UpdateStartAndEndPoint();
     }
@@ -128,27 +123,27 @@ public class TileEditor : Editor
 
     private void UpdateStartAndEndPoint()
     {
-        _startPoint.position = GetLastTilePart().transform.position + new Vector3(tilePartSize / 2f, 0f, 0f);
-        _endPoint.position = GetFirstTilePart().transform.position + new Vector3(-tilePartSize / 2f, 0f, 0f);
+        tile.startPoint.position = GetLastTilePart().transform.position + new Vector3(tilePartSize / 2f, 0f, 0f);
+        tile.endPoint.position = GetFirstTilePart().transform.position + new Vector3(-tilePartSize / 2f, 0f, 0f);
     }
 
     private void AddTileParts()
     {
-        while(tileSizeProp.intValue > tileParts.Count)
+        while(tile.tileSize >= tileParts.Count)
         {
             GameObject newTilePart = Instantiate(tilePartPrefab, GetNewTilePartPosition(), tile.transform.rotation);
-            newTilePart.transform.parent = tile.transform.GetChild(0);
             tileParts.Add(newTilePart);
+            newTilePart.transform.parent = tile.transform.GetChild(0);
         }
     }
 
     private void RemoveTileParts()
     {
-        while(tileSizeProp.intValue < tileParts.Count)
+        while (tile.tileSize < tileParts.Count)
         {
             GameObject lastTilePart = GetLastTilePart();
-            tileParts.Remove(lastTilePart);
             DestroyImmediate(lastTilePart);
+            tileParts.Remove(lastTilePart);
         }
     }
 }

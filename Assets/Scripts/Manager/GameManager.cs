@@ -22,16 +22,29 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
 
         Debug.Log("loaded");
-
-        OnTick += UpdateScore;
-        Player.OnCollectCoin += UpdateCoins;
-        Player.OnGameOver += GameOver;
+        SubscribeToEvents();
     }
+
+    private void OnDestroy() => UnSubscribeToEvents();
 
     private void Update()
     {
         UpdateTick();
         if (Input.GetKey(KeyCode.Escape)) EndRun();
+    }
+
+    private void SubscribeToEvents()
+    {
+        OnTick += UpdateScore;
+        Player.OnCollectCoin += UpdateCoins;
+        Player.OnGameOver += GameOver;
+    }
+
+    private void UnSubscribeToEvents()
+    {
+        OnTick -= UpdateScore;
+        Player.OnCollectCoin -= UpdateCoins;
+        Player.OnGameOver -= GameOver;
     }
 
     private void EndRun()

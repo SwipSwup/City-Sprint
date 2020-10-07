@@ -27,21 +27,30 @@ public class TrackManager : MonoBehaviour
 
     private void Start()
     {
-        DefaultSubscriptions();
+        SubscribeToEvents();
         InstaniateTrack();
     }
 
     private void OnDestroy()
     {
         StopAllCoroutines();
+        UnSubscribeToEvents();
     }
 
-    private void DefaultSubscriptions()
+    private void SubscribeToEvents()
     {
         GameManager.OnTick += HandleTickUpdate;
         TileDestroyer.OnTileDelete += HandleTileDestroyed;
         Player.OnGameOver += HandleGameOver;
         Player.OnObstacleCollision += HandleObstacleHit;
+    }
+    
+    private void UnSubscribeToEvents()
+    {
+        GameManager.OnTick -= HandleTickUpdate;
+        TileDestroyer.OnTileDelete -= HandleTileDestroyed;
+        Player.OnGameOver -= HandleGameOver;
+        Player.OnObstacleCollision -= HandleObstacleHit;
     }
 
     public void SetTileSpeedMultiplyer(float tileSpeedMultiplyer)
