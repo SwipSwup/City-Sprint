@@ -16,9 +16,16 @@ public class MySQLController : MonoBehaviour
     {
         //StartCoroutine(GetScores());
     }
+
+    public void testMethod()
+    {
+        Debug.Log("testMethod()");
+
+        StartCoroutine(AddScore("email1", "name1", 1));
+    }
     
     // remember to use StartCoroutine when calling this function!
-    public IEnumerator AddScore(string email, string displayName, int score, GameObject guiText)
+    public IEnumerator AddScore(string email, string displayName, int score)
     {
         
 
@@ -29,8 +36,11 @@ public class MySQLController : MonoBehaviour
         string post_url = addScoreURL + "email=" + UnityWebRequest.EscapeURL(email) + 
             "&displayName=" + UnityWebRequest.EscapeURL(displayName) + "&score=" + score + "&hash=" + hash;
 
+        Debug.Log(post_url);
+
         // Post the URL to the site and create a download object to get the result.
         UnityWebRequest hs_post = new UnityWebRequest(post_url);
+        hs_post.SendWebRequest();
 
         yield return hs_post; // Wait until the download is done
 
@@ -38,24 +48,29 @@ public class MySQLController : MonoBehaviour
         {
             Debug.Log("There was an error posting the high score: " + hs_post.error);
         }
+        else
+        {
+            Debug.Log("----");
+            Debug.Log(hs_post);
+            Debug.Log(hs_post.GetResponseHeaders());
+            Debug.Log("----");
+        }
     }
 
-    IEnumerator GetScore(string email, GameObject guiText)
+    public int GetScore(string email)
     {
         string hash = MD5Hash(email + secretKey);
         string post_url = getScoreURL + "email=" + UnityWebRequest.EscapeURL(email) + "&hash=" + hash;
         
         UnityWebRequest hs_post = new UnityWebRequest(post_url);
-        yield return hs_post;
+        //yield return hs_post;
 
         if (hs_post.error != null)
         {
-            //gameObject.guiText.text = "There was an error posting the high score: " + hs_post.error;
+            return -1;
         }
-        else
-        {
-            //gameObject.guiText.text = hs_get.text;
-        }
+
+        return 1;
     }
 
     // Get the scores from the MySQL DB to display in a GUIText.
