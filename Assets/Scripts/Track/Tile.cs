@@ -17,7 +17,7 @@ public class Tile : MonoBehaviour
 
     public float tileSpeed;
     private void UpdatedTileSpeed(float tileSpeed) => this.tileSpeed = tileSpeed;
-    private void Awake() => TrackManager.OnUpdateTileSpeed += UpdatedTileSpeed;
+    private void Start() => TrackManager.OnUpdateTileSpeed += UpdatedTileSpeed;
 
     private void Move() => transform.Translate(new Vector3(tileSpeed * Time.deltaTime, 0f));
     private void Update() => Move();

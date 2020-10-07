@@ -24,9 +24,6 @@ public class TrackManagerEditor : Editor
     private SerializedProperty stopDownIntervalProp;
     private SerializedProperty stopDownStepTimeProp;
 
-    private GameObject _startTile;
-    private GameObject _tileSpacer;
-
     private bool showSettings = true;
 
     private void OnEnable()
@@ -82,9 +79,7 @@ public class TrackManagerEditor : Editor
 
         GUILayout.BeginHorizontal();
         EditorGUILayout.PropertyField(startTileProp, new GUIContent(string.Empty));
-        _startTile = startTileProp.objectReferenceValue as GameObject;
         EditorGUILayout.PropertyField(tileSpacerProp, new GUIContent(string.Empty));
-        _tileSpacer = tileSpacerProp.objectReferenceValue as GameObject;
         GUILayout.EndHorizontal();
 
         GUILayout.Space(10);
@@ -109,7 +104,7 @@ public class TrackManagerEditor : Editor
             EditorGUILayout.PropertyField(maxTileSpeedProp, new GUIContent(string.Empty));
             EditorGUILayout.EndHorizontal();
 
-            EditorGUILayout.Slider(tileSpeedMultiplyerProp, 0f, 2f, new GUIContent("Tile speed Multiplyer"));
+            EditorGUILayout.Slider(tileSpeedMultiplyerProp, 1f, 2f, new GUIContent("Tile speed Multiplyer"));
 
             GUILayout.Space(10);
 
