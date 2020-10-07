@@ -3,13 +3,14 @@ using System.Collections;
 using System.Text;
 using System.Security.Cryptography;
 using UnityEngine.Networking;
+using System.Collections.Generic;
 
 [ExecuteInEditMode]
 public class MySQLController : MonoBehaviour
 {
     private string secretKey = "Gs82ntnfw98HD93btj2nf92rnIJJBHJVojsDavidSt1nktdns134GD3K0NR4D1U5hallo"; // Edit this value and make sure it's the same as the one stored on the server
     private string addScoreURL = "http://kdender.com/CitySprint/addscore.php?"; //be sure to add a ? to your url
-    private string getScoreURL = "http://kdender.com/CitySprint/getScore.php?";
+    private string getScoreURL = "http://kdender.com/CitySprint/getscore.php?";
     private string topHighscoresURL = "http://kdender.com/CitySprint/display.php";
 
     void Start()
@@ -17,11 +18,14 @@ public class MySQLController : MonoBehaviour
         //StartCoroutine(GetScores());
     }
 
-    public void testMethod()
+    public void testMethod(int i)
     {
-        Debug.Log("testMethod()");
 
-        StartCoroutine(AddScore("email1", "name1", 1));
+        //StartCoroutine(AddScore("email" + i, "name" + i, i));
+
+        //Debug.Log(MD5Hash("email" + i + "name" + i + i + secretKey));
+
+        Debug.Log(GetScore("email1"));
     }
     
     // remember to use StartCoroutine when calling this function!
@@ -50,10 +54,12 @@ public class MySQLController : MonoBehaviour
         }
         else
         {
-            Debug.Log("----");
-            Debug.Log(hs_post);
+            Debug.Log("           ");
             Debug.Log(hs_post.GetResponseHeaders());
-            Debug.Log("----");
+            Debug.Log("           ");
+            foreach (KeyValuePair<string, string> kvp in hs_post.GetResponseHeaders())
+                Debug.Log("Key = "+ kvp.Key +" , Value = " + kvp.Value);
+            Debug.Log("           ");
         }
     }
 
@@ -61,16 +67,28 @@ public class MySQLController : MonoBehaviour
     {
         string hash = MD5Hash(email + secretKey);
         string post_url = getScoreURL + "email=" + UnityWebRequest.EscapeURL(email) + "&hash=" + hash;
-        
+
+        Debug.Log(post_url);
+
         UnityWebRequest hs_post = new UnityWebRequest(post_url);
-        //yield return hs_post;
+        hs_post.SendWebRequest();
+        //yield return hs_post
 
         if (hs_post.error != null)
         {
+            Debug.Log("There was an error posting the high score: " + hs_post.error);
             return -1;
         }
-
-        return 1;
+        else
+        {
+            Debug.Log("           ");
+            Debug.Log(hs_post.GetResponseHeaders());
+            Debug.Log("           ");
+            foreach (KeyValuePair<string, string> kvp in hs_post.GetResponseHeaders())
+                Debug.Log("Key = " + kvp.Key + " , Value = " + kvp.Value);
+            Debug.Log("           ");
+            return 1;
+        }
     }
 
     // Get the scores from the MySQL DB to display in a GUIText.

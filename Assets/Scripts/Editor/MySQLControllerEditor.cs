@@ -33,7 +33,7 @@ public class MySQLControllerEditor : Editor
         if(GUILayout.Button("Submit score"))
         {
             MySQLController msc = (MySQLController)target;
-            msc.testMethod();
+            msc.testMethod(score);
         }
     }
 }
