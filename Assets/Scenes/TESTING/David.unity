@@ -1231,15 +1231,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spacer
       objectReference: {fileID: 0}
-    - target: {fileID: 2046737294625241971, guid: 78232cbc631270d409765369a99fe99e,
-        type: 3}
-      propertyPath: isSpacer
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 2046737294625241972, guid: 78232cbc631270d409765369a99fe99e,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.96
+      value: -27.16
       objectReference: {fileID: 0}
     - target: {fileID: 2046737294625241972, guid: 78232cbc631270d409765369a99fe99e,
         type: 3}
