@@ -920,6 +920,7 @@ GameObject:
   - component: {fileID: 1071436615}
   - component: {fileID: 1071436616}
   - component: {fileID: 1071436614}
+  - component: {fileID: 1071436617}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -983,6 +984,20 @@ MonoBehaviour:
   playerData: {fileID: 11400000, guid: 9113d08f2acb99d42b1a7da9e193b029, type: 2}
   TICK_SEC_INTERVAL: 0.2
   tManager: {fileID: 1071436614}
+--- !u!114 &1071436617
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1071436613}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb4e1101a81c6e745a5a3204308a9e12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  addScoreURL: http://kdender.com/CitySprint/addscore.php?
+  highscoreURL: http://kdender.com/CitySprint/display.php
 --- !u!4 &1081482535 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9174919730189480792, guid: 409bd38650786d142b3c9d26dd7bb6a0,
