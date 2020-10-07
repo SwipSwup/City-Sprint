@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   place: 1000
   playerName: Test player
-  highscore: 6825
-  coins: 786
+  lastScore: 1585
+  highscore: 1585
+  lastCoins: 0
+  coins: 1054
