@@ -11,11 +11,28 @@ public class InGameUIHandler : MonoBehaviour
 
     private void Start()
     {
+        SubscribeToEvents();
+
+        ResetUI();
+    }
+
+    private void OnDestroy()
+    {
+        UnSubscribeToEvents();
+    }
+
+    private void SubscribeToEvents()
+    {
         GameManager.OnScoreUpdate += UpdateScore;
         GameManager.OnCoinUpdate += UpdateCoins;
         Player.OnGameOver += DisableUI;
+    }
 
-        ResetUI();
+    private void UnSubscribeToEvents()
+    {
+        GameManager.OnScoreUpdate -= UpdateScore;
+        GameManager.OnCoinUpdate -= UpdateCoins;
+        Player.OnGameOver -= DisableUI;
     }
 
     private void ResetUI()

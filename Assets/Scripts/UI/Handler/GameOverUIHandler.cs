@@ -15,7 +15,22 @@ public class GameOverUIHandler : MonoBehaviour
 
     private void Start()
     {
+        SubscribeToEvents();
+    }
+
+    private void OnDestroy()
+    {
+        UnSubscribeToEvents();
+    }
+
+    private void SubscribeToEvents()
+    {
         Player.OnGameOver += OpenGameOverMenu;
+    }
+
+    private void UnSubscribeToEvents()
+    {
+        Player.OnGameOver -= OpenGameOverMenu;
     }
 
     private void CloseGameOverMenu()

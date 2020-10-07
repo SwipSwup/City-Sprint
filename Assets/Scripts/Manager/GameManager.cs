@@ -30,7 +30,9 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         UpdateTick();
+#if UNITY_EDITOR
         if (Input.GetKey(KeyCode.Escape)) EndRun();
+#endif
     }
 
     private void SubscribeToEvents()
@@ -50,7 +52,6 @@ public class GameManager : MonoBehaviour
     private void EndRun()
     {
         Player.OnScreenTab -= EndRun;
-        SceneManager.UnloadSceneAsync("UI");
         SceneManager.LoadSceneAsync(2, LoadSceneMode.Single);
     }
 

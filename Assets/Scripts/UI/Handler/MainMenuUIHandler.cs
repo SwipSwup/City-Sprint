@@ -26,9 +26,24 @@ public class MainMenuUIHandler : MonoBehaviour
 
     private void Start()
     {
-        GameManager.OnTick += AnimatePlayText;
+        SubscribeToEvents();
         LoadPlayerData();
         playButtonText = playButtonTextObject.GetComponent<TextMeshProUGUI>();
+    }
+
+    private void OnDestroy()
+    {
+        UnSubscribeToEvents();
+    }
+
+    private void SubscribeToEvents()
+    {
+        GameManager.OnTick += AnimatePlayText;
+    }
+
+    private void UnSubscribeToEvents()
+    {
+        GameManager.OnTick -= AnimatePlayText;
     }
 
     private int animationIndex;
