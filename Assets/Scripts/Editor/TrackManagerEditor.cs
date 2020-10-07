@@ -12,6 +12,7 @@ public class TrackManagerEditor : Editor
     private SerializedProperty activeTilesProp;
     private SerializedProperty startTileProp;
     private SerializedProperty tileSpacerProp;
+    private SerializedProperty tilePrefabsProp;
 
     private SerializedProperty maxTilesProp;
     private SerializedProperty maxTileSpeedProp;
@@ -46,6 +47,7 @@ public class TrackManagerEditor : Editor
         activeTilesProp = serializedObject.FindProperty("activeTiles");
         startTileProp = serializedObject.FindProperty("startTile");
         tileSpacerProp = serializedObject.FindProperty("tileSpacer");
+        tilePrefabsProp = serializedObject.FindProperty("tilePrefabs");
 
         maxTilesProp = serializedObject.FindProperty("maxTiles");
         maxTileSpeedProp = serializedObject.FindProperty("maxTileSpeed");
@@ -84,7 +86,8 @@ public class TrackManagerEditor : Editor
 
         GUILayout.Space(10);
 
-        EditorGUILayout.PropertyField(activeTilesProp, new GUIContent("Active Tiles"));
+        EditorGUILayout.PropertyField(tilePrefabsProp, new GUIContent("Tile prefabs"));
+        EditorGUILayout.PropertyField(activeTilesProp, new GUIContent("Active tiles"));
 
         GUILayout.Space(10);
     }

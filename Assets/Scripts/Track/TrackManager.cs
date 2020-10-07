@@ -53,6 +53,7 @@ public class TrackManager : MonoBehaviour
     {
         activeTiles = new List<Tile>();
         activeTiles.Add(startTile.GetComponent<Tile>());
+        startTile.GetComponent<Tile>().tileSpeed = tileSpeed;
 
         while (activeTiles.Count < maxTiles)
             SpawnRandomTrackTile();
@@ -96,10 +97,11 @@ public class TrackManager : MonoBehaviour
 
     private void HandleTileDestroyed(Tile tile)
     {
-        activeTiles.Remove(tile);
-
+        Debug.Log(tile);
         if (!tile.isSpacer)
             SpawnRandomTrackTile();
+
+        activeTiles.Remove(tile);
     }
 
     private void HandleObstacleHit()
@@ -115,7 +117,7 @@ public class TrackManager : MonoBehaviour
 
     private Vector3 GetNewTrackTilePosition(GameObject prefab)
     {
-        Debug.Log(activeTiles.Count);
+        Debug.Log(activeTiles[0].endPoint);
         Vector3 lastBackPoint = activeTiles[activeTiles.Count - 1].endPoint.position;
         return new Vector3(lastBackPoint.x + (prefab.transform.position.x - prefab.GetComponent<Tile>().startPoint.position.x), lastBackPoint.y, lastBackPoint.z);
     }

@@ -19,7 +19,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
 
         Debug.Log("loaded");
 
@@ -31,12 +31,14 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         UpdateTick();
+        if (Input.GetKey(KeyCode.Escape)) EndRun();
     }
 
     private void EndRun()
     {
         Player.OnScreenTab -= EndRun;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.UnloadSceneAsync("UI");
+        SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
     }
 
     private void GameOver()
