@@ -12,7 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce9e76377a733d46b6effb0fde320e2, type: 3}
   m_Name: playerData
   m_EditorClassIdentifier: 
+  email: testPlayer@test.gmail
+  displayName: TestPlayer
   place: 1000
-  playerName: Test player
-  highscore: 6825
-  coins: 786
+  lastScore: 1585
+  highscore: 1585
+  lastCoins: 0
+  coins: 1054

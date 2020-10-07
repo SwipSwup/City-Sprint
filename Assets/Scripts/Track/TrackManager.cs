@@ -9,7 +9,7 @@ public class TrackManager : MonoBehaviour
     public int maxTickCount;
     private int tickCounter;
 
-    public List<Tile> activeTiles = new List<Tile>();
+    public List<Tile> activeTiles;
     public GameObject[] tilePrefabs;
     public GameObject startTile;
     public GameObject tileSpacer;
@@ -25,10 +25,15 @@ public class TrackManager : MonoBehaviour
     public float stopDownInterval = 1f;
     public float stopDownStepTime = .01f;
 
-    private void Awake()
+    private void Start()
     {
         DefaultSubscriptions();
         InstaniateTrack();
+    }
+
+    private void OnDestroy()
+    {
+        StopAllCoroutines();
     }
 
     private void DefaultSubscriptions()
@@ -46,7 +51,9 @@ public class TrackManager : MonoBehaviour
 
     private void InstaniateTrack()
     {
+        activeTiles = new List<Tile>();
         activeTiles.Add(startTile.GetComponent<Tile>());
+        startTile.GetComponent<Tile>().tileSpeed = tileSpeed;
 
         while (activeTiles.Count < maxTiles)
             SpawnRandomTrackTile();
@@ -90,16 +97,18 @@ public class TrackManager : MonoBehaviour
 
     private void HandleTileDestroyed(Tile tile)
     {
-        activeTiles.Remove(tile);
-
+        Debug.Log(tile);
         if (!tile.isSpacer)
             SpawnRandomTrackTile();
+
+        activeTiles.Remove(tile);
     }
 
     private void HandleObstacleHit()
     {
         StartCoroutine(SmoothSpeedUpTileSpeed());
     }
+
     private void HandleGameOver()
     {
         GameManager.OnTick -= HandleTickUpdate;
@@ -108,6 +117,7 @@ public class TrackManager : MonoBehaviour
 
     private Vector3 GetNewTrackTilePosition(GameObject prefab)
     {
+        Debug.Log(activeTiles[0].endPoint);
         Vector3 lastBackPoint = activeTiles[activeTiles.Count - 1].endPoint.position;
         return new Vector3(lastBackPoint.x + (prefab.transform.position.x - prefab.GetComponent<Tile>().startPoint.position.x), lastBackPoint.y, lastBackPoint.z);
     }

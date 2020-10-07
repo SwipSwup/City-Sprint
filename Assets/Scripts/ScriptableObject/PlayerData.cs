@@ -5,9 +5,10 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "new PlayerData", menuName = "ScriptableObjects/PlayerData")]
 public class PlayerData : ScriptableObject
 {
-    public int place;
-    public string playerName;
+    public string email;
+    public string displayName;
 
+    public int place;
     public int lastScore;
     public int highscore;
     public int lastCoins;

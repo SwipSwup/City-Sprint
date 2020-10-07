@@ -17,13 +17,12 @@ public class GameManager : MonoBehaviour
     private int score;
     private int coins;
 
-    private void Awake()
-    {
-        SceneManager.LoadSceneAsync(1, LoadSceneMode.Additive);
-    }
-
     private void Start()
     {
+        SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
+
+        Debug.Log("loaded");
+
         OnTick += UpdateScore;
         Player.OnCollectCoin += UpdateCoins;
         Player.OnGameOver += GameOver;
@@ -32,11 +31,14 @@ public class GameManager : MonoBehaviour
     private void Update()
     {
         UpdateTick();
+        if (Input.GetKey(KeyCode.Escape)) EndRun();
     }
 
     private void EndRun()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Player.OnScreenTab -= EndRun;
+        SceneManager.UnloadSceneAsync("UI");
+        SceneManager.LoadSceneAsync(0, LoadSceneMode.Single);
     }
 
     private void GameOver()

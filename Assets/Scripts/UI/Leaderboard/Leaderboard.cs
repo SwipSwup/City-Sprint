@@ -22,6 +22,6 @@ public class Leaderboard : MonoBehaviour
             Instantiate(leaderboardEntryPrefab, leaderboardEntryField.transform);
         }    
         GameObject playerEntry = Instantiate(leaderboardEntryPrefab, leaderboardEntryField.transform);
-        playerEntry.GetComponent<LeaderboardEntry>().SetEntryData(playerData.place, playerData.playerName, playerData.highscore.ToString());
+        playerEntry.GetComponent<LeaderboardEntry>().SetEntryData(playerData.place, playerData.displayName, playerData.highscore.ToString());
     }
 }
