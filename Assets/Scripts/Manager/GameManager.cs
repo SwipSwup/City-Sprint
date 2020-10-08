@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
     private void EndRun()
     {
         Player.OnScreenTab -= EndRun;
-        SceneManager.LoadSceneAsync(2, LoadSceneMode.Single);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
 
     private void GameOver()
