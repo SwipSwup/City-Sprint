@@ -192,6 +192,7 @@ Transform:
   - {fileID: 5450091394375470945}
   - {fileID: 5028836682086815921}
   - {fileID: 9188780618260060081}
+  - {fileID: 4046688304408194722}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -592,3 +593,78 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1001 &6357788135680014946
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 4585228400298610748}
+    m_Modifications:
+    - target: {fileID: 6923122300411450560, guid: 899994c9f54c72543abd5cb610976be9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 1.589
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 899994c9f54c72543abd5cb610976be9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.093
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 899994c9f54c72543abd5cb610976be9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.65
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 899994c9f54c72543abd5cb610976be9,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.801803
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 899994c9f54c72543abd5cb610976be9,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.10014256
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 899994c9f54c72543abd5cb610976be9,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.10553482
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 899994c9f54c72543abd5cb610976be9,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5796084
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 899994c9f54c72543abd5cb610976be9,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 899994c9f54c72543abd5cb610976be9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -114.725
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 899994c9f54c72543abd5cb610976be9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 43.013
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 899994c9f54c72543abd5cb610976be9,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -42.56598
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450565, guid: 899994c9f54c72543abd5cb610976be9,
+        type: 3}
+      propertyPath: m_Name
+      value: Hover ripple effect
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 899994c9f54c72543abd5cb610976be9, type: 3}
+--- !u!4 &4046688304408194722 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6923122300411450560, guid: 899994c9f54c72543abd5cb610976be9,
+    type: 3}
+  m_PrefabInstance: {fileID: 6357788135680014946}
+  m_PrefabAsset: {fileID: 0}
