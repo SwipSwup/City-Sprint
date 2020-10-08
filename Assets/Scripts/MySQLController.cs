@@ -25,7 +25,7 @@ public class MySQLController : MonoBehaviour
 
         //Debug.Log(MD5Hash("email" + i + "name" + i + i + secretKey));
 
-        Debug.Log(GetScore("email1"));
+        StartCoroutine(GetScore("email1"));
     }
     
     // remember to use StartCoroutine when calling this function!
@@ -63,21 +63,36 @@ public class MySQLController : MonoBehaviour
         }
     }
 
-    public int GetScore(string email)
+    public IEnumerator GetScore(string email)
     {
         string hash = MD5Hash(email + secretKey);
         string post_url = getScoreURL + "email=" + UnityWebRequest.EscapeURL(email) + "&hash=" + hash;
 
         Debug.Log(post_url);
+        Debug.Log("           ");
 
-        UnityWebRequest hs_post = new UnityWebRequest(post_url);
-        hs_post.SendWebRequest();
-        //yield return hs_post
+        UnityWebRequest hs_post = UnityWebRequest.Get(post_url);
+        yield return hs_post.SendWebRequest();
+
+
+        string[] pages = post_url.Split('/');
+        int page = pages.Length - 1;
+
+        if (hs_post.isNetworkError)
+        {
+            Debug.Log(pages[page] + ": Error: " + hs_post.error);
+        }
+        else
+        {
+            Debug.Log(pages[page] + ":\nReceived: " + hs_post.downloadHandler.text);
+        }
+        //return 0;
+        /*
 
         if (hs_post.error != null)
         {
             Debug.Log("There was an error posting the high score: " + hs_post.error);
-            return -1;
+            //return -1;
         }
         else
         {
@@ -87,8 +102,8 @@ public class MySQLController : MonoBehaviour
             foreach (KeyValuePair<string, string> kvp in hs_post.GetResponseHeaders())
                 Debug.Log("Key = " + kvp.Key + " , Value = " + kvp.Value);
             Debug.Log("           ");
-            return 1;
-        }
+            //return 1;
+        }*/
     }
 
     // Get the scores from the MySQL DB to display in a GUIText.
