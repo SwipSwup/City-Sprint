@@ -104,8 +104,6 @@ public class TileEditor : Editor
 
     private void UpdateTileSize()
     {
-        //Debug.Log(tileSizeProp.intValue);
-        //Debug.Log(tileParts.Count);
         if (tile.tileSize == tileParts.Count) return;
         if (tile.tileSize > tileParts.Count) AddTileParts();
         if (tile.tileSize < tileParts.Count) RemoveTileParts();

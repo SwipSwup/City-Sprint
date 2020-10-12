@@ -7,8 +7,8 @@ using UnityEngine.Rendering;
 [ExecuteInEditMode]
 public class Tile : MonoBehaviour
 {
-    [SerializeField] public Transform startPoint;
-    [SerializeField] public Transform endPoint;
+    public Transform startPoint;
+    public Transform endPoint;
 
     public bool isSpacer;
 

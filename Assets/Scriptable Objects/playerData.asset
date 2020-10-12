@@ -15,7 +15,7 @@ MonoBehaviour:
   email: test.player@test.com
   displayName: TestPlayer
   place: 1000
-  lastScore: 1345
-  highscore: 10435
+  lastScore: 240
+  highscore: 2958
   lastCoins: 0
   coins: 1054

@@ -11,10 +11,11 @@ public class GameManager : MonoBehaviour
     private bool runActive = false;
 
     [SerializeField]
-    private float TICK_SEC_INTERVAL;
+    private const float TICK_SEC_INTERVAL = 0.2f;
     private float tickTimer;
 
-    [SerializeField] private TrackManager tManager;
+    [SerializeField] 
+    private TrackManager tManager;
     private int score;
     private int coins;
 

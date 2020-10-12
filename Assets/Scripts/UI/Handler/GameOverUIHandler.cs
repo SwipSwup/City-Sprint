@@ -13,15 +13,8 @@ public class GameOverUIHandler : MonoBehaviour
 
     [SerializeField] private Canvas gameOverCanvas;
 
-    private void Start()
-    {
-        SubscribeToEvents();
-    }
-
-    private void OnDestroy()
-    {
-        UnSubscribeToEvents();
-    }
+    private void Start() => SubscribeToEvents();
+    private void OnDestroy() => UnSubscribeToEvents();
 
     private void SubscribeToEvents()
     {
@@ -33,10 +26,7 @@ public class GameOverUIHandler : MonoBehaviour
         Player.OnGameOver -= OpenGameOverMenu;
     }
 
-    private void CloseGameOverMenu()
-    {
-        gameOverCanvas.enabled = false;
-    }
+    private void CloseGameOverMenu() => gameOverCanvas.enabled = false;
 
     private void OpenGameOverMenu()
     {
@@ -45,15 +35,6 @@ public class GameOverUIHandler : MonoBehaviour
         ChangeCoins(data.lastCoins);
     }
 
-
-
-    private void ChangeScore(int score)
-    {
-        this.score.text = "Score: " + score;
-    }
-
-    private void ChangeCoins(int coins)
-    {
-        this.coins.text = "Coins: " + data.lastCoins;
-    }
+    private void ChangeScore(int score) => this.score.text = "Score: " + score;
+    private void ChangeCoins(int coins) => this.coins.text = "Coins: " + data.lastCoins;
 }
