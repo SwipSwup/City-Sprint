@@ -58,10 +58,27 @@ public class GameManager : MonoBehaviour
     private void GameOver()
     {
         Player.OnScreenTab += EndRun;
+        UpdateData();
+    }
+
+    private void UpdateData()
+    {
         playerData.lastScore = score;
-        if (playerData.highscore < score) playerData.highscore = score;
-        playerData.coins += coins;
         playerData.lastCoins = coins;
+        playerData.coins += coins;
+        UpdateHigscore();
+    }
+
+    private void UpdateHigscore()
+    {
+        if (playerData.highscore < score)
+        {
+            playerData.highscore = score;
+            Debug.Log(playerData.email);
+            Debug.Log(playerData.displayName);
+            Debug.Log(score);
+            StartCoroutine(MySQLController.AddScore(playerData.email, playerData.displayName, score));
+        }
     }
 
     public static Action<int> OnCoinUpdate;
