@@ -47,8 +47,8 @@ public class GameManager : MonoBehaviour
         MainMenuUIHandler.OnPlay -= StartRun;
         Player.OnCollectCoin -= UpdateCoins;
         Player.OnGameOver -= GameOver;
+        PlayerInput.OnScreenTab -= EndRun;
     }
-
 
     private void StartRun()
     {
@@ -57,13 +57,13 @@ public class GameManager : MonoBehaviour
 
     private void EndRun()
     {
-        Player.OnScreenTab -= EndRun;
+        PlayerInput.OnScreenTab -= EndRun;
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
 
     private void GameOver()
     {
-        Player.OnScreenTab += EndRun;
+        PlayerInput.OnScreenTab += EndRun;
         UpdateData();
     }
 
