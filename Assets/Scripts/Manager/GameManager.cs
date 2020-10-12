@@ -21,7 +21,6 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
-        SpawnDefaultTrack();
         SubscribeToEvents();
     }
 
@@ -31,12 +30,13 @@ public class GameManager : MonoBehaviour
     {
         UpdateTick();
 #if UNITY_EDITOR
-        if (Input.GetKey(KeyCode.Escape)) EndRun();
+        if (Input.GetKeyDown(KeyCode.Escape)) EndRun();
 #endif
     }
 
     private void SubscribeToEvents()
     {
+        MainMenuUIHandler.OnPlay += StartRun;
         Player.OnCollectCoin += UpdateCoins;
         Player.OnGameOver += GameOver;
     }
@@ -44,6 +44,7 @@ public class GameManager : MonoBehaviour
     private void UnSubscribeToEvents()
     {
         OnTick -= UpdateScore;
+        MainMenuUIHandler.OnPlay -= StartRun;
         Player.OnCollectCoin -= UpdateCoins;
         Player.OnGameOver -= GameOver;
     }
