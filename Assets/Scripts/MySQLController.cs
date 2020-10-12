@@ -8,102 +8,66 @@ using System.Collections.Generic;
 [ExecuteInEditMode]
 public class MySQLController : MonoBehaviour
 {
-    private string secretKey = "Gs82ntnfw98HD93btj2nf92rnIJJBHJVojsDavidSt1nktdns134GD3K0NR4D1U5hallo"; // Edit this value and make sure it's the same as the one stored on the server
-    private string addScoreURL = "http://kdender.com/CitySprint/addscore.php?"; //be sure to add a ? to your url
-    private string getScoreURL = "http://kdender.com/CitySprint/getscore.php?";
-    private string topHighscoresURL = "http://kdender.com/CitySprint/display.php";
+    private static string secretKey = "Gs82ntnfw98HD93btj2nf92rnIJJBHJVojsDavidSt1nktdns134GD3K0NR4D1U5hallo";
+    private static string addScoreURL = "http://kdender.com/CitySprint/addscore.php?"; //be sure to add a ? to your url
+    private static string getScoreURL = "http://kdender.com/CitySprint/getscore.php?";
+    private static string topHighscoresURL = "http://kdender.com/CitySprint/display.php";
 
-    void Start()
-    {
-        //StartCoroutine(GetScores());
-    }
-
-    public void testMethod(int i)
+    public void testMethod(string email, string name, int i)
     {
 
-        //StartCoroutine(AddScore("email" + i, "name" + i, i));
+        StartCoroutine(AddScore(email, "testName", i));
 
-        //Debug.Log(MD5Hash("email" + i + "name" + i + i + secretKey));
-
-        StartCoroutine(GetScore("email1"));
+        //Debug.Log(GetScore(email));
     }
+ 
     
-    // remember to use StartCoroutine when calling this function!
-    public IEnumerator AddScore(string email, string displayName, int score)
+    // updates score on database if its higher than the last one and inserts it if it doesn't exist yet
+    // StartCoroutine(AddScore(email of player, name choosen by the player, new highscore the player reached))
+    public static IEnumerator AddScore(string email, string displayName, int score)
     {
-        
-
-        //This connects to a server side php script that will add the name and score to a MySQL DB.
-        // Supply it with a string representing the players name and the players score.
         string hash = MD5Hash(email + displayName + score + secretKey);
-
+        hash = email;
         string post_url = addScoreURL + "email=" + UnityWebRequest.EscapeURL(email) + 
             "&displayName=" + UnityWebRequest.EscapeURL(displayName) + "&score=" + score + "&hash=" + hash;
-
-        Debug.Log(post_url);
-
-        // Post the URL to the site and create a download object to get the result.
+        
         UnityWebRequest hs_post = new UnityWebRequest(post_url);
-        hs_post.SendWebRequest();
+        yield return hs_post.SendWebRequest();
 
-        yield return hs_post; // Wait until the download is done
-
-        if (hs_post.error != null)
+        if (hs_post.isNetworkError)
         {
-            Debug.Log("There was an error posting the high score: " + hs_post.error);
+            Debug.LogError("Error: " + hs_post.error);
         }
         else
         {
-            Debug.Log("           ");
-            Debug.Log(hs_post.GetResponseHeaders());
-            Debug.Log("           ");
-            foreach (KeyValuePair<string, string> kvp in hs_post.GetResponseHeaders())
-                Debug.Log("Key = "+ kvp.Key +" , Value = " + kvp.Value);
-            Debug.Log("           ");
+            string response = hs_post.downloadHandler.text;
+            if (response != null && response != "")
+            {
+                Debug.LogError(response);
+            }
         }
     }
 
-    public IEnumerator GetScore(string email)
+    public int GetScore(string email)
     {
         string hash = MD5Hash(email + secretKey);
         string post_url = getScoreURL + "email=" + UnityWebRequest.EscapeURL(email) + "&hash=" + hash;
 
-        Debug.Log(post_url);
-        Debug.Log("           ");
-
         UnityWebRequest hs_post = UnityWebRequest.Get(post_url);
-        yield return hs_post.SendWebRequest();
-
-
-        string[] pages = post_url.Split('/');
-        int page = pages.Length - 1;
-
+        hs_post.SendWebRequest();
+        
         if (hs_post.isNetworkError)
         {
-            Debug.Log(pages[page] + ": Error: " + hs_post.error);
+            Debug.LogError("Error: " + hs_post.error);
+            return -1;
         }
-        else
+        else if (int.TryParse(hs_post.downloadHandler.text, out int score))
         {
-            Debug.Log(pages[page] + ":\nReceived: " + hs_post.downloadHandler.text);
+            return score;
         }
-        //return 0;
-        /*
-
-        if (hs_post.error != null)
-        {
-            Debug.Log("There was an error posting the high score: " + hs_post.error);
-            //return -1;
-        }
-        else
-        {
-            Debug.Log("           ");
-            Debug.Log(hs_post.GetResponseHeaders());
-            Debug.Log("           ");
-            foreach (KeyValuePair<string, string> kvp in hs_post.GetResponseHeaders())
-                Debug.Log("Key = " + kvp.Key + " , Value = " + kvp.Value);
-            Debug.Log("           ");
-            //return 1;
-        }*/
+        Debug.Log(hs_post.downloadHandler.text);
+        Debug.Log("No score in data base");
+        return 0;
     }
 
     // Get the scores from the MySQL DB to display in a GUIText.
