@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1785714898321872000}
   - component: {fileID: 1785714898321872015}
   - component: {fileID: 1785714898321872001}
+  - component: {fileID: 3454430613916371650}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -61,8 +62,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxTickCount: 5
   activeTiles: []
-  tilePrefabs:
-  - {fileID: 3745101668477015237, guid: 55aab76daeee2b847b15eb2459bd84f3, type: 3}
+  trackTilePrefabs: []
+  menuTilePrefabs: []
   startTile: {fileID: 0}
   tileSpacer: {fileID: 2046737294625241968, guid: 78232cbc631270d409765369a99fe99e,
     type: 3}
@@ -74,3 +75,15 @@ MonoBehaviour:
   hitStep: 0.5
   stopDownInterval: 1
   stopDownStepTime: 0.01
+--- !u!114 &3454430613916371650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785714898321872002}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421f565c7eede1848bcaa4b669b01e73, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
