@@ -175,7 +175,7 @@ public class Player : MonoBehaviour
 
     private void ManageMovementInput()
     {
-        if (movement != 0 || curLane + movement >= 0 || curLane + movement <= lanes.Length - 1) return;
+        if (movement == 0 || curLane + movement < 0 || curLane + movement > lanes.Length - 1) return;
 
         oldLane = curLane;
         curLane += movement;
@@ -288,6 +288,8 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
+        if (controlsLocked || !IsGrounded()) return;
+
         Rigidbody.AddForce(-Rigidbody.velocity, ForceMode.VelocityChange);
 
         jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
@@ -298,6 +300,7 @@ public class Player : MonoBehaviour
 
     private void Sneak()
     {
+        if (controlsLocked) return;
         if (isJumping)
         {
             isJumping = false;
