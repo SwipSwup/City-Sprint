@@ -193,6 +193,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
         if (movement != 0 && !controlsLocked)
         {
+            ManageMovementInput();
             return;
         }
 
