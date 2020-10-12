@@ -177,7 +177,11 @@ public class Player : MonoBehaviour
 
     private void ManageMovementInput()
     {
-        if (movement == 0 || curLane + movement < 0 || curLane + movement > lanes.Length - 1) return;
+        if (movement == 0 || curLane + movement < 0 || curLane + movement > lanes.Length - 1)
+        {
+            movement = 0;
+            return;
+        }
 
         oldLane = curLane;
         curLane += movement;
