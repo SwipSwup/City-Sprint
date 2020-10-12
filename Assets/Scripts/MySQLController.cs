@@ -16,7 +16,7 @@ public class MySQLController : MonoBehaviour
     public void testMethod(string email, string name, int i)
     {
 
-        //StartCoroutine(AddScore(email, "testName", i));
+        StartCoroutine(AddScore("david.stinkt@kannNichtProgrammieren.at", "testName", 5));
 
         //Debug.Log(GetScore(email));
 
@@ -34,18 +34,18 @@ public class MySQLController : MonoBehaviour
     public static IEnumerator AddScore(string email, string displayName, int score)
     {
         string hash = MD5Hash(email + displayName + score + secretKey);
-        hash = email;
         string post_url = addScoreURL + "?email=" + UnityWebRequest.EscapeURL(email) +
             "&displayName=" + UnityWebRequest.EscapeURL(displayName) + "&score=" + score + "&hash=" + hash;
 
         UnityWebRequest hs_post = new UnityWebRequest(post_url);
         yield return hs_post.SendWebRequest();
+        while (!hs_post.isDone) ;
 
         if (hs_post.isNetworkError)
         {
             Debug.LogError("Error: " + hs_post.error);
         }
-        else
+        else if (hs_post.downloadHandler != null)
         {
             string response = hs_post.downloadHandler.text;
             if (response != null && response != "") Debug.LogError(response);
