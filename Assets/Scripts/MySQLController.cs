@@ -11,26 +11,26 @@ public class MySQLController : MonoBehaviour
     private static string secretKey = "Gs82ntnfw98HD93btj2nf92rnIJJBHJVojsDavidSt1nktdns134GD3K0NR4D1U5hallo";
     private static string addScoreURL = "http://kdender.com/CitySprint/addscore.php?"; //be sure to add a ? to your url
     private static string getScoreURL = "http://kdender.com/CitySprint/getscore.php?";
-    private static string topHighscoresURL = "http://kdender.com/CitySprint/display.php";
+    private static string getTopHighscoresURL = "http://kdender.com/CitySprint/gettophighscores.php";
 
     public void testMethod(string email, string name, int i)
     {
 
-        StartCoroutine(AddScore(email, "testName", i));
+        //StartCoroutine(AddScore(email, "testName", i));
 
-        //Debug.Log(GetScore(email));
+        Debug.Log(GetScore(email));
     }
- 
-    
+
+
     // updates score on database if its higher than the last one and inserts it if it doesn't exist yet
     // StartCoroutine(AddScore(email of player, name choosen by the player, new highscore the player reached))
     public static IEnumerator AddScore(string email, string displayName, int score)
     {
         string hash = MD5Hash(email + displayName + score + secretKey);
         hash = email;
-        string post_url = addScoreURL + "email=" + UnityWebRequest.EscapeURL(email) + 
+        string post_url = addScoreURL + "email=" + UnityWebRequest.EscapeURL(email) +
             "&displayName=" + UnityWebRequest.EscapeURL(displayName) + "&score=" + score + "&hash=" + hash;
-        
+
         UnityWebRequest hs_post = new UnityWebRequest(post_url);
         yield return hs_post.SendWebRequest();
 
@@ -41,21 +41,20 @@ public class MySQLController : MonoBehaviour
         else
         {
             string response = hs_post.downloadHandler.text;
-            if (response != null && response != "")
-            {
-                Debug.LogError(response);
-            }
+            if (response != null && response != "") Debug.LogError(response);
         }
     }
 
-    public int GetScore(string email)
+    public static int GetScore(string email)
     {
         string hash = MD5Hash(email + secretKey);
         string post_url = getScoreURL + "email=" + UnityWebRequest.EscapeURL(email) + "&hash=" + hash;
+        Debug.Log(post_url);
 
         UnityWebRequest hs_post = UnityWebRequest.Get(post_url);
         hs_post.SendWebRequest();
-        
+        while (!hs_post.isDone) ;
+
         if (hs_post.isNetworkError)
         {
             Debug.LogError("Error: " + hs_post.error);
@@ -65,27 +64,32 @@ public class MySQLController : MonoBehaviour
         {
             return score;
         }
-        Debug.Log(hs_post.downloadHandler.text);
-        Debug.Log("No score in data base");
         return 0;
     }
-
-    // Get the scores from the MySQL DB to display in a GUIText.
-    // remember to use StartCoroutine when calling this function!
-    IEnumerator GetTopHighscores()
+    
+    public static Dictionary<string, int> GetTopHighscores()
     {
-        //gameObject.guiText.text = "Loading Scores";
-        UnityWebRequest hs_get = new UnityWebRequest(topHighscoresURL);
-        yield return hs_get;
+        UnityWebRequest hs_post = UnityWebRequest.Get(getTopHighscoresURL);
+        hs_post.SendWebRequest();
+        while (!hs_post.isDone) ;
 
-        if (hs_get.error != null)
+        Dictionary<string, int> scoreList = new Dictionary<string, int>();
+        if (hs_post.isNetworkError)
         {
-            print("There was an error getting the high score: " + hs_get.error);
+            Debug.LogError("Error: " + hs_post.error);
+            scoreList.Add("Error", 0);
+            return scoreList;
         }
-        else
+        string result = hs_post.downloadHandler.text;
+        if (result == null || result == "")
         {
-            //gameObject.guiText.text = hs_get.text; // this is a GUIText that will display the scores in game.
+            scoreList.Add("", 0);
+            return scoreList;
         }
+        
+
+
+        return scoreList;
     }
 
     public static string MD5Hash(string input)
