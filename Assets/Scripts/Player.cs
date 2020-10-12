@@ -93,6 +93,14 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void OnDestroy()
+    {
+        PlayerInput.OnSwipeLeft -= MoveLeft;
+        PlayerInput.OnSwipeRight -= MoveRight;
+        PlayerInput.OnSwipeUp -= Jump;
+        PlayerInput.OnSwipeDown -= Sneak;
+    }
+
     private void CheckLanes()
     {
         if (lanes == null || lanes.Length < 2)
@@ -169,11 +177,11 @@ public class Player : MonoBehaviour
     {
         if (movement != 0 || curLane + movement >= 0 || curLane + movement <= lanes.Length - 1) return;
 
-        movement = 0;
         oldLane = curLane;
         curLane += movement;
         oldLocation = transform.position;
         movementTarget = new Vector3(lanes[curLane].position.x, transform.position.y, lanes[curLane].position.z);
+        movement = 0;
         isMoving = true;
     }
 
