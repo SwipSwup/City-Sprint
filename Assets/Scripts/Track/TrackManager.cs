@@ -14,6 +14,8 @@ public class TrackManager : MonoBehaviour
     public GameObject startTile;
     public GameObject tileSpacer;
 
+    private bool trackStartet = false;
+
     public int maxTiles = 10;
     public float maxTileSpeed = 25f;
     public float tileSpeed = 5f;
@@ -39,8 +41,6 @@ public class TrackManager : MonoBehaviour
 
     private void SubscribeToEvents()
     {
-        GameManager.OnTick += HandleTickUpdate;
-        TileDestroyer.OnTileDelete += HandleTileDestroyed;
         Player.OnGameOver += HandleGameOver;
         Player.OnObstacleCollision += HandleObstacleHit;
     }
@@ -56,6 +56,17 @@ public class TrackManager : MonoBehaviour
     public void SetTileSpeedMultiplyer(float tileSpeedMultiplyer)
     {
         this.tileSpeedMultiplyer = tileSpeedMultiplyer;
+    }
+
+    private void SpawnDefaultTiles()
+    {
+
+    }
+
+    private void StartTrack()
+    {
+        GameManager.OnTick += HandleTickUpdate;
+        TileDestroyer.OnTileDelete += HandleTileDestroyed;
     }
 
     private void InstaniateTrack()

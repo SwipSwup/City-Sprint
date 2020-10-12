@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private PlayerData playerData;
+    private bool runActive = false;
 
     [SerializeField]
     private float TICK_SEC_INTERVAL;
@@ -20,8 +21,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
-
-        Debug.Log("loaded");
+        SpawnDefaultTrack();
         SubscribeToEvents();
     }
 
@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour
 
     private void SubscribeToEvents()
     {
-        OnTick += UpdateScore;
         Player.OnCollectCoin += UpdateCoins;
         Player.OnGameOver += GameOver;
     }
@@ -47,6 +46,12 @@ public class GameManager : MonoBehaviour
         OnTick -= UpdateScore;
         Player.OnCollectCoin -= UpdateCoins;
         Player.OnGameOver -= GameOver;
+    }
+
+
+    private void StartRun()
+    {
+        OnTick += UpdateScore;
     }
 
     private void EndRun()
@@ -74,9 +79,6 @@ public class GameManager : MonoBehaviour
         if (playerData.highscore < score)
         {
             playerData.highscore = score;
-            Debug.Log(playerData.email);
-            Debug.Log(playerData.displayName);
-            Debug.Log(score);
             StartCoroutine(MySQLController.AddScore(playerData.email, playerData.displayName, score));
         }
     }
