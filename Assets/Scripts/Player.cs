@@ -123,6 +123,8 @@ public class Player : MonoBehaviour
     {
         if (controlsLocked) return;
 
+        GetPCInput();
+
         ManageMovementInput();
 
         if (isMoving) ApplyMovement();
@@ -185,14 +187,12 @@ public class Player : MonoBehaviour
         isMoving = true;
     }
 
-    private void ManagePlayerInput()
+    private void GetPCInput()
     {
-        // temp PC controlls
         if (Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
         if (Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
         if (movement != 0 && !controlsLocked)
         {
-            //ManageMovementInput();
             return;
         }
 
@@ -207,71 +207,6 @@ public class Player : MonoBehaviour
             Sneak();
             return;
         }
-
-
-        //---------------MOBILE
-        /*
-        if (Input.touches.Length < 1)
-        {
-            inputValid = false;
-            return;
-        }
-        touch = Input.touches[0];
-
-        if (touch.phase == TouchPhase.Canceled || touch.phase == TouchPhase.Ended)
-        {
-            if (deltaPosition.x < tabDistance && deltaPosition.x > -tabDistance &&
-                deltaPosition.y < tabDistance && deltaPosition.y > -tabDistance &&
-                inputValid) OnScreenTab?.Invoke();
-
-            inputValid = false;
-            return;
-        }
-
-        if (touch.phase == TouchPhase.Began)
-        {
-            inputValid = true;
-            startTouch = touch.position;
-            return;
-        }
-
-        if (touch.phase == TouchPhase.Moved && inputValid)
-        {
-            deltaPosition = touch.position - startTouch;
-
-            if (deltaPosition.x < -swipeDetection) movement -= 1;
-            if (deltaPosition.x > swipeDetection) movement += 1;
-            if (movement != 0)
-            {
-                if (controlsLocked)
-                {
-                    movement = 0;
-                }
-                else
-                {
-                    ManageMovementInput();
-                }
-
-                inputValid = false;
-                return;
-            }
-
-            if (deltaPosition.y > swipeDetection && !controlsLocked)
-            {
-                if (IsGrounded() && !isJumping) HandleJumping();
-
-                inputValid = false;
-                return;
-            }
-
-            if (deltaPosition.y < -swipeDetection && !controlsLocked)
-            {
-                HandleSneaking();
-                inputValid = false;
-                return;
-            }
-        }
-        */
     }
 
     private void MoveLeft()
