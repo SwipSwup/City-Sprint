@@ -106,7 +106,7 @@ public class TileEditor : Editor
     {
         if (tile.tileSize == tileParts.Count) return;
         if (tile.tileSize > tileParts.Count) AddTileParts();
-        if (tile.tileSize < tileParts.Count) RemoveTileParts();
+        else if (tile.tileSize < tileParts.Count) RemoveTileParts();
         UpdateCollider();
         UpdateStartAndEndPoint();
     }
