@@ -46,7 +46,8 @@ public class Player : MonoBehaviour
 
     public bool controlsLocked = false;
 
-    private Rigidbody Rigidbody;
+    private Rigidbody playerRigidbody;
+    private CapsuleCollider playerCollider;
 
     private int curLane;
     private int oldLane;
@@ -63,12 +64,13 @@ public class Player : MonoBehaviour
 
     void Start()
     {
-        Rigidbody = GetComponent<Rigidbody>();
+        playerRigidbody = GetComponent<Rigidbody>();
+        playerCollider = GetComponent<CapsuleCollider>();
 
         CheckRigidbody();
         CheckLanes();
 
-        Rigidbody.useGravity = false;
+        playerRigidbody.useGravity = false;
 
         curLane = (lanes.Length - 1) / 2;
         transform.position = lanes[curLane].position;
@@ -82,7 +84,7 @@ public class Player : MonoBehaviour
 
     private void CheckRigidbody()
     {
-        if (Rigidbody == null)
+        if (playerRigidbody == null)
         {
             Debug.LogError("Player does not have an assigned Rigidbody! Quitting Application.");
             Application.Quit(-1);
@@ -171,7 +173,8 @@ public class Player : MonoBehaviour
         else
         {
             isSneaking = false;
-            transform.LeanScaleY(1f, 0.1f);
+            Debug.Log("1");
+            playerCollider.height = 2f;
         }
     }
 
@@ -230,12 +233,12 @@ public class Player : MonoBehaviour
     {
         if (controlsLocked || !IsGrounded()) return;
 
-        Rigidbody.AddForce(-Rigidbody.velocity, ForceMode.VelocityChange);
+        playerRigidbody.AddForce(-playerRigidbody.velocity, ForceMode.VelocityChange);
 
         jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
         isJumping = true;
         applyGravity = false;
-        transform.LeanScaleY(1f, 0.05f);
+        playerCollider.height = 2f;
     }
 
     private void Sneak()
@@ -246,14 +249,13 @@ public class Player : MonoBehaviour
             isJumping = false;
             applyGravity = true;
 
-            Rigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
+            playerRigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
         }
         else if (!IsGrounded())
         {
-            Rigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
+            playerRigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
         }
-
-        transform.LeanScaleY(0.5f, 0.1f);
+        playerCollider.height = 1f;
         sneakDurationLeft = sneakDuration;
         isSneaking = true;
     }
@@ -261,7 +263,7 @@ public class Player : MonoBehaviour
     private void ApplyGravity()
     {
         if (!IsGrounded() && applyGravity && !controlsLocked)
-            Rigidbody.AddForce(Vector3.down * gravity * Time.deltaTime * 60, ForceMode.Acceleration);
+            playerRigidbody.AddForce(Vector3.down * gravity * Time.deltaTime * 60, ForceMode.Acceleration);
     }
 
     void OnCollisionEnter(Collision target)
@@ -303,9 +305,9 @@ public class Player : MonoBehaviour
 
     public void GameOver()
     {
-        Rigidbody.constraints = RigidbodyConstraints.None;
-        Rigidbody.useGravity = true;
-        Rigidbody.AddForce(Vector3.Normalize(Camera.position - transform.position) * collisionForce, ForceMode.VelocityChange);
+        playerRigidbody.constraints = RigidbodyConstraints.None;
+        playerRigidbody.useGravity = true;
+        playerRigidbody.AddForce(Vector3.Normalize(Camera.position - transform.position) * collisionForce, ForceMode.VelocityChange);
         controlsLocked = true;
     }
 
