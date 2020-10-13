@@ -10,7 +10,8 @@ public class TrackManager : MonoBehaviour
     private int tickCounter;
 
     public List<Tile> activeTiles;
-    public GameObject[] tilePrefabs;
+    public GameObject[] trackTilePrefabs;
+    public GameObject[] menuTilePrefabs;
     public GameObject startTile;
     public GameObject tileSpacer;
 
@@ -28,7 +29,7 @@ public class TrackManager : MonoBehaviour
     private void Start()
     {
         SubscribeToEvents();
-        InstaniateTrack();
+        Initialize();
     }
 
     private void OnDestroy()
@@ -39,36 +40,79 @@ public class TrackManager : MonoBehaviour
 
     private void SubscribeToEvents()
     {
-        GameManager.OnTick += HandleTickUpdate;
-        TileDestroyer.OnTileDelete += HandleTileDestroyed;
+        MainMenuUIHandler.OnPlay += StartTrack; 
         Player.OnGameOver += HandleGameOver;
         Player.OnObstacleCollision += HandleObstacleHit;
     }
     
     private void UnSubscribeToEvents()
     {
+        MainMenuUIHandler.OnPlay -= StartTrack; 
         GameManager.OnTick -= HandleTickUpdate;
-        TileDestroyer.OnTileDelete -= HandleTileDestroyed;
+        TileDestroyer.OnTileDelete -= HandleTileDestroyedOnRun;
+        TileDestroyer.OnTileDelete -= HandleTileDestroyedOnMenu;
         Player.OnGameOver -= HandleGameOver;
         Player.OnObstacleCollision -= HandleObstacleHit;
     }
 
-    public void SetTileSpeedMultiplyer(float tileSpeedMultiplyer)
+    public void SetTileSpeedMultiplyer(float tileSpeedMultiplyer) => this.tileSpeedMultiplyer = tileSpeedMultiplyer;
+
+    private void Initialize()
     {
-        this.tileSpeedMultiplyer = tileSpeedMultiplyer;
+        TileDestroyer.OnTileDelete += HandleTileDestroyedOnMenu;
+        AddstartTile();
+        FillTrack(menuTilePrefabs, 4);
     }
 
-    private void InstaniateTrack()
+    private void SpawnRandomMenuTile()
+    {
+        //todo temp
+        menuTilePrefabs = new GameObject[] { tileSpacer };
+        GameObject newTilePrefab = menuTilePrefabs[(int)UnityEngine.Random.Range(0f, menuTilePrefabs.Length)];
+
+        SpawnTile(newTilePrefab, GetNewTrackTilePosition(newTilePrefab), transform.rotation);
+    }
+
+    private void FillTrack(GameObject[] tiles, int amount)
+    {
+        while (activeTiles.Count < amount)
+        {
+            //todo temp
+            GameObject tile = tileSpacer;
+            SpawnTile(tile, GetNewTrackTilePosition(tile), transform.rotation);
+        }
+        UpdateTileSpeed(tileSpeed);
+    }
+
+    public static Action OnTrackStart;
+    private void StartTrack()
+    {
+        GameManager.OnTick += HandleTickUpdate;
+        TileDestroyer.OnTileDelete -= HandleTileDestroyedOnMenu;
+        TileDestroyer.OnTileDelete += HandleTileDestroyedOnRun;
+        InstaniateTrack();
+        OnTrackStart?.Invoke();
+    }
+
+    private void AddstartTile()
     {
         activeTiles = new List<Tile>();
         activeTiles.Add(startTile.GetComponent<Tile>());
         startTile.GetComponent<Tile>().tileSpeed = tileSpeed;
+    }
 
+    private void InstaniateTrack()
+    {
+        Tile tmp = activeTiles[activeTiles.Count - 1];
+        activeTiles = new List<Tile>();
+        activeTiles.Add(tmp);
         while (activeTiles.Count < maxTiles)
             SpawnRandomTrackTile();
 
         UpdateTileSpeed(tileSpeed);
     }
+
+    private GameObject GetRandomTile(GameObject[] tileList) => tileList[(int)UnityEngine.Random.Range(0f, tileList.Length)];
 
     private IEnumerator SmoothSpeedUpTileSpeed()
     {
@@ -104,10 +148,18 @@ public class TrackManager : MonoBehaviour
         }
     }
 
-    private void HandleTileDestroyed(Tile tile)
+    private void HandleTileDestroyedOnRun(Tile tile)
     {
         if (!tile.isSpacer)
             SpawnRandomTrackTile();
+
+        activeTiles.Remove(tile);
+    }
+
+    private void HandleTileDestroyedOnMenu(Tile tile)
+    {
+        if (tile.isSpacer)
+            SpawnRandomMenuTile();
 
         activeTiles.Remove(tile);
     }
@@ -131,7 +183,7 @@ public class TrackManager : MonoBehaviour
 
     private void SpawnRandomTrackTile()
     {
-        GameObject newTilePrefab = tilePrefabs[(int)UnityEngine.Random.Range(0f, tilePrefabs.Length)];
+        GameObject newTilePrefab = GetRandomTile(trackTilePrefabs);
 
         SpawnTile(tileSpacer, GetNewTrackTilePosition(tileSpacer), transform.rotation);
         SpawnTile(newTilePrefab, GetNewTrackTilePosition(newTilePrefab), transform.rotation);

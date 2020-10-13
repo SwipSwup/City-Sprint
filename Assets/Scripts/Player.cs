@@ -7,50 +7,42 @@ public class Player : MonoBehaviour
     [Header("Required Objects")]
 
     [Tooltip("Positions of the lanes the players moves between")]
-    public Transform[] lanes = new Transform[2];
+    [SerializeField] private Transform[] lanes = new Transform[2];
     [Tooltip("The camera of the player")]
-    public Transform Camera;
+    [SerializeField] private Transform Camera;
 
 
     [Header("Movement Settings")]
 
-    [Range(0f, 1000f)]
-    [Tooltip("Distance after wich swipe is detected")]
-    public float swipeDetection = 50f;
-
-    [Range(0f, 100f)]
-    [Tooltip("Distance up to wich it still counts as a tab")]
-    public float tabDistance = 10f;
-
     [Range(1f, 100f)]
     [Tooltip("Speed at wich the players moves between the lanes")]
-    public float speed = 20f;
+    [SerializeField] private float speed = 20f;
 
     [Range(1f, 100f)]
     [Tooltip("Speed at wich the players moves up when jumping")]
-    public float jumpSpeed = 10f;
+    [SerializeField] private float jumpSpeed = 10f;
 
     [Range(0f, 100f)]
     [Tooltip("Height the player jumps at")]
-    public float jumpHeight = 2f;
+    [SerializeField] private float jumpHeight = 2f;
 
     [Range(0f, 100f)]
     [Tooltip("Duration the player sneaks when pressing the sneak button")]
-    public float sneakDuration = 10f;
+    [SerializeField] private float sneakDuration = 10f;
 
     [Range(0f, 100f)]
     [Tooltip("Gravity applied to the player when falling (ignored when jumping)")]
-    public float gravity = 9.81f;
+    [SerializeField] private float gravity = 9.81f;
 
     [Space]
 
     [Range(0f, 1f)]
     [Tooltip("The distance the player checks below itsself to decide whether its touching the ground")]
-    public float distToGround = 0.01f;
+    [SerializeField] private float distToGround = 0.01f;
 
     [Range(0f, 100f)]
     [Tooltip("The force at wich the player gets shot away when the game is over")]
-    public float collisionForce = 10f;
+    [SerializeField] private float collisionForce = 10f;
 
     public bool controlsLocked = false;
 
@@ -64,12 +56,6 @@ public class Player : MonoBehaviour
     private bool isSneaking = false;
     private float sneakDurationLeft = 0f;
     private bool applyGravity = true;
-
-    //Input
-    private Vector2 startTouch;
-    private Vector2 deltaPosition;
-    private Touch touch;
-    private bool inputValid;
 
     private Vector3 movementTarget;
     private Vector3 oldLocation;
@@ -87,6 +73,11 @@ public class Player : MonoBehaviour
         curLane = (lanes.Length - 1) / 2;
         transform.position = lanes[curLane].position;
         movementTarget = transform.position;
+
+        PlayerInput.OnSwipeLeft += MoveLeft;
+        PlayerInput.OnSwipeRight += MoveRight;
+        PlayerInput.OnSwipeUp += Jump;
+        PlayerInput.OnSwipeDown += Sneak;
     }
 
     private void CheckRigidbody()
@@ -100,6 +91,14 @@ public class Player : MonoBehaviour
             UnityEditor.EditorApplication.isPlaying = false;
 #endif
         }
+    }
+
+    private void OnDestroy()
+    {
+        PlayerInput.OnSwipeLeft -= MoveLeft;
+        PlayerInput.OnSwipeRight -= MoveRight;
+        PlayerInput.OnSwipeUp -= Jump;
+        PlayerInput.OnSwipeDown -= Sneak;
     }
 
     private void CheckLanes()
@@ -122,10 +121,11 @@ public class Player : MonoBehaviour
 
     private void ManageMovement()
     {
-        ManagePlayerInput();
-
         if (controlsLocked) return;
 
+        GetPCInput();
+
+        ManageMovementInput();
 
         if (isMoving) ApplyMovement();
 
@@ -175,12 +175,24 @@ public class Player : MonoBehaviour
         }
     }
 
-    private void ManagePlayerInput()
+    private void ManageMovementInput()
     {
-        movement = 0;
-        
-        //--------------PC
+        if (movement == 0 || curLane + movement < 0 || curLane + movement > lanes.Length - 1)
+        {
+            movement = 0;
+            return;
+        }
 
+        oldLane = curLane;
+        curLane += movement;
+        oldLocation = transform.position;
+        movementTarget = new Vector3(lanes[curLane].position.x, transform.position.y, lanes[curLane].position.z);
+        movement = 0;
+        isMoving = true;
+    }
+
+    private void GetPCInput()
+    {
         if (Input.GetKeyDown(KeyCode.LeftArrow)) movement -= 1;
         if (Input.GetKeyDown(KeyCode.RightArrow)) movement += 1;
         if (movement != 0 && !controlsLocked)
@@ -191,95 +203,33 @@ public class Player : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.UpArrow) && !controlsLocked)
         {
-            if (IsGrounded() && !isJumping) HandleJumping();
+            if (IsGrounded() && !isJumping) Jump();
             return;
         }
 
         if (Input.GetKeyDown(KeyCode.DownArrow) && !controlsLocked)
         {
-            HandleSneaking();
+            Sneak();
             return;
-        }
-
-
-        //---------------MOBILE
-
-        if (Input.touches.Length < 1)
-        {
-            inputValid = false;
-            return;
-        }
-        touch = Input.touches[0];
-
-        if (touch.phase == TouchPhase.Canceled || touch.phase == TouchPhase.Ended)
-        {
-            if (deltaPosition.x < tabDistance && deltaPosition.x > -tabDistance &&
-                deltaPosition.y < tabDistance && deltaPosition.y > -tabDistance &&
-                inputValid) OnScreenTab?.Invoke();
-
-            inputValid = false;
-            return;
-        }
-
-        if (touch.phase == TouchPhase.Began)
-        {
-            inputValid = true;
-            startTouch = touch.position;
-            return;
-        }
-
-        if (touch.phase == TouchPhase.Moved && inputValid)
-        {
-            deltaPosition = touch.position - startTouch;
-
-            if (deltaPosition.x < -swipeDetection) movement -= 1;
-            if (deltaPosition.x > swipeDetection) movement += 1;
-            if (movement != 0)
-            {
-                if (controlsLocked)
-                {
-                    movement = 0;
-                }
-                else
-                {
-                    ManageMovementInput();
-                }
-
-                inputValid = false;
-                return;
-            }
-
-            if (deltaPosition.y > swipeDetection && !controlsLocked)
-            {
-                if (IsGrounded() && !isJumping) HandleJumping();
-
-                inputValid = false;
-                return;
-            }
-
-            if (deltaPosition.y < -swipeDetection && !controlsLocked)
-            {
-                HandleSneaking();
-                inputValid = false;
-                return;
-            }
         }
     }
 
-    private void ManageMovementInput()
+    private void MoveLeft()
     {
-        if (movement != 0 && curLane + movement >= 0 && curLane + movement <= lanes.Length - 1)
-        {
-            oldLane = curLane;
-            curLane += movement;
-            oldLocation = transform.position;
-            movementTarget = new Vector3(lanes[curLane].position.x, transform.position.y, lanes[curLane].position.z);
-            isMoving = true;
-        }
+        if (controlsLocked) return;
+        movement --;
     }
 
-    private void HandleJumping()
+    private void MoveRight()
     {
+        if (controlsLocked) return;
+        movement++;
+    }
+
+    private void Jump()
+    {
+        if (controlsLocked || !IsGrounded()) return;
+
         Rigidbody.AddForce(-Rigidbody.velocity, ForceMode.VelocityChange);
 
         jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
@@ -288,8 +238,9 @@ public class Player : MonoBehaviour
         transform.LeanScaleY(1f, 0.05f);
     }
 
-    private void HandleSneaking()
+    private void Sneak()
     {
+        if (controlsLocked) return;
         if (isJumping)
         {
             isJumping = false;

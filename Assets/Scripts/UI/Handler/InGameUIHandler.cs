@@ -12,54 +12,35 @@ public class InGameUIHandler : MonoBehaviour
     private void Start()
     {
         SubscribeToEvents();
-
         ResetUI();
     }
 
-    private void OnDestroy()
-    {
-        UnSubscribeToEvents();
-    }
+    private void OnDestroy() => UnSubscribeToEvents();
+
+    public void EnableInGameUI() => inGameUICanvas.enabled = true;
+    public void DisableInGameUI() => inGameUICanvas.enabled = false;
+
+    private void UpdateScore(int score) => this.score.text = "Score: " + score;
+    private void UpdateCoins(int coins) => this.coins.text = "Coins: " + coins;
 
     private void SubscribeToEvents()
     {
         GameManager.OnScoreUpdate += UpdateScore;
         GameManager.OnCoinUpdate += UpdateCoins;
-        Player.OnGameOver += DisableUI;
+        Player.OnGameOver += DisableInGameUI;
     }
 
     private void UnSubscribeToEvents()
     {
         GameManager.OnScoreUpdate -= UpdateScore;
         GameManager.OnCoinUpdate -= UpdateCoins;
-        Player.OnGameOver -= DisableUI;
+        Player.OnGameOver -= DisableInGameUI;
     }
 
     private void ResetUI()
     {
         UpdateScore(0);
         UpdateCoins(0);
-    }
-
-    private void DisableUI()
-    {
-        Debug.Log("bruh");
-        inGameUICanvas.enabled = false;
-    }
-
-    private void EnableUI()
-    {
-        inGameUICanvas.enabled = true;
-    }
-
-    private void UpdateScore(int score)
-    {
-        this.score.text = "Score: " + score;
-    }
-
-    private void UpdateCoins(int coins)
-    {
-        this.coins.text = "Coins: " + coins;
     }
 
     private IEnumerator CountUp(int score)

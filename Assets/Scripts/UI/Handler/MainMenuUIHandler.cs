@@ -4,106 +4,21 @@ using UnityEngine;
 using TMPro;
 using System.IO.IsolatedStorage;
 using UnityEngine.UI;
+using System;
 
 public class MainMenuUIHandler : MonoBehaviour
 {
-    public int maxTick = 3;
-    private int tickCounter;
+    public Canvas mainMenuCanvas;
 
-    public PlayerData playerData;
-    public GameObject dataFrame;
-
-    public GameObject playButtonObject;
-    public GameObject playButtonTextObject;
-    private TextMeshProUGUI playButtonText;
-
-    public GameObject upgradeButtonObject;
-    public GameObject upgradeButtonTextObject;
-
-    public TextMeshProUGUI highscoreText;
-    public TextMeshProUGUI coinsText;
-
-
-    private void Start()
+    public static Action OnPlay;
+    public void Play()
     {
-        SubscribeToEvents();
-        LoadPlayerData();
-        playButtonText = playButtonTextObject.GetComponent<TextMeshProUGUI>();
+        OnPlay?.Invoke();
+        DisableMenuUI();
+        GetComponent<InGameUIHandler>().EnableInGameUI();
     }
 
-    private void OnDestroy()
-    {
-        UnSubscribeToEvents();
-    }
+    private void DisableMenuUI() => mainMenuCanvas.enabled = false;
 
-    private void SubscribeToEvents()
-    {
-        GameManager.OnTick += AnimatePlayText;
-    }
-
-    private void UnSubscribeToEvents()
-    {
-        GameManager.OnTick -= AnimatePlayText;
-    }
-
-    private int animationIndex;
-    private string[] playAimationStates = { "PLAY", "PLAY >", "PLAY >>", "PLAY >>>" };
-    private void AnimatePlayText()
-    {
-        if (tickCounter++ % maxTick == 0)
-        {
-            tickCounter = 0;
-            playButtonText.text = playAimationStates[animationIndex++];
-            if (animationIndex > 3)
-                animationIndex = 0;
-        }
-    }
-
-    private void LoadPlayerData()
-    {
-        ChangeHighscore(playerData.highscore.ToString());
-        ChangeCoins(playerData.coins.ToString());
-
-    }
-
-    private void ChangeHighscore(string highscore)
-    {
-        highscoreText.text = highscore;
-    }
-    
-    private void ChangeCoins(string money)
-    {
-        coinsText.text = money;
-    }
-
-    private void DisablePlayButton()
-    {
-        playButtonObject.GetComponent<Image>().enabled = false;
-        playButtonObject.GetComponent<Button>().enabled = false;
-
-        playButtonText.enabled = false;
-    }
-
-    private void disableUpgradeButton()
-    {
-        upgradeButtonObject.GetComponent<Image>().enabled = false;
-        upgradeButtonObject.GetComponent<Button>().enabled = false;
-
-        upgradeButtonTextObject.GetComponent<TextMeshProUGUI>().enabled = false;
-    }
-
-    private void DisableDataFrame()
-    {
-        dataFrame.SetActive(false);
-    }
-
-
-    public void OpenUpgradeMenu()
-    {
-        DisablePlayButton();
-        DisableDataFrame();
-        upgradeButtonTextObject.GetComponent<TextMeshProUGUI>().enabled = false;
-        LeanTween.scale(upgradeButtonObject, Vector3.one * 50, 1f);
-    }
-
+    private void EnableMenuUI() => mainMenuCanvas.enabled = true;
 }

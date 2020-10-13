@@ -8,20 +8,20 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private PlayerData playerData;
+    private bool runActive = false;
 
     [SerializeField]
-    private float TICK_SEC_INTERVAL;
+    private const float TICK_SEC_INTERVAL = 0.2f;
     private float tickTimer;
 
-    [SerializeField] private TrackManager tManager;
+    [SerializeField] 
+    private TrackManager tManager;
     private int score;
     private int coins;
 
     private void Start()
     {
         SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
-
-        Debug.Log("loaded");
         SubscribeToEvents();
     }
 
@@ -31,13 +31,13 @@ public class GameManager : MonoBehaviour
     {
         UpdateTick();
 #if UNITY_EDITOR
-        if (Input.GetKey(KeyCode.Escape)) EndRun();
+        if (Input.GetKeyDown(KeyCode.Escape)) EndRun();
 #endif
     }
 
     private void SubscribeToEvents()
     {
-        OnTick += UpdateScore;
+        MainMenuUIHandler.OnPlay += StartRun;
         Player.OnCollectCoin += UpdateCoins;
         Player.OnGameOver += GameOver;
     }
@@ -45,19 +45,26 @@ public class GameManager : MonoBehaviour
     private void UnSubscribeToEvents()
     {
         OnTick -= UpdateScore;
+        MainMenuUIHandler.OnPlay -= StartRun;
         Player.OnCollectCoin -= UpdateCoins;
         Player.OnGameOver -= GameOver;
+        PlayerInput.OnScreenTab -= EndRun;
+    }
+
+    private void StartRun()
+    {
+        OnTick += UpdateScore;
     }
 
     private void EndRun()
     {
-        Player.OnScreenTab -= EndRun;
+        PlayerInput.OnScreenTab -= EndRun;
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);
     }
 
     private void GameOver()
     {
-        Player.OnScreenTab += EndRun;
+        PlayerInput.OnScreenTab += EndRun;
         UpdateData();
     }
 
@@ -74,9 +81,6 @@ public class GameManager : MonoBehaviour
         if (playerData.highscore < score)
         {
             playerData.highscore = score;
-            Debug.Log(playerData.email);
-            Debug.Log(playerData.displayName);
-            Debug.Log(score);
             StartCoroutine(MySQLController.AddScore(playerData.email, playerData.displayName, score));
         }
     }

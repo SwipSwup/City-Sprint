@@ -47,7 +47,7 @@ public class TrackManagerEditor : Editor
         activeTilesProp = serializedObject.FindProperty("activeTiles");
         startTileProp = serializedObject.FindProperty("startTile");
         tileSpacerProp = serializedObject.FindProperty("tileSpacer");
-        tilePrefabsProp = serializedObject.FindProperty("tilePrefabs");
+        tilePrefabsProp = serializedObject.FindProperty("trackTilePrefabs");
 
         maxTilesProp = serializedObject.FindProperty("maxTiles");
         maxTileSpeedProp = serializedObject.FindProperty("maxTileSpeed");
