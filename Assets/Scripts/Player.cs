@@ -173,8 +173,7 @@ public class Player : MonoBehaviour
         else
         {
             isSneaking = false;
-            Debug.Log("1");
-            playerCollider.height = 2f;
+            transform.LeanScaleY(1f, 0.1f);
         }
     }
 
@@ -238,7 +237,7 @@ public class Player : MonoBehaviour
         jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
         isJumping = true;
         applyGravity = false;
-        playerCollider.height = 2f;
+        transform.LeanScaleY(1f, 0.1f);
     }
 
     private void Sneak()
@@ -255,7 +254,7 @@ public class Player : MonoBehaviour
         {
             playerRigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
         }
-        playerCollider.height = 1f;
+        transform.LeanScaleY(0.5f, 0.1f);
         sneakDurationLeft = sneakDuration;
         isSneaking = true;
     }
