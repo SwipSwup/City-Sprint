@@ -8,8 +8,8 @@ public class Player : MonoBehaviour
 
     [Tooltip("Positions of the lanes the players moves between")]
     [SerializeField] private Transform[] lanes = new Transform[2];
-    [Tooltip("The camera of the player")]
-    [SerializeField] private Transform Camera;
+    [Tooltip("The Transform of the Model of the player")]
+    [SerializeField] private Transform playerModel;
 
 
     [Header("Movement Settings")]
@@ -61,11 +61,13 @@ public class Player : MonoBehaviour
     private Vector3 movementTarget;
     private Vector3 oldLocation;
     private Vector3 jumpingTarget;
+    private Vector3 logicModelDifference;
 
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
         playerCollider = GetComponent<CapsuleCollider>();
+        logicModelDifference = playerModel.position - transform.position;
 
         CheckRigidbody();
         CheckLanes();
@@ -119,6 +121,14 @@ public class Player : MonoBehaviour
     void Update()
     {
         ManageMovement();
+        UpdateModelMovement();
+    }
+
+    private void UpdateModelMovement()
+    {
+        playerModel.position = transform.position + logicModelDifference;
+        //temporary until animation
+        if (isSneaking) playerModel.position += Vector3.down * 0.75f;
     }
 
     private void ManageMovement()
@@ -306,7 +316,8 @@ public class Player : MonoBehaviour
     {
         playerRigidbody.constraints = RigidbodyConstraints.None;
         playerRigidbody.useGravity = true;
-        playerRigidbody.AddForce(Vector3.Normalize(Camera.position - transform.position) * collisionForce, ForceMode.VelocityChange);
+        //playerRigidbody.AddForce(Vector3.Normalize(Camera.position - playerTransform.position) * collisionForce, ForceMode.VelocityChange);
+        playerRigidbody.AddForce(Vector3.up * collisionForce, ForceMode.VelocityChange);
         controlsLocked = true;
     }
 
