@@ -317,7 +317,7 @@ public class Player : MonoBehaviour
         playerRigidbody.constraints = RigidbodyConstraints.None;
         playerRigidbody.useGravity = true;
         //playerRigidbody.AddForce(Vector3.Normalize(Camera.position - playerTransform.position) * collisionForce, ForceMode.VelocityChange);
-        playerRigidbody.AddForce(Vector3.up * collisionForce, ForceMode.VelocityChange);
+        playerRigidbody.AddForce(Vector3.up * collisionForce * 50, ForceMode.Force);
         controlsLocked = true;
     }
 
