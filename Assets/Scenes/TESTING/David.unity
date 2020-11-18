@@ -909,7 +909,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 851740389}
-  m_LocalRotation: {x: 0.08953127, y: -0.70141584, z: 0.08953129, w: 0.70141584}
+  m_LocalRotation: {x: 0.08953126, y: -0.70141584, z: 0.0895313, w: 0.70141584}
   m_LocalPosition: {x: 7.827, y: 7.69, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1161,7 +1161,7 @@ MonoBehaviour:
   m_BindingMode: 1
   m_FollowOffset: {x: 12, y: 5, z: 0}
   m_XDamping: 0.5
-  m_YDamping: 5
+  m_YDamping: 20
   m_ZDamping: 3.61
   m_AngularDampingMode: 0
   m_PitchDamping: 0
@@ -1184,12 +1184,12 @@ MonoBehaviour:
   m_LookaheadTime: 0
   m_LookaheadSmoothing: 14.3
   m_LookaheadIgnoreY: 0
-  m_HorizontalDamping: 7
+  m_HorizontalDamping: 5
   m_VerticalDamping: 0.5
   m_ScreenX: 0.5
   m_ScreenY: 0.5
   m_DeadZoneWidth: 0
-  m_DeadZoneHeight: 0
+  m_DeadZoneHeight: 0.1
   m_SoftZoneWidth: 0.8
   m_SoftZoneHeight: 0.8
   m_BiasX: 0
@@ -1726,7 +1726,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerData
       value: 
-      objectReference: {fileID: 11400000, guid: 9c4aa1730d6fb904e9b8469a040f75c8,
+      objectReference: {fileID: 11400000, guid: 9113d08f2acb99d42b1a7da9e193b029,
         type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bebe7fd820a60014aa5f6f0448b89a43, type: 3}
