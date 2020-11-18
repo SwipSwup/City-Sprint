@@ -71,13 +71,15 @@ public class Player : MonoBehaviour
     private Vector3 movementTarget;
     private Vector3 oldLocation;
     private Vector3 jumpingTarget;
-    private Vector3 logicModelDifference;
+    private Vector3 logicModelPositionDifference;
+    private Vector3 logicModelRotationDifference;
 
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
         //playerCollider = GetComponent<CapsuleCollider>();
-        logicModelDifference = playerModel.position - transform.position;
+        logicModelPositionDifference = playerModel.position - transform.position;
+        logicModelRotationDifference = playerModel.eulerAngles - transform.eulerAngles;
 
         CheckRigidbody();
         CheckLanes();
@@ -143,13 +145,15 @@ public class Player : MonoBehaviour
 
     private void UpdateModelMovement()
     {
-        playerModel.position = transform.position + logicModelDifference;
-
         if (controlsLocked)
         {
             playerModel.transform.position = this.transform.position;
-            playerModel.transform.rotation = this.transform.rotation;
+            playerModel.transform.eulerAngles = this.transform.eulerAngles + logicModelRotationDifference;
+
+            return;
         }
+
+        playerModel.position = transform.position + logicModelPositionDifference;
     }
 
     private void ManageMovement()
@@ -346,6 +350,7 @@ public class Player : MonoBehaviour
         //playerRigidbody.useGravity = true;
         //playerRigidbody.AddForce(Vector3.Normalize(Camera.position - playerTransform.position) * collisionForce, ForceMode.VelocityChange);
         playerRigidbody.AddForce(Vector3.up * collisionForce, ForceMode.Force);
+        playerRigidbody.angularVelocity += new Vector3(0, 0, 1);
         controlsLocked = true;
         applyGravity = false;
     }
