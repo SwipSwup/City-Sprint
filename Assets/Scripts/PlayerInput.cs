@@ -90,6 +90,8 @@ public class PlayerInput : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.UpArrow)) OnSwipeUp?.Invoke();
 
         if (Input.GetKeyDown(KeyCode.DownArrow)) OnSwipeDown?.Invoke();
+
+        if (Input.GetKeyDown(KeyCode.Mouse0)) OnScreenTab?.Invoke();
     }
 
     public static Action OnSwipeUp;

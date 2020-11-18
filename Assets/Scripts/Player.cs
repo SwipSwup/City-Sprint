@@ -11,47 +11,50 @@ public class Player : MonoBehaviour
     [Tooltip("The Transform of the Model of the player")]
     [SerializeField] private Transform playerModel;
 
-
+    [Space]
     [Header("Movement Settings")]
 
-    [Range(1f, 100f)]
+    [Range(0f, 100f)]
     [Tooltip("Speed at wich the players moves between the lanes")]
-    [SerializeField] private float speed = 20f;
+    [SerializeField] private float speed = 30f;
 
-    [Range(0f, 100f)]
-    [Tooltip("Speed at wich the players moves up when jumping")]
-    [SerializeField] private float jumpSpeed = 10f;
-
-    [Range(0f, 100f)]
-    [Tooltip("Height the player jumps at")]
-    [SerializeField] private float jumpHeight = 2f;
-
-    [Range(0f, 100f)]
-    [Tooltip("Duration the player stays in the air when jumping")]
-    [SerializeField] private float jumpDuration = 4f;
-
-    [Range(0f, 100f)]
-    [Tooltip("Duration the player sneaks when pressing the sneak button")]
-    [SerializeField] private float sneakDuration = 10f;
-
-    [Range(0f, 100f)]
-    [Tooltip("Gravity applied to the player when falling (ignored when jumping)")]
-    [SerializeField] private float gravity = 9.81f;
-
-    [Space]
-
-    [Range(0f, 1f)]
+    [Range(0f, 10f)]
     [Tooltip("The distance the player checks below itsself to decide whether its touching the ground")]
-    [SerializeField] private float distToGround = 0.01f;
+    [SerializeField] private float levitateDistToGround = 1f;
 
     [Range(0f, 100f)]
     [Tooltip("The force at wich the player gets shot away when the game is over")]
     [SerializeField] private float collisionForce = 10f;
 
+    [Space]
+
+    [Range(0f, 100f)]
+    [Tooltip("Speed at wich the players moves up when jumping")]
+    [SerializeField] private float jumpSpeed = 20f;
+
+    [Range(0f, 100f)]
+    [Tooltip("Height the player jumps at")]
+    [SerializeField] private float jumpHeight = 1.8f;
+
+    [Range(0f, 100f)]
+    [Tooltip("Duration the player stays in the air when jumping")]
+    [SerializeField] private float jumpDuration = 4f;
+
+    [Space]
+
+    [Range(0f, 100f)]
+    [Tooltip("Duration the player sneaks when pressing the sneak button")]
+    [SerializeField] private float sneakDuration = 10f;
+
+    [Range(0f, 1f)]
+    [Tooltip("The distance the player levitates above the ground")]
+    [SerializeField] private float sneakDistToGround = 0.01f;
+
     public bool controlsLocked = false;
 
     private Rigidbody playerRigidbody;
     //private CapsuleCollider playerCollider;
+    private float playerBoxColliderHeight;
 
     private int curLane;
     private int oldLane;
@@ -62,6 +65,8 @@ public class Player : MonoBehaviour
     private bool isSneaking = false;
     private float sneakDurationLeft = 0f;
     private bool applyGravity = true;
+    private float distToGround;
+    private bool isGrounded = false;
 
     private Vector3 movementTarget;
     private Vector3 oldLocation;
@@ -78,9 +83,11 @@ public class Player : MonoBehaviour
         CheckLanes();
 
         playerRigidbody.useGravity = false;
+        distToGround = levitateDistToGround;
+        playerBoxColliderHeight = GetComponent<BoxCollider>().size.y;
 
         curLane = (lanes.Length - 1) / 2;
-        transform.position = lanes[curLane].position;
+        transform.position = lanes[curLane].position + Vector3.up * 3;
         movementTarget = transform.position;
 
         PlayerInput.OnSwipeLeft += MoveLeft;
@@ -123,6 +130,11 @@ public class Player : MonoBehaviour
         }
     }
 
+    private void FixedUpdate()
+    {
+        ApplyGravity();
+    }
+
     void Update()
     {
         ManageMovement();
@@ -132,8 +144,12 @@ public class Player : MonoBehaviour
     private void UpdateModelMovement()
     {
         playerModel.position = transform.position + logicModelDifference;
-        //temporary until animation
-        if (isSneaking) playerModel.position += Vector3.down * 0.75f;
+
+        if (controlsLocked)
+        {
+            playerModel.transform.position = this.transform.position;
+            playerModel.transform.rotation = this.transform.rotation;
+        }
     }
 
     private void ManageMovement()
@@ -148,7 +164,7 @@ public class Player : MonoBehaviour
 
         if (isSneaking) ApplySneaking();
 
-        ApplyGravity();
+        //ApplyGravity();
     }
 
     private void ApplyMovement()
@@ -171,11 +187,11 @@ public class Player : MonoBehaviour
 
         if (Math.Abs(transform.position.y - jumpingTarget.y) < 0.01f)
         {
-            Levitate();
+            JumpLevitate();
         }
     }
 
-    private void Levitate()
+    private void JumpLevitate()
     {
         if (jumpDurationLeft > 0)
         {
@@ -210,7 +226,8 @@ public class Player : MonoBehaviour
     {
         sneakDurationLeft = 0;
         isSneaking = false;
-        transform.LeanScaleY(1f, 0.1f);
+        distToGround = levitateDistToGround;
+        transform.position += Vector3.up * (levitateDistToGround - sneakDistToGround);
     }
 
     private void ManageMovementInput()
@@ -243,16 +260,16 @@ public class Player : MonoBehaviour
 
     private void Jump()
     {
-        if (controlsLocked || !IsGrounded()) return;
+        if (controlsLocked || !CheckGrounded()) return;
 
         if (isSneaking) CancelSneaking();
 
-        playerRigidbody.AddForce(-playerRigidbody.velocity, ForceMode.VelocityChange);
+        //playerRigidbody.AddForce(-playerRigidbody.velocity, ForceMode.VelocityChange);
 
         jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
         isJumping = true;
         applyGravity = false;
-        
+
         jumpDurationLeft = jumpDuration;
     }
 
@@ -261,25 +278,29 @@ public class Player : MonoBehaviour
         if (controlsLocked) return;
         if (isJumping)
         {
-            isJumping = false;
-            applyGravity = true;
+            CancelJumping();
+            //playerRigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
+        }
+        //else if (isGrounded)
+        //{
+        //    playerRigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
+        //}
 
-            playerRigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
-        }
-        else if (!IsGrounded())
-        {
-            playerRigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
-        }
-        transform.LeanScaleY(0.5f, 0.1f);
+        distToGround = sneakDistToGround;
         sneakDurationLeft = sneakDuration;
         isSneaking = true;
     }
 
     private void ApplyGravity()
     {
+        if (CheckGrounded() || !applyGravity) return;
+
+        transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.down * 10, jumpSpeed / 60);
+
+
         //Debug.Log(playerRigidbody.velocity);
-        if (!IsGrounded() && applyGravity && !controlsLocked)
-            playerRigidbody.velocity = Vector3.down * jumpSpeed; //AddForce(Vector3.down * jumpSpeed, ForceMode.VelocityChange);
+        //if (!IsGrounded() && applyGravity && !controlsLocked)
+        //    playerRigidbody.velocity = Vector3.down * jumpSpeed; //AddForce(Vector3.down * jumpSpeed, ForceMode.VelocityChange);
     }
 
     void OnCollisionEnter(Collision target)
@@ -322,13 +343,19 @@ public class Player : MonoBehaviour
     public void GameOver()
     {
         playerRigidbody.constraints = RigidbodyConstraints.None;
-        playerRigidbody.useGravity = true;
+        //playerRigidbody.useGravity = true;
         //playerRigidbody.AddForce(Vector3.Normalize(Camera.position - playerTransform.position) * collisionForce, ForceMode.VelocityChange);
-        playerRigidbody.AddForce(Vector3.up * collisionForce * 50, ForceMode.Force);
+        playerRigidbody.AddForce(Vector3.up * collisionForce, ForceMode.Force);
         controlsLocked = true;
+        applyGravity = false;
     }
 
-    private bool IsGrounded() => Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, distToGround + 0.2f);
+    private bool CheckGrounded()
+    {
+        //Debug.DrawRay(transform.position, Vector3.down, Color.magenta, distToGround + playerBoxColliderHeight / 2);
+        isGrounded = Physics.Raycast(transform.position, Vector3.down, distToGround + playerBoxColliderHeight / 2);
+        return isGrounded;
+    }
 
     public static Action OnGameOver;
 
