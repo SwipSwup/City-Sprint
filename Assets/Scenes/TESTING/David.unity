@@ -576,11 +576,14 @@ MonoBehaviour:
   speed: 30
   jumpSpeed: 10
   jumpHeight: 2
+  jumpDuration: 4
   sneakDuration: 10
+  sneakDistToGround: 0.01
   gravity: 10
-  distToGround: 0.01
+  levitateDistToGround: 0.01
   collisionForce: 12.14
   controlsLocked: 0
+  isGrounded: 0
 --- !u!1001 &431852239
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1816,7 +1819,7 @@ PrefabInstance:
     - target: {fileID: 165185627279709454, guid: 9d38b4673b9834d47a0c1c25ee78d928,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.85
+      value: 2.99
       objectReference: {fileID: 0}
     - target: {fileID: 165185627279709454, guid: 9d38b4673b9834d47a0c1c25ee78d928,
         type: 3}
@@ -1896,7 +1899,22 @@ PrefabInstance:
     - target: {fileID: 5384147578879730631, guid: 9d38b4673b9834d47a0c1c25ee78d928,
         type: 3}
       propertyPath: distToGround
-      value: 0.01
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384147578879730631, guid: 9d38b4673b9834d47a0c1c25ee78d928,
+        type: 3}
+      propertyPath: levitateDistToGround
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384147578879730631, guid: 9d38b4673b9834d47a0c1c25ee78d928,
+        type: 3}
+      propertyPath: jumpSpeed
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5384147578879730631, guid: 9d38b4673b9834d47a0c1c25ee78d928,
+        type: 3}
+      propertyPath: sneakDistToGround
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 6160527702226577852, guid: 9d38b4673b9834d47a0c1c25ee78d928,
         type: 3}
