@@ -112,16 +112,14 @@ MonoBehaviour:
   - {fileID: 0}
   playerModel: {fileID: 3696410226120771826}
   speed: 30
-  jumpSpeed: 10
-  jumpHeight: 2
+  levitateDistToGround: 1
+  collisionForce: 30
+  jumpSpeed: 20
+  jumpHeight: 1.8
   jumpDuration: 4
   sneakDuration: 10
   sneakDistToGround: 0.01
-  gravity: 10
-  distToGround: 0.01
-  collisionForce: 12.14
   controlsLocked: 0
-  isGrounded: 0
 --- !u!1001 &931762899336566990
 PrefabInstance:
   m_ObjectHideFlags: 0

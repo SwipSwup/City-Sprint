@@ -18,7 +18,7 @@ public class Player : MonoBehaviour
     [Tooltip("Speed at wich the players moves between the lanes")]
     [SerializeField] private float speed = 30f;
 
-    [Range(0f, 1f)]
+    [Range(0f, 10f)]
     [Tooltip("The distance the player checks below itsself to decide whether its touching the ground")]
     [SerializeField] private float levitateDistToGround = 1f;
 
@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
 
     [Range(0f, 100f)]
     [Tooltip("Height the player jumps at")]
-    [SerializeField] private float jumpHeight = 2f;
+    [SerializeField] private float jumpHeight = 1.8f;
 
     [Range(0f, 100f)]
     [Tooltip("Duration the player stays in the air when jumping")]
@@ -343,10 +343,11 @@ public class Player : MonoBehaviour
     public void GameOver()
     {
         playerRigidbody.constraints = RigidbodyConstraints.None;
-        playerRigidbody.useGravity = true;
+        //playerRigidbody.useGravity = true;
         //playerRigidbody.AddForce(Vector3.Normalize(Camera.position - playerTransform.position) * collisionForce, ForceMode.VelocityChange);
         playerRigidbody.AddForce(Vector3.up * collisionForce, ForceMode.Force);
         controlsLocked = true;
+        applyGravity = false;
     }
 
     private bool CheckGrounded()
