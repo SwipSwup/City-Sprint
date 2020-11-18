@@ -18,10 +18,11 @@ public class PlayerInput : MonoBehaviour
 
     void Update()
     {
-        ManagePlayerInput();
+        ManageTouchInput();
+        ManageKeyboardInput();
     }
 
-    private void ManagePlayerInput()
+    private void ManageTouchInput()
     {
         if (Input.touches.Length < 1)
         {
@@ -79,6 +80,16 @@ public class PlayerInput : MonoBehaviour
                 return;
             }
         }
+    }
+
+    private void ManageKeyboardInput()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) OnSwipeLeft?.Invoke();
+        if (Input.GetKeyDown(KeyCode.RightArrow)) OnSwipeRight?.Invoke();
+
+        if (Input.GetKeyDown(KeyCode.UpArrow)) OnSwipeUp?.Invoke();
+
+        if (Input.GetKeyDown(KeyCode.DownArrow)) OnSwipeDown?.Invoke();
     }
 
     public static Action OnSwipeUp;
