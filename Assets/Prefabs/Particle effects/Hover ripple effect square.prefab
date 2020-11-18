@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 6923122300411450567}
   - component: {fileID: 6923122300411450566}
   m_Layer: 0
-  m_Name: Hover ripple effect
+  m_Name: Hover ripple effect square
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4709,7 +4709,7 @@ ParticleSystemRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 0c019cc1e636ffd44a0fa02480e897a2, type: 2}
+  - {fileID: 2100000, guid: a27aa9ff024de1a478a87daf7a7ba65a, type: 2}
   - {fileID: 2100000, guid: 0c019cc1e636ffd44a0fa02480e897a2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
