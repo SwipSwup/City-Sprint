@@ -68,7 +68,6 @@ public class Player : MonoBehaviour
     private bool applyGravity = true;
     private float distToGround;
     private bool isGrounded = false;
-    private float roadPosY;
 
     private Vector3 movementTarget;
     private Vector3 oldLocation;
@@ -93,7 +92,7 @@ public class Player : MonoBehaviour
         curLane = (lanes.Length - 1) / 2;
         transform.position = lanes[curLane].position + Vector3.up * 3;
         movementTarget = transform.position;
-        roadPosY = lanes[curLane].position.y;
+        //roadPosY = lanes[curLane].position.y;
 
         PlayerInput.OnSwipeLeft += MoveLeft;
         PlayerInput.OnSwipeRight += MoveRight;
@@ -246,9 +245,9 @@ public class Player : MonoBehaviour
 
     private void CancelSneaking()
     {
+        distToGround = levitateDistToGround;
         sneakDurationLeft = 0;
         isSneaking = false;
-        Debug.Log("Sneaking Cancelled");
         //transform.position = new Vector3(transform.position.x, transform.position.y + levitateDistToGround - sneakDistToGround, transform.position.z);
     }
 
@@ -315,7 +314,7 @@ public class Player : MonoBehaviour
 
     private void SetYRelativeToGround()
     {
-        transform.position = new Vector3(transform.position.x, GetGroundY(transform.position.y) + distToGround - 0.01f, transform.position.z);
+        transform.position = new Vector3(transform.position.x, GetGroundY(transform.position.y) + distToGround - 0.01f + playerBoxColliderHeight / 2, transform.position.z);
     }
 
     private void ApplyGravity()
@@ -391,14 +390,7 @@ public class Player : MonoBehaviour
     }
 
     private bool CheckGrounded(float yOffset)
-    {
-        Debug.Log("distToGround: " + distToGround +
-            "\npositionY: " + transform.position.y +
-            "\nchange: " + (distToGround + playerBoxColliderHeight / 2 - yOffset) +
-            "\ntargetY: " + (transform.position.y - (distToGround + playerBoxColliderHeight / 2 - yOffset)) +
-            "\nplayerBoxCollider / 2: " + playerBoxColliderHeight / 2 +
-            "\nyOffset: " + yOffset);             
-        Debug.DrawRay(transform.position, Vector3.down, Color.blue, distToGround + playerBoxColliderHeight / 2 - yOffset);
+    {          
         return Physics.Raycast(transform.position, Vector3.down, distToGround + playerBoxColliderHeight / 2 - yOffset);
     }
 
