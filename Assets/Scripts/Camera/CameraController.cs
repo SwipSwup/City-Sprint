@@ -19,7 +19,6 @@ public class CameraController : MonoBehaviour
 
     private void blendToV1()
     {
-        Debug.Log("blend");
         vcam1.enabled = true;
     }
 
