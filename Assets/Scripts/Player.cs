@@ -390,14 +390,7 @@ public class Player : MonoBehaviour
     }
 
     private bool CheckGrounded(float yOffset)
-    {
-        Debug.Log("distToGround: " + distToGround +
-            "\npositionY: " + transform.position.y +
-            "\nchange: " + (distToGround + playerBoxColliderHeight / 2 - yOffset) +
-            "\ntargetY: " + (transform.position.y - (distToGround + playerBoxColliderHeight / 2 - yOffset)) +
-            "\nplayerBoxCollider / 2: " + playerBoxColliderHeight / 2 +
-            "\nyOffset: " + yOffset);             
-        Debug.DrawRay(transform.position, Vector3.down, Color.blue, distToGround + playerBoxColliderHeight / 2 - yOffset);
+    {          
         return Physics.Raycast(transform.position, Vector3.down, distToGround + playerBoxColliderHeight / 2 - yOffset);
     }
 
