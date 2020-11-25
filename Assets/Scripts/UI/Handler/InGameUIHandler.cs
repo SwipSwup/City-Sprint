@@ -20,7 +20,7 @@ public class InGameUIHandler : MonoBehaviour
     public void EnableInGameUI() => inGameUICanvas.enabled = true;
     public void DisableInGameUI() => inGameUICanvas.enabled = false;
 
-    private void UpdateScore(int score) => this.score.text = "Score: " + score;
+    private void UpdateScore(int score) => this.score.text = score.ToString();
     private void UpdateCoins(int coins) => this.coins.text = "Coins: " + coins;
 
     private void SubscribeToEvents()
