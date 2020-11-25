@@ -121,12 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &27503533 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3696410226120771826, guid: 9d38b4673b9834d47a0c1c25ee78d928,
-    type: 3}
-  m_PrefabInstance: {fileID: 7248388071883122453}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &42935256
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,8 +877,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 27503533}
-  m_Follow: {fileID: 27503533}
+  m_LookAt: {fileID: 0}
+  m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 10
@@ -1812,12 +1806,12 @@ PrefabInstance:
     - target: {fileID: 165185627279709454, guid: 9d38b4673b9834d47a0c1c25ee78d928,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -3.31
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 165185627279709454, guid: 9d38b4673b9834d47a0c1c25ee78d928,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.99
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 165185627279709454, guid: 9d38b4673b9834d47a0c1c25ee78d928,
         type: 3}
@@ -1893,7 +1887,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerTransform2
       value: 
-      objectReference: {fileID: 27503533}
+      objectReference: {fileID: 0}
     - target: {fileID: 5384147578879730631, guid: 9d38b4673b9834d47a0c1c25ee78d928,
         type: 3}
       propertyPath: distToGround

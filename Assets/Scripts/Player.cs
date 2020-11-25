@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     [Tooltip("Positions of the lanes the players moves between")]
     [SerializeField] private Transform[] lanes = new Transform[2];
+
     [Tooltip("The Transform of the Model of the player")]
     [SerializeField] private Transform playerModel;
 
@@ -67,6 +68,7 @@ public class Player : MonoBehaviour
     private bool applyGravity = true;
     private float distToGround;
     private bool isGrounded = false;
+    private float roadPosY;
 
     private Vector3 movementTarget;
     private Vector3 oldLocation;
@@ -91,6 +93,7 @@ public class Player : MonoBehaviour
         curLane = (lanes.Length - 1) / 2;
         transform.position = lanes[curLane].position + Vector3.up * 3;
         movementTarget = transform.position;
+        roadPosY = lanes[curLane].position.y;
 
         PlayerInput.OnSwipeLeft += MoveLeft;
         PlayerInput.OnSwipeRight += MoveRight;
@@ -222,16 +225,31 @@ public class Player : MonoBehaviour
         }
         else
         {
-            CancelSneaking();
+            distToGround = levitateDistToGround;
+            ApplyUnSneak();
         }
+    }
+
+    private void ApplyUnSneak()
+    {
+        if (!CheckGrounded(jumpSpeed * Time.deltaTime))
+        {
+            SetYRelativeToGround();
+            CancelSneaking();
+            return;
+        }
+
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(transform.position.x, transform.position.y + 100, transform.position.z), jumpSpeed * Time.deltaTime);
+
+        
     }
 
     private void CancelSneaking()
     {
         sneakDurationLeft = 0;
         isSneaking = false;
-        distToGround = levitateDistToGround;
-        transform.position += Vector3.up * (levitateDistToGround - sneakDistToGround);
+        Debug.Log("Sneaking Cancelled");
+        //transform.position = new Vector3(transform.position.x, transform.position.y + levitateDistToGround - sneakDistToGround, transform.position.z);
     }
 
     private void ManageMovementInput()
@@ -268,8 +286,6 @@ public class Player : MonoBehaviour
 
         if (isSneaking) CancelSneaking();
 
-        //playerRigidbody.AddForce(-playerRigidbody.velocity, ForceMode.VelocityChange);
-
         jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
         isJumping = true;
         applyGravity = false;
@@ -280,26 +296,39 @@ public class Player : MonoBehaviour
     private void Sneak()
     {
         if (controlsLocked) return;
-        if (isJumping)
-        {
-            CancelJumping();
-            //playerRigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
-        }
-        //else if (isGrounded)
-        //{
-        //    playerRigidbody.AddForce(Vector3.down * gravity, ForceMode.VelocityChange);
-        //}
+        if (isJumping) CancelJumping();
 
         distToGround = sneakDistToGround;
         sneakDurationLeft = sneakDuration;
         isSneaking = true;
     }
 
+    private float GetGroundY(float failOutput) //TODO: Wenn predict-ground-check dann position auf dementsprechendes offset zu groundY setzen
+    {
+        RaycastHit hit;
+
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 10)) 
+            return hit.point.y;
+
+        return failOutput;
+    }
+
+    private void SetYRelativeToGround()
+    {
+        transform.position = new Vector3(transform.position.x, GetGroundY(transform.position.y) + distToGround - 0.01f, transform.position.z);
+    }
+
     private void ApplyGravity()
     {
         if (CheckGrounded() || !applyGravity) return;
 
-        transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.down * 10, jumpSpeed / 60);
+        if (CheckGrounded(-jumpSpeed / 60))
+        {
+            SetYRelativeToGround();
+            return;
+        }
+
+        transform.position = Vector3.MoveTowards(transform.position, transform.position + Vector3.down * 100, jumpSpeed / 60);
 
 
         //Debug.Log(playerRigidbody.velocity);
@@ -357,9 +386,20 @@ public class Player : MonoBehaviour
 
     private bool CheckGrounded()
     {
-        //Debug.DrawRay(transform.position, Vector3.down, Color.magenta, distToGround + playerBoxColliderHeight / 2);
         isGrounded = Physics.Raycast(transform.position, Vector3.down, distToGround + playerBoxColliderHeight / 2);
         return isGrounded;
+    }
+
+    private bool CheckGrounded(float yOffset)
+    {
+        Debug.Log("distToGround: " + distToGround +
+            "\npositionY: " + transform.position.y +
+            "\nchange: " + (distToGround + playerBoxColliderHeight / 2 - yOffset) +
+            "\ntargetY: " + (transform.position.y - (distToGround + playerBoxColliderHeight / 2 - yOffset)) +
+            "\nplayerBoxCollider / 2: " + playerBoxColliderHeight / 2 +
+            "\nyOffset: " + yOffset);             
+        Debug.DrawRay(transform.position, Vector3.down, Color.blue, distToGround + playerBoxColliderHeight / 2 - yOffset);
+        return Physics.Raycast(transform.position, Vector3.down, distToGround + playerBoxColliderHeight / 2 - yOffset);
     }
 
     public static Action OnGameOver;
