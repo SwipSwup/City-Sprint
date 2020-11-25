@@ -115,7 +115,7 @@ MonoBehaviour:
   levitateDistToGround: 1.5
   collisionForce: 30
   jumpSpeed: 30
-  jumpHeight: 2
+  jumpHeight: 1
   jumpDuration: 4
   sneakDuration: 10
   sneakDistToGround: 0.5
