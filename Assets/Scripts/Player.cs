@@ -12,6 +12,9 @@ public class Player : MonoBehaviour
     [Tooltip("The Transform of the Model of the player")]
     [SerializeField] private Transform playerModel;
 
+    [Tooltip("manages Sound")]
+    [SerializeField] private SoundManager soundManager;
+
     [Space]
     [Header("Movement Settings")]
 
@@ -290,6 +293,8 @@ public class Player : MonoBehaviour
         applyGravity = false;
 
         jumpDurationLeft = jumpDuration;
+
+        soundManager.PitchIncrease(soundManager.carLoop, 0.5f, 3);
     }
 
     private void Sneak()
