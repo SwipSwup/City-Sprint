@@ -149,7 +149,7 @@ Light:
   serializedVersion: 10
   m_Type: 1
   m_Shape: 0
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 0.6698113, g: 0.6698113, b: 0.6698113, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -334,7 +334,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &841443835
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -888,7 +888,7 @@ AudioSource:
   m_audioClip: {fileID: 8300000, guid: c77921192c680d44c8c5d27292ec2655, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.011
-  m_Pitch: 1
+  m_Pitch: 0
   Loop: 1
   Mute: 1
   Spatialize: 0
@@ -1159,6 +1159,16 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 5034016771471608090, guid: 5d219f74248cafb468d4fbc10ff9e6cd,
         type: 3}
+    - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
+        type: 3}
+      propertyPath: tileSpeedMultiplyer
+      value: 1.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
+        type: 3}
+      propertyPath: tileSpeed
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 1785714898321872002, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
       propertyPath: m_Name

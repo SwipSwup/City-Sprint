@@ -87,7 +87,7 @@ public class TrackManager : MonoBehaviour
         GameManager.OnTick += HandleTickUpdate;
         TileDestroyer.OnTileDelete -= HandleTileDestroyedOnMenu;
         TileDestroyer.OnTileDelete += HandleTileDestroyedOnRun;
-        InstaniateTrack();
+        StartCoroutine(InstaniateTrack());
         OnTrackStart?.Invoke();
     }
 
@@ -98,14 +98,11 @@ public class TrackManager : MonoBehaviour
         startTile.GetComponent<Tile>().tileSpeed = tileSpeed;
     }
 
-    private void InstaniateTrack()
+    private IEnumerator InstaniateTrack()
     {
-        Tile tmp = activeTiles[activeTiles.Count - 1];
-        activeTiles = new List<Tile>();
-        activeTiles.Add(tmp);
+        yield return null;
         while (activeTiles.Count < maxTiles)
             SpawnRandomTrackTile();
-
         UpdateTileSpeed(tileSpeed);
     }
 
@@ -181,6 +178,7 @@ public class TrackManager : MonoBehaviour
     private void SpawnRandomTrackTile()
     {
         GameObject newTilePrefab = GetRandomTile(trackTilePrefabs);
+        Debug.Log(newTilePrefab.name + "; " + GetNewTrackTilePosition(tileSpacer));
 
         SpawnTile(tileSpacer, GetNewTrackTilePosition(tileSpacer), transform.rotation);
         SpawnTile(newTilePrefab, GetNewTrackTilePosition(newTilePrefab), transform.rotation);
