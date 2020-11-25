@@ -66,7 +66,6 @@ public class TrackManager : MonoBehaviour
 
     private void SpawnRandomMenuTile()
     {
-        //todo temp
         GameObject newTilePrefab = menuTilePrefabs[(int)UnityEngine.Random.Range(0f, menuTilePrefabs.Length)];
 
         SpawnTile(newTilePrefab, GetNewTrackTilePosition(newTilePrefab), transform.rotation);
