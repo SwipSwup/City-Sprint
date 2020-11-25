@@ -61,13 +61,12 @@ public class TrackManager : MonoBehaviour
     {
         TileDestroyer.OnTileDelete += HandleTileDestroyedOnMenu;
         AddstartTile();
-        FillTrack(menuTilePrefabs, 4);
+        FillTrack(menuTilePrefabs, 3);
     }
 
     private void SpawnRandomMenuTile()
     {
         //todo temp
-        menuTilePrefabs = new GameObject[] { tileSpacer };
         GameObject newTilePrefab = menuTilePrefabs[(int)UnityEngine.Random.Range(0f, menuTilePrefabs.Length)];
 
         SpawnTile(newTilePrefab, GetNewTrackTilePosition(newTilePrefab), transform.rotation);
@@ -77,8 +76,7 @@ public class TrackManager : MonoBehaviour
     {
         while (activeTiles.Count < amount)
         {
-            //todo temp
-            GameObject tile = tileSpacer;
+            GameObject tile = menuTilePrefabs[(int)UnityEngine.Random.Range(0f, menuTilePrefabs.Length)];
             SpawnTile(tile, GetNewTrackTilePosition(tile), transform.rotation);
         }
         UpdateTileSpeed(tileSpeed);
