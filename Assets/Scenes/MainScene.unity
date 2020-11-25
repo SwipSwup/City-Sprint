@@ -98,7 +98,7 @@ LightmapSettings:
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
-  m_UseShadowmask: 0
+  m_UseShadowmask: 1
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -121,12 +121,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!4 &27503533 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3696410226120771826, guid: 9d38b4673b9834d47a0c1c25ee78d928,
-    type: 3}
-  m_PrefabInstance: {fileID: 7248388071883122453}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &42935256
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,6 +487,12 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: -1283430238283731265, guid: 409bd38650786d142b3c9d26dd7bb6a0, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 409bd38650786d142b3c9d26dd7bb6a0, type: 3}
+--- !u!1 &334328943 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5034016771471608090, guid: 5d219f74248cafb468d4fbc10ff9e6cd,
+    type: 3}
+  m_PrefabInstance: {fileID: 6298337104981756095}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &384756308
 GameObject:
   m_ObjectHideFlags: 0
@@ -574,13 +574,13 @@ MonoBehaviour:
   - {fileID: 131321913}
   playerModel: {fileID: 0}
   speed: 30
+  levitateDistToGround: 1
+  collisionForce: 12.14
   jumpSpeed: 10
   jumpHeight: 2
   jumpDuration: 4
   sneakDuration: 10
-  gravity: 10
-  distToGround: 0.01
-  collisionForce: 12.14
+  sneakDistToGround: 0.01
   controlsLocked: 0
 --- !u!1 &442552747
 GameObject:
@@ -749,7 +749,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 841443834}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 172515602e62fb746b5d573b38a5fe58, type: 3}
   m_Name: 
@@ -809,8 +809,8 @@ MonoBehaviour:
   m_StreamingVersion: 20170927
   m_Priority: 10
   m_StandbyUpdate: 2
-  m_LookAt: {fileID: 27503533}
-  m_Follow: {fileID: 27503533}
+  m_LookAt: {fileID: 0}
+  m_Follow: {fileID: 0}
   m_Lens:
     FieldOfView: 40
     OrthographicSize: 10
@@ -1610,9 +1610,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
+      propertyPath: menuTilePrefabs.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
+        type: 3}
       propertyPath: startTile
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 334328943}
     - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
       propertyPath: tileSpacer
@@ -1634,6 +1639,12 @@ PrefabInstance:
       propertyPath: trackTilePrefabs.Array.data[0]
       value: 
       objectReference: {fileID: 3745101668477015237, guid: 55aab76daeee2b847b15eb2459bd84f3,
+        type: 3}
+    - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
+        type: 3}
+      propertyPath: menuTilePrefabs.Array.data[0]
+      value: 
+      objectReference: {fileID: 5034016771471608090, guid: 5d219f74248cafb468d4fbc10ff9e6cd,
         type: 3}
     - target: {fileID: 1785714898321872002, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
@@ -1882,7 +1893,7 @@ PrefabInstance:
         type: 3}
       propertyPath: playerTransform2
       value: 
-      objectReference: {fileID: 27503533}
+      objectReference: {fileID: 0}
     - target: {fileID: 5384147578879730631, guid: 9d38b4673b9834d47a0c1c25ee78d928,
         type: 3}
       propertyPath: distToGround
