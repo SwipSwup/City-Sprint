@@ -178,7 +178,6 @@ public class TrackManager : MonoBehaviour
     private void SpawnRandomTrackTile()
     {
         GameObject newTilePrefab = GetRandomTile(trackTilePrefabs);
-        Debug.Log(newTilePrefab.name + "; " + GetNewTrackTilePosition(tileSpacer));
 
         SpawnTile(tileSpacer, GetNewTrackTilePosition(tileSpacer), transform.rotation);
         SpawnTile(newTilePrefab, GetNewTrackTilePosition(newTilePrefab), transform.rotation);
