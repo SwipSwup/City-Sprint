@@ -5,93 +5,39 @@ using UnityEngine;
 public class SoundManager : MonoBehaviour
 {
 
-    public AudioSource carLoop;
+
+    [Space]
+    [Header("Engine Loop")]
     [SerializeField] private bool playCarLoop = true;
-    [SerializeField] private float volumeCarLoop = 1;
+    public AudioSource carLoop;
+    [SerializeField] private Transform player;
+    [SerializeField] private float defaultLevitateY = 1.84f;
+    [Space]
+    [Range(0f, 1f)]
+    [SerializeField] private float pitchDamping = 0.5f;
+    [Range(-10f, 10f)]
+    [SerializeField] private float pitchOffset = 0f;
 
-    private List<PitchChange> activePitchChanges = new List<PitchChange>();
 
-    private class PitchChange
-    {
-        private float seconds;
-        private float secondsLeft;
-
-        private float ogPitch;
-        private float maxPitch;
-        private float curPitch;
-
-        private int delta = 1;
-        private int stage = 1;
-        private bool isDone = false;
-
-        AudioSource source;
-
-        public PitchChange(AudioSource source, float seconds, float maxPitch)
-        {
-            this.seconds = seconds;
-            this.maxPitch = maxPitch;
-            this.source = source;
-
-            secondsLeft = seconds;
-            ogPitch = source.pitch;
-            curPitch = ogPitch;
-        }
-
-        public void UpdatePitch(float dTime)
-        {
-            if (isDone) return;
-
-            if (stage == 1) curPitch = ogPitch + (maxPitch - ogPitch) * ((1 - secondsLeft / seconds) * 2);
-            else curPitch = ogPitch + (maxPitch - ogPitch) * ((secondsLeft / seconds) * 2);
-
-            //curPitch = (stage == 1) ? ogPitch + (maxPitch - ogPitch) * (1 - secondsLeft / seconds * 2) : ogPitch + (maxPitch - ogPitch) * (secondsLeft / seconds * 2);
-
-            source.pitch = curPitch;
-            secondsLeft -= dTime;
-
-            if (secondsLeft <= seconds / 2)
-            {
-                stage = 2;
-            }
-
-            if (secondsLeft < 0)
-            {
-                curPitch = ogPitch;
-                source.pitch = curPitch;
-                isDone = true;
-            }
-        }
-
-        public bool IsDone() => isDone;
-    }
-
-    // Start is called before the first frame update
     void Start()
     {
-        carLoop.maxDistance = -1;
         carLoop.loop = true;
 
         if (playCarLoop) carLoop.Play();
-
-
     }
 
-    // Update is called once per frame
     void Update()
     {
-        for (int i = 0; i < activePitchChanges.Count - 1; i++)
-        {
-            PitchChange pitchChange = activePitchChanges[i];
-            pitchChange.UpdatePitch(Time.deltaTime);
-            if (pitchChange.IsDone())
-            {
-                activePitchChanges.Remove(pitchChange);
-            }
-        }
+        if (playCarLoop) carLoop.pitch = ((player.position.y + pitchOffset) / defaultLevitateY) * (1 - pitchDamping) + pitchDamping;
     }
 
-    public void PitchIncrease(AudioSource source, float seconds, float maxPitch)
+    private float GetGroundY()
     {
-        activePitchChanges.Add(new PitchChange(source, seconds, maxPitch));
+        RaycastHit hit;
+
+        if (Physics.Raycast(player.position, Vector3.down, out hit, 100))
+            return hit.point.y;
+
+        return player.position.y;
     }
 }
