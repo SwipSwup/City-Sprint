@@ -12,9 +12,6 @@ public class Player : MonoBehaviour
     [Tooltip("The Transform of the Model of the player")]
     [SerializeField] private Transform playerModel;
 
-    [Tooltip("manages Sound")]
-    [SerializeField] private SoundManager soundManager;
-
     [Space]
     [Header("Movement Settings")]
 
@@ -251,7 +248,6 @@ public class Player : MonoBehaviour
         distToGround = levitateDistToGround;
         sneakDurationLeft = 0;
         isSneaking = false;
-        //transform.position = new Vector3(transform.position.x, transform.position.y + levitateDistToGround - sneakDistToGround, transform.position.z);
     }
 
     private void ManageMovementInput()
@@ -285,7 +281,6 @@ public class Player : MonoBehaviour
     private void Jump()
     {
         if (controlsLocked || !CheckGrounded()) return;
-
         if (isSneaking) CancelSneaking();
 
         jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
@@ -293,8 +288,6 @@ public class Player : MonoBehaviour
         applyGravity = false;
 
         jumpDurationLeft = jumpDuration;
-
-        soundManager.PitchIncrease(soundManager.carLoop, 0.5f, 3);
     }
 
     private void Sneak()
