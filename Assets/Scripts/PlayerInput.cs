@@ -33,9 +33,29 @@ public class PlayerInput : MonoBehaviour
 
         if (touch.phase == TouchPhase.Canceled || touch.phase == TouchPhase.Ended)
         {
-            if (deltaPosition.x < tabDistance && deltaPosition.x > -tabDistance &&
-                deltaPosition.y < tabDistance && deltaPosition.y > -tabDistance &&
-                inputValid) OnScreenTab?.Invoke();
+            float maxDelta = 0;
+
+            if (Math.Abs(deltaPosition.x) > Math.Abs(maxDelta)) maxDelta = deltaPosition.x;
+            if (Math.Abs(deltaPosition.y) > Math.Abs(maxDelta)) maxDelta = deltaPosition.y;
+
+            if (maxDelta <= tabDistance && inputValid) OnScreenTab?.Invoke();
+
+            if (maxDelta == deltaPosition.x)
+            {
+                OnSwipeLeft?.Invoke();
+            }
+            else if (maxDelta == deltaPosition.x)
+            {
+                OnSwipeRight?.Invoke();
+            }
+            else if (maxDelta == deltaPosition.y)
+            {
+                OnSwipeUp?.Invoke();
+            }
+            else if (maxDelta == deltaPosition.y)
+            {
+                OnSwipeDown?.Invoke();
+            }
 
             inputValid = false;
             return;
@@ -48,6 +68,7 @@ public class PlayerInput : MonoBehaviour
             return;
         }
 
+        /*
         if (touch.phase == TouchPhase.Moved && inputValid)
         {
             deltaPosition = touch.position - startTouch;
@@ -79,7 +100,7 @@ public class PlayerInput : MonoBehaviour
                 inputValid = false;
                 return;
             }
-        }
+        }*/
     }
 
     private void ManageKeyboardInput()
