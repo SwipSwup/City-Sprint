@@ -283,7 +283,7 @@ public class Player : MonoBehaviour
         if (controlsLocked || !CheckGrounded()) return;
         if (isSneaking) CancelSneaking();
 
-        jumpingTarget = new Vector3(transform.position.x, transform.position.y + jumpHeight, transform.position.z);
+        jumpingTarget = new Vector3(transform.position.x, GetGroundY(transform.position.y) + distToGround + playerBoxColliderHeight / 2 + jumpHeight, transform.position.z);
         isJumping = true;
         applyGravity = false;
 
