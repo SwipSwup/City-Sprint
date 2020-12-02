@@ -18,12 +18,25 @@ public class SoundManager : MonoBehaviour
     [Range(-10f, 10f)]
     [SerializeField] private float pitchOffset = 0f;
 
+    [Space]
+    [Header("Game Over")]
+    [SerializeField] private bool playGameOverSound = true;
+    public AudioSource gameOverSound;
+
+    [Space]
+    [Header("Coin Collect")]
+    [SerializeField] private bool playCoinCollectSound = true;
+    public AudioSource coinCollectSound;
+
 
     void Start()
     {
         carLoop.loop = true;
 
         if (playCarLoop) carLoop.Play();
+
+        Player.OnCollectCoin += PlayCoinCollectSound;
+        Player.OnGameOver += PlayGameOverSound;
     }
 
     void Update()
@@ -39,5 +52,15 @@ public class SoundManager : MonoBehaviour
             return hit.point.y;
 
         return player.position.y;
+    }
+
+    public void PlayGameOverSound()
+    {
+        if (playGameOverSound) gameOverSound.Play();
+    }
+
+    public void PlayCoinCollectSound()
+    {
+        if (playCoinCollectSound) coinCollectSound.Play();
     }
 }
