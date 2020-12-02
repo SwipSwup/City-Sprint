@@ -8,6 +8,8 @@ public class PlayerData : ScriptableObject
     public string email;
     public string displayName;
 
+    public bool firstStart;
+
     public int place;
     public int lastScore;
     public int highscore;

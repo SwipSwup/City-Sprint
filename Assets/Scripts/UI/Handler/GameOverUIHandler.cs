@@ -31,8 +31,33 @@ public class GameOverUIHandler : MonoBehaviour
     private void OpenGameOverMenu()
     {
         gameOverCanvas.enabled = true;
-        ChangeScore(data.lastScore);
+        StartCoroutine(ShowInfo());
         ChangeCoins(data.lastCoins);
+    }
+
+    private IEnumerator ShowInfo()
+    {
+        ChangeScore(0);
+
+        int lastScore = data.lastScore;
+        int tmp = 0;
+        Debug.Log(lastScore);
+        yield return new WaitForSeconds(.5f);
+        while(tmp < data.lastScore)
+        {
+          //  ChangeScore(tmp %= lastScore);
+            lastScore /= 5;
+            Debug.Log(lastScore);
+
+            yield return new WaitForSeconds(.1f);
+        }
+        yield return new WaitForSeconds(1f);
+        showCoins();
+    }
+
+    private void showCoins()
+    {
+        coins.enabled = true;
     }
 
     private void ChangeScore(int score) => this.score.text = "Score: " + score;
