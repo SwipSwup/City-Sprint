@@ -39,6 +39,12 @@ public class SoundManager : MonoBehaviour
         Player.OnGameOver += PlayGameOverSound;
     }
 
+    private void OnDestroy()
+    {
+        Player.OnCollectCoin -= PlayCoinCollectSound;
+        Player.OnGameOver -= PlayGameOverSound;
+    }
+
     void Update()
     {
         if (playCarLoop)
