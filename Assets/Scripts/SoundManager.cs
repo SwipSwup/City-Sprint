@@ -41,7 +41,14 @@ public class SoundManager : MonoBehaviour
 
     void Update()
     {
-        if (playCarLoop) carLoop.pitch = ((player.position.y + pitchOffset) / defaultLevitateY) * (1 - pitchDamping) + pitchDamping;
+        if (playCarLoop)
+        {
+            float newPitch = ((player.position.y + pitchOffset) / defaultLevitateY) * (1 - pitchDamping) + pitchDamping);
+            if (carLoop.pitch == newPitch) return;
+
+            carLoop.pitch = newPitch;
+            Debug.Log("pitchChange");
+        }
     }
 
     private float GetGroundY()
