@@ -43,7 +43,7 @@ public class SoundManager : MonoBehaviour
     {
         if (playCarLoop)
         {
-            float newPitch = ((player.position.y + pitchOffset) / defaultLevitateY) * (1 - pitchDamping) + pitchDamping);
+            float newPitch = ((player.position.y + pitchOffset) / defaultLevitateY) * (1 - pitchDamping) + pitchDamping;
             if (carLoop.pitch == newPitch) return;
 
             carLoop.pitch = newPitch;
