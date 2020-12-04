@@ -6,6 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
+    //Static gamedata
+
+
+
+
     [SerializeField]
     private PlayerData playerData;
     private bool runActive = false;
