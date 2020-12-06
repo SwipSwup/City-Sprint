@@ -36,21 +36,24 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape)) EndRun();
 #endif
     }
-
-    private void IsNewPlayer()
+    private void CreateNewPlayer(string email, string username)
     {
-        if (playerData.firsTimeStart == false) return;
+        playerData.email = email;
+        playerData.displayName = username;
 
-
-
-
-    }
+        playerData.place = 0;
+        playerData.lastScore = 0;
+        playerData.highscore = 0;
+        playerData.lastCoins = 0;
+        playerData.coins = 0;
+    } 
 
     private void SubscribeToEvents()
     {
         MainMenuUIHandler.OnPlay += StartRun;
         Player.OnCollectCoin += UpdateCoins;
         Player.OnGameOver += GameOver;
+        ConnectPopUpHandler.OnUserRegister += CreateNewPlayer;
     }
 
     private void UnSubscribeToEvents()
@@ -60,6 +63,7 @@ public class GameManager : MonoBehaviour
         Player.OnCollectCoin -= UpdateCoins;
         Player.OnGameOver -= GameOver;
         PlayerInput.OnScreenTab -= EndRun;
+        ConnectPopUpHandler.OnUserRegister -= CreateNewPlayer;
     }
 
     private void StartRun()
