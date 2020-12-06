@@ -8,7 +8,7 @@ public class PlayerData : ScriptableObject
     public string email;
     public string displayName;
 
-    public bool firstStart;
+    public bool firsTimeStart;
 
     public int place;
     public int lastScore;

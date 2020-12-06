@@ -6,11 +6,6 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    //Static gamedata
-
-
-
-
     [SerializeField]
     private PlayerData playerData;
     private bool runActive = false;
@@ -19,7 +14,6 @@ public class GameManager : MonoBehaviour
     private const float TICK_SEC_INTERVAL = 0.2f;
     private float tickTimer;
 
-    [SerializeField] 
     private TrackManager tManager;
     private int score;
     private int coins;
@@ -27,7 +21,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
+        tManager = GetComponent<TrackManager>();
         SubscribeToEvents();
+
+
     }
 
     private void OnDestroy() => UnSubscribeToEvents();
@@ -38,6 +35,15 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.Escape)) EndRun();
 #endif
+    }
+
+    private void IsNewPlayer()
+    {
+        if (playerData.firsTimeStart == false) return;
+
+
+
+
     }
 
     private void SubscribeToEvents()
