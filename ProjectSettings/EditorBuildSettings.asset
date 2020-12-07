@@ -12,6 +12,9 @@ EditorBuildSettings:
     path: Assets/Scenes/TESTING/David.unity
     guid: a13061a31745dc5418311463f88fdef2
   - enabled: 1
+    path: Assets/Scenes/LoadingScene.unity
+    guid: 8acc7d7291fc1fd428ea8d12a07a65d1
+  - enabled: 1
     path: Assets/Scenes/MainScene.unity
     guid: c365ca1f44cb3ad42b7893f1d8b290c6
   - enabled: 1
