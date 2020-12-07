@@ -26,7 +26,6 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.touches.Length < 1)
         {
-            inputValid = false;
             return;
         }
         touch = Input.touches[0];
@@ -38,7 +37,7 @@ public class PlayerInput : MonoBehaviour
             if (Math.Abs(deltaPosition.x) > Math.Abs(maxDelta)) maxDelta = deltaPosition.x;
             if (Math.Abs(deltaPosition.y) > Math.Abs(maxDelta)) maxDelta = deltaPosition.y;
 
-            if (maxDelta <= tabDistance && inputValid) OnScreenTab?.Invoke();
+            if (maxDelta <= tabDistance) OnScreenTab?.Invoke();
 
             if (maxDelta == deltaPosition.x)
             {
@@ -57,14 +56,12 @@ public class PlayerInput : MonoBehaviour
                 OnSwipeDown?.Invoke();
             }
 
-            inputValid = false;
             return;
         }
 
         if (touch.phase == TouchPhase.Began)
         {
             startTouch = touch.position;
-            inputValid = true;
             return;
         }
 
