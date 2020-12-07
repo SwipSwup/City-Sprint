@@ -32,6 +32,7 @@ public class PlayerInput : MonoBehaviour
 
         if (touch.phase == TouchPhase.Canceled || touch.phase == TouchPhase.Ended)
         {
+            deltaPosition = startTouch - touch.position;
             float maxDelta = 0;
 
             if (Math.Abs(deltaPosition.x) > Math.Abs(maxDelta)) maxDelta = deltaPosition.x;
