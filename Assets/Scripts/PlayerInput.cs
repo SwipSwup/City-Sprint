@@ -40,11 +40,11 @@ public class PlayerInput : MonoBehaviour
 
             if (maxDelta <= tabDistance) OnScreenTab?.Invoke();
 
-            if (maxDelta == deltaPosition.x && maxDelta < 0)
+            if (maxDelta == deltaPosition.x && maxDelta > 0)
             {
                 OnSwipeLeft?.Invoke();
             }
-            else if (maxDelta == deltaPosition.x && maxDelta > 0)
+            else if (maxDelta == deltaPosition.x && maxDelta < 0)
             {
                 OnSwipeRight?.Invoke();
             }
