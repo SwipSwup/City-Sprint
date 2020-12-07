@@ -11,7 +11,6 @@ public class PlayerInput : MonoBehaviour
     [Tooltip("Distance up to wich it still counts as a tab")]
     public float tabDistance = 10f;
 
-    private bool inputValid = false;
     private Touch touch;
     private Vector2 startTouch;
     private Vector2 deltaPosition;
@@ -24,10 +23,8 @@ public class PlayerInput : MonoBehaviour
 
     private void ManageTouchInput()
     {
-        if (Input.touches.Length < 1)
-        {
-            return;
-        }
+        if (Input.touches.Length < 1) return;
+        
         touch = Input.touches[0];
 
         if (touch.phase == TouchPhase.Canceled || touch.phase == TouchPhase.Ended)
@@ -60,45 +57,7 @@ public class PlayerInput : MonoBehaviour
             return;
         }
 
-        if (touch.phase == TouchPhase.Began)
-        {
-            startTouch = touch.position;
-            return;
-        }
-
-        /*
-        if (touch.phase == TouchPhase.Moved && inputValid)
-        {
-            deltaPosition = touch.position - startTouch;
-
-            if (deltaPosition.x < -swipeDetection)
-            {
-                OnSwipeLeft?.Invoke();
-                inputValid = false;
-                return;
-            }
-
-            if (deltaPosition.x > swipeDetection)
-            {
-                OnSwipeRight?.Invoke();
-                inputValid = false;
-                return;
-            }
-
-            if (deltaPosition.y > swipeDetection)
-            {
-                OnSwipeUp?.Invoke();
-                inputValid = false;
-                return;
-            }
-
-            if (deltaPosition.y < -swipeDetection)
-            {
-                OnSwipeDown?.Invoke();
-                inputValid = false;
-                return;
-            }
-        }*/
+        if (touch.phase == TouchPhase.Began) startTouch = touch.position;
     }
 
     private void ManageKeyboardInput()
