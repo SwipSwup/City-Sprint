@@ -1674,6 +1674,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1821208071}
+        m_MethodName: PlaySoundGeneralButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &239232332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5115,6 +5126,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1821208071}
+        m_MethodName: PlaySoundStartGameButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &931883185
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6738,6 +6760,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1821208071}
+        m_MethodName: PlaySoundGeneralButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1111714602
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8208,6 +8241,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1821208071}
+        m_MethodName: PlaySoundGeneralButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1364395059
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9482,6 +9526,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1821208071}
+        m_MethodName: PlaySoundGeneralButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1722211973
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9686,6 +9741,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1821208071}
+        m_MethodName: PlaySoundGeneralButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1808027864
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9737,6 +9803,7 @@ GameObject:
   - component: {fileID: 1821208068}
   - component: {fileID: 1821208069}
   - component: {fileID: 1821208070}
+  - component: {fileID: 1821208071}
   m_Layer: 0
   m_Name: UIHandler
   m_TagString: Untagged
@@ -9843,6 +9910,18 @@ MonoBehaviour:
   registerPasswordConfirm: {fileID: 1681421968}
   loginError: {fileID: 939189250}
   registerError: {fileID: 269074267}
+--- !u!114 &1821208071
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1821208064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 972c26a452424104bbf992ca28ea443f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1833170899
 GameObject:
   m_ObjectHideFlags: 0
@@ -10331,6 +10410,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1821208071}
+        m_MethodName: PlaySoundGeneralButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1927553577
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10449,7 +10539,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1930596307}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1821208071}
+        m_MethodName: PlaySoundGeneralButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1930596307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11250,6 +11351,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 1821208071}
+        m_MethodName: PlaySoundGeneralButton
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &2008676140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11382,6 +11494,17 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 1821208070}
         m_MethodName: disableLoginUI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1821208071}
+        m_MethodName: PlaySoundGeneralButton
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
