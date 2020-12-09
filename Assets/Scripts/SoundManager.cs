@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
@@ -28,21 +26,46 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private bool playCoinCollectSound = true;
     public AudioSource coinCollectSound;
 
+    [Space]
+    [Header("Ambient Sounds")]
+    [SerializeField] private bool playAmbientSounds = true;
+    [SerializeField] private float ambientSoundChancePerSec = 0.5f;
+    public AudioSource[] ambientSounds;
+
+    [Space]
+    [Header("UI Button Sounds")]
+    [SerializeField] private bool playButtonSounds = true;
+    public AudioSource continueButtonSound;
+    public AudioSource generalButtonSound;
+    public AudioSource pauseButtonSound;
+    public AudioSource startGameButtonSound;
+
 
     void Start()
     {
         carLoop.loop = true;
 
         if (playCarLoop) carLoop.Play();
+        InvokeRepeating("PlayAmbientSound", 1f, 1f);
 
         Player.OnCollectCoin += PlayCoinCollectSound;
         Player.OnGameOver += PlayGameOverSound;
+
+        UISoundEvents.SoundContinueButton += PlaySoundContinueButton;
+        UISoundEvents.SoundGeneralButton += PlaySoundGeneralButton;
+        UISoundEvents.SoundPauseButton += PlaySoundPauseButton;
+        UISoundEvents.SoundStartGameButton += PlaySoundStartGameButton;
     }
 
     private void OnDestroy()
     {
         Player.OnCollectCoin -= PlayCoinCollectSound;
         Player.OnGameOver -= PlayGameOverSound;
+
+        UISoundEvents.SoundContinueButton -= PlaySoundContinueButton;
+        UISoundEvents.SoundGeneralButton -= PlaySoundGeneralButton;
+        UISoundEvents.SoundPauseButton -= PlaySoundPauseButton;
+        UISoundEvents.SoundStartGameButton -= PlaySoundStartGameButton;
     }
 
     void Update()
@@ -67,13 +90,38 @@ public class SoundManager : MonoBehaviour
         return player.position.y;
     }
 
-    public void PlayGameOverSound()
+    private void PlayAmbientSound()
+    {
+        if (playAmbientSounds && ambientSounds.Length > 0 && Random.value > ambientSoundChancePerSec)
+        {
+            ambientSounds[Random.Range(0, ambientSounds.Length - 1)].Play();
+        }
+    }
+
+    private void PlayGameOverSound()
     {
         if (playGameOverSound) gameOverSound.Play();
     }
 
-    public void PlayCoinCollectSound()
+    private void PlayCoinCollectSound()
     {
         if (playCoinCollectSound) coinCollectSound.Play();
+    }
+
+    public void PlaySoundContinueButton()
+    {
+        if (playButtonSounds) continueButtonSound.Play();
+    }
+    public void PlaySoundGeneralButton()
+    {
+        if (playButtonSounds) generalButtonSound.Play();
+    }
+    public void PlaySoundPauseButton()
+    {
+        if (playButtonSounds) pauseButtonSound.Play();
+    }
+    public void PlaySoundStartGameButton()
+    {
+        if (playButtonSounds) startGameButtonSound.Play();
     }
 }
