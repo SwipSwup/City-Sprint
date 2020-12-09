@@ -10,10 +10,16 @@ public class TrackManager : MonoBehaviour
     private int tickCounter;
 
     public List<Tile> activeTiles;
+    public List<Tile> activeBuildings;
     public GameObject[] trackTilePrefabs;
     public GameObject[] menuTilePrefabs;
+    public GameObject[] buildingPrefabs;
     public GameObject startTile;
     public GameObject tileSpacer;
+
+    public int maxBuildings = 10;
+    public Transform leftBuilding;
+    public Transform rightBuilding;
 
     public int maxTiles = 10;
     public float maxTileSpeed = 25f;
@@ -40,7 +46,8 @@ public class TrackManager : MonoBehaviour
 
     private void SubscribeToEvents()
     {
-        MainMenuUIHandler.OnPlay += StartTrack; 
+        MainMenuUIHandler.OnPlay += StartTrack;
+        TileDestroyer.OnBuildingDelete += ReactOnBuildingDestroyed;
         Player.OnGameOver += ReactOnGameOver;
         Player.OnObstacleCollision += ReactOnObstacleHit;
     }
@@ -49,6 +56,7 @@ public class TrackManager : MonoBehaviour
     {
         MainMenuUIHandler.OnPlay -= StartTrack; 
         GameManager.OnTick -= ReactOnTickUpdate;
+        TileDestroyer.OnBuildingDelete -= ReactOnBuildingDestroyed;
         TileDestroyer.OnTileDelete -= ReactOnTileDestroyedInRun;
         TileDestroyer.OnTileDelete -= ReactOnTileDestroyedInMenu;
         Player.OnGameOver -= ReactOnGameOver;
@@ -150,6 +158,12 @@ public class TrackManager : MonoBehaviour
         activeTiles.Remove(tile);
     }
 
+    private void ReactOnBuildingDestroyed(Tile tile)
+    {
+        activeBuildings.Remove(tile);
+
+    }
+
     private void ReactOnTileDestroyedInMenu(Tile tile)
     {
         if (tile.isSpacer)
@@ -191,6 +205,8 @@ public class TrackManager : MonoBehaviour
         SpawnTile(newTilePrefab, GetNewTrackTilePosition(newTilePrefab), transform.rotation);
     }
 
+   
+
     /// <summary>
     /// Spawns a tileprefab at given position and with the given rotation
     /// </summary>
@@ -202,5 +218,25 @@ public class TrackManager : MonoBehaviour
         GameObject newTile = Instantiate(prefab, position, rotation);
         newTile.GetComponent<Tile>().tileSpeed = tileSpeed;
         activeTiles.Add(newTile.GetComponent<Tile>());
+    }
+
+    private void SpawnRandomBuildingLeft()
+    {
+        GameObject newBuilding = Instantiate(buildingPrefabs[(int)UnityEngine.Random.Range(0f, buildingPrefabs.Length)], leftBuilding.position, leftBuilding.rotation);
+
+        Tile tile = newBuilding.AddComponent<Tile>();
+        tile.tileSpeed = tileSpeed;
+        tile.isSpacer = true;
+        activeBuildings.Add(tile);
+    }
+
+    private void SpawnRandomBuildingRight()
+    {
+        GameObject newBuilding = Instantiate(buildingPrefabs[(int)UnityEngine.Random.Range(0f, buildingPrefabs.Length)], rightBuilding.position, rightBuilding.rotation);
+
+        Tile tile = newBuilding.AddComponent<Tile>();
+        tile.tileSpeed = tileSpeed;
+        tile.isSpacer = true;
+        activeBuildings.Add(tile);
     }
 }
