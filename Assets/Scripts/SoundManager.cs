@@ -25,11 +25,13 @@ public class SoundManager : MonoBehaviour
     [Header("Game Over")]
     [SerializeField] private bool playGameOverSound = true;
     public AudioSource gameOverSound;
+    public bool knoardPlayGameOver = false;
 
     [Space]
     [Header("Coin Collect")]
     [SerializeField] private bool playCoinCollectSound = true;
     public AudioSource coinCollectSound;
+    public bool knoardPlayCoinCollect = false;
 
     [Space]
     [Header("Ambient Sounds")]
@@ -38,6 +40,7 @@ public class SoundManager : MonoBehaviour
     private float delayLeft;
     [SerializeField] private float ambientSoundChancePerDelay = 0.2f;
     public AudioSource[] ambientSounds;
+    public bool knoardPlayAmbientSound = false;
 
     [Space]
     [Header("UI Button Sounds")]
@@ -91,9 +94,23 @@ public class SoundManager : MonoBehaviour
         if (playCarLoop && playSounds)
         {
             float newPitch = (player.position.y - defaultLevitateY + pitchOffset) * (1 - pitchDamping) + 1;
-            if (carLoop.pitch == newPitch) return;
+            if (carLoop.pitch != newPitch) carLoop.pitch = newPitch;
+        }
 
-            carLoop.pitch = newPitch;
+        if (knoardPlayAmbientSound)
+        {
+            knoardPlayAmbientSound = false;
+            ambientSounds[Random.Range(0, ambientSounds.Length - 1)].Play();
+        }
+        if (knoardPlayCoinCollect)
+        {
+            knoardPlayCoinCollect = false;
+            PlayCoinCollectSound();
+        }
+        if (knoardPlayGameOver)
+        {
+            knoardPlayGameOver = false;
+            PlayGameOverSound();
         }
     }
 
@@ -115,7 +132,7 @@ public class SoundManager : MonoBehaviour
             return;
         }
         delayLeft = ambientSoundDelaySec;
-        if (playAmbientSounds && playSounds && ambientSounds.Length > 0 && Random.value >  1 - ambientSoundChancePerDelay)
+        if (playAmbientSounds && playSounds && ambientSounds.Length > 0 && Random.value > 1 - ambientSoundChancePerDelay)
         {
             ambientSounds[Random.Range(0, ambientSounds.Length - 1)].Play();
         }
