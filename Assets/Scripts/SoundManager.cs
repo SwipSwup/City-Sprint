@@ -2,8 +2,6 @@
 
 public class SoundManager : MonoBehaviour
 {
-
-
     [Space]
     [Header("Engine Loop")]
     [SerializeField] private bool playCarLoop = true;
@@ -29,7 +27,9 @@ public class SoundManager : MonoBehaviour
     [Space]
     [Header("Ambient Sounds")]
     [SerializeField] private bool playAmbientSounds = true;
-    [SerializeField] private float ambientSoundChancePerSec = 0.5f;
+    [SerializeField] private float ambientSoundDelaySec = 5f;
+    private float delayLeft;
+    [SerializeField] private float ambientSoundChancePerDelay = 0.2f;
     public AudioSource[] ambientSounds;
 
     [Space]
@@ -92,7 +92,13 @@ public class SoundManager : MonoBehaviour
 
     private void PlayAmbientSound()
     {
-        if (playAmbientSounds && ambientSounds.Length > 0 && Random.value > ambientSoundChancePerSec)
+        if (delayLeft > 0)
+        {
+            delayLeft--;
+            return;
+        }
+        delayLeft = ambientSoundDelaySec;
+        if (playAmbientSounds && ambientSounds.Length > 0 && Random.value >  1 - ambientSoundChancePerDelay)
         {
             ambientSounds[Random.Range(0, ambientSounds.Length - 1)].Play();
         }
