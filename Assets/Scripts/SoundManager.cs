@@ -100,17 +100,17 @@ public class SoundManager : MonoBehaviour
         if (knoardPlayAmbientSound)
         {
             knoardPlayAmbientSound = false;
-            PlayAmbientSound();
+            ambientSounds[Random.Range(0, ambientSounds.Length - 1)].Play();
         }
         if (knoardPlayCoinCollect)
         {
             knoardPlayCoinCollect = false;
-            PlayAmbientSound();
+            PlayCoinCollectSound();
         }
         if (knoardPlayGameOver)
         {
             knoardPlayGameOver = false;
-            PlayAmbientSound();
+            PlayGameOverSound();
         }
     }
 
