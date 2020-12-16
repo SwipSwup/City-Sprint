@@ -100,6 +100,8 @@ public class Player : MonoBehaviour
         PlayerInput.OnSwipeRight += MoveRight;
         PlayerInput.OnSwipeUp += Jump;
         PlayerInput.OnSwipeDown += Sneak;
+
+        InGameUIHandler.OnPause += TogglLockedControls;
     }
 
     private void CheckRigidbody()
@@ -121,6 +123,8 @@ public class Player : MonoBehaviour
         PlayerInput.OnSwipeRight -= MoveRight;
         PlayerInput.OnSwipeUp -= Jump;
         PlayerInput.OnSwipeDown -= Sneak;
+
+        InGameUIHandler.OnPause -= TogglLockedControls;
     }
 
     private void CheckLanes()
@@ -394,6 +398,18 @@ public class Player : MonoBehaviour
     private bool CheckGrounded(float yOffset)
     {          
         return Physics.Raycast(transform.position, Vector3.down, distToGround + playerBoxColliderHeight / 2 - yOffset);
+    }
+
+    private void TogglLockedControls()
+    {
+        if (controlsLocked)
+        {
+            controlsLocked = false;
+        }
+        else
+        {
+            controlsLocked = true;
+        }
     }
 
     public static Action OnGameOver;

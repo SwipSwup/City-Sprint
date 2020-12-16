@@ -3,6 +3,11 @@
 public class SoundManager : MonoBehaviour
 {
     [Space]
+    [Header("General")]
+    [SerializeField] private bool playSounds = true;
+    [SerializeField] private bool logPlayerY = false;
+
+    [Space]
     [Header("Engine Loop")]
     [SerializeField] private bool playCarLoop = true;
     public AudioSource carLoop;
@@ -42,7 +47,6 @@ public class SoundManager : MonoBehaviour
     public AudioSource pauseButtonSound;
     public AudioSource startGameButtonSound;
 
-
     void Start()
     {
         carLoop.loop = true;
@@ -60,6 +64,8 @@ public class SoundManager : MonoBehaviour
         UISoundEvents.SoundGeneralButton += PlaySoundGeneralButton;
         UISoundEvents.SoundPauseButton += PlaySoundPauseButton;
         UISoundEvents.SoundStartGameButton += PlaySoundStartGameButton;
+
+        InGameUIHandler.OnPause += ToggleMuteAllSounds;
     }
 
     private void OnDestroy()
@@ -74,11 +80,15 @@ public class SoundManager : MonoBehaviour
         UISoundEvents.SoundGeneralButton -= PlaySoundGeneralButton;
         UISoundEvents.SoundPauseButton -= PlaySoundPauseButton;
         UISoundEvents.SoundStartGameButton -= PlaySoundStartGameButton;
+
+        InGameUIHandler.OnPause -= ToggleMuteAllSounds;
     }
 
     void Update()
     {
-        if (playCarLoop)
+        if (logPlayerY) Debug.Log("PlayerY: " + player.position.y);
+
+        if (playCarLoop && playSounds)
         {
             float newPitch = (player.position.y - defaultLevitateY + pitchOffset) * (1 - pitchDamping) + 1;
             if (carLoop.pitch == newPitch) return;
@@ -105,7 +115,7 @@ public class SoundManager : MonoBehaviour
             return;
         }
         delayLeft = ambientSoundDelaySec;
-        if (playAmbientSounds && ambientSounds.Length > 0 && Random.value >  1 - ambientSoundChancePerDelay)
+        if (playAmbientSounds && playSounds && ambientSounds.Length > 0 && Random.value >  1 - ambientSoundChancePerDelay)
         {
             ambientSounds[Random.Range(0, ambientSounds.Length - 1)].Play();
         }
@@ -113,35 +123,49 @@ public class SoundManager : MonoBehaviour
 
     private void PlayGameOverSound()
     {
-        if (playGameOverSound) gameOverSound.Play();
+        if (playGameOverSound && playSounds) gameOverSound.Play();
     }
 
     private void StopCarLoop() => carLoop.Stop();
 
     private void PlayCarLoop()
     {
-        if (playCarLoop) carLoop.Play();
+        if (playCarLoop && playSounds) carLoop.Play();
     }
 
     private void PlayCoinCollectSound()
     {
-        if (playCoinCollectSound) coinCollectSound.Play();
+        if (playCoinCollectSound && playSounds) coinCollectSound.Play();
     }
 
     public void PlaySoundContinueButton()
     {
-        if (playButtonSounds) continueButtonSound.Play();
+        if (playButtonSounds && playSounds) continueButtonSound.Play();
     }
     public void PlaySoundGeneralButton()
     {
-        if (playButtonSounds) generalButtonSound.Play();
+        if (playButtonSounds && playSounds) generalButtonSound.Play();
     }
     public void PlaySoundPauseButton()
     {
-        if (playButtonSounds) pauseButtonSound.Play();
+        if (playButtonSounds && playSounds) pauseButtonSound.Play();
     }
     public void PlaySoundStartGameButton()
     {
-        if (playButtonSounds) startGameButtonSound.Play();
+        if (playButtonSounds && playSounds) startGameButtonSound.Play();
+    }
+
+    public void ToggleMuteAllSounds()
+    {
+        if (playSounds)
+        {
+            playSounds = false;
+            StopCarLoop();
+        }
+        else
+        {
+            playSounds = true;
+            PlayCarLoop();
+        }
     }
 }
