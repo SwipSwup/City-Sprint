@@ -10,6 +10,7 @@ public class TrackManager : MonoBehaviour
     private int tickCounter;
 
     public List<Tile> activeTiles;
+    public List<Tile> activeBuildings;
     public GameObject[] trackTilePrefabs;
     public GameObject[] menuTilePrefabs;
     public GameObject startTile;
@@ -26,6 +27,8 @@ public class TrackManager : MonoBehaviour
     public float stopDownInterval = 1f;
     public float stopDownStepTime = .01f;
 
+    private bool paused = false;
+
     private void Start()
     {
         SubscribeToEvents();
@@ -40,9 +43,10 @@ public class TrackManager : MonoBehaviour
 
     private void SubscribeToEvents()
     {
-        MainMenuUIHandler.OnPlay += StartTrack; 
+        MainMenuUIHandler.OnPlay += StartTrack;
         Player.OnGameOver += ReactOnGameOver;
         Player.OnObstacleCollision += ReactOnObstacleHit;
+        InGameUIHandler.OnPause += ReactOnPause;
     }
     
     private void UnSubscribeToEvents()
@@ -53,6 +57,7 @@ public class TrackManager : MonoBehaviour
         TileDestroyer.OnTileDelete -= ReactOnTileDestroyedInMenu;
         Player.OnGameOver -= ReactOnGameOver;
         Player.OnObstacleCollision -= ReactOnObstacleHit;
+        InGameUIHandler.OnPause -= ReactOnPause;
     }
 
     public void SetTileSpeedMultiplyer(float tileSpeedMultiplyer) => this.tileSpeedMultiplyer = tileSpeedMultiplyer;
@@ -169,6 +174,21 @@ public class TrackManager : MonoBehaviour
         StartCoroutine(SmoothStopTrack());
     }
 
+    private void ReactOnPause()
+    {
+        if(paused)
+        {
+            paused = false;
+            OnUpdateTileSpeed?.Invoke(tileSpeed);
+            GameManager.OnTick += ReactOnTickUpdate;
+        } else
+        {
+            paused = true;
+            OnUpdateTileSpeed?.Invoke(0f);
+            GameManager.OnTick -= ReactOnTickUpdate;
+        }
+    }
+
     /// <summary>
     /// Calculates the new tracktile spawn position
     /// </summary>
@@ -191,6 +211,8 @@ public class TrackManager : MonoBehaviour
         SpawnTile(newTilePrefab, GetNewTrackTilePosition(newTilePrefab), transform.rotation);
     }
 
+   
+
     /// <summary>
     /// Spawns a tileprefab at given position and with the given rotation
     /// </summary>
@@ -203,4 +225,6 @@ public class TrackManager : MonoBehaviour
         newTile.GetComponent<Tile>().tileSpeed = tileSpeed;
         activeTiles.Add(newTile.GetComponent<Tile>());
     }
+
+   
 }

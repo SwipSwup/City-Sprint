@@ -25,7 +25,7 @@ public class TrackManagerEditor : Editor
 
     private SerializedProperty stopDownIntervalProp;
     private SerializedProperty stopDownStepTimeProp;
-
+    
     private bool showSettings = true;
 
     private void OnEnable()
@@ -65,6 +65,7 @@ public class TrackManagerEditor : Editor
 
     private void DrawInfo()
     {
+       
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label("Current tile speed");
         GUILayout.Label("Current amount of tiles");
