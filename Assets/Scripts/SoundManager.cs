@@ -9,8 +9,10 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private Transform player;
     [SerializeField] private float defaultLevitateY = 1.84f;
     [Space]
+    [Tooltip("Controls the maximum altitude the pitch can change in")]
     [Range(0f, 1f)]
     [SerializeField] private float pitchDamping = 0.5f;
+    [Tooltip("Adds a general offset to the pitch")]
     [Range(-10f, 10f)]
     [SerializeField] private float pitchOffset = 0f;
 
@@ -45,11 +47,14 @@ public class SoundManager : MonoBehaviour
     {
         carLoop.loop = true;
 
-        if (playCarLoop) carLoop.Play();
+        PlayCarLoop();
         InvokeRepeating("PlayAmbientSound", 1f, 1f);
 
         Player.OnCollectCoin += PlayCoinCollectSound;
         Player.OnGameOver += PlayGameOverSound;
+
+        Player.OnGameOver += StopCarLoop;
+        PlayerInput.OnScreenTab += PlayCarLoop;
 
         UISoundEvents.SoundContinueButton += PlaySoundContinueButton;
         UISoundEvents.SoundGeneralButton += PlaySoundGeneralButton;
@@ -62,6 +67,9 @@ public class SoundManager : MonoBehaviour
         Player.OnCollectCoin -= PlayCoinCollectSound;
         Player.OnGameOver -= PlayGameOverSound;
 
+        Player.OnGameOver -= StopCarLoop;
+        PlayerInput.OnScreenTab -= PlayCarLoop;
+
         UISoundEvents.SoundContinueButton -= PlaySoundContinueButton;
         UISoundEvents.SoundGeneralButton -= PlaySoundGeneralButton;
         UISoundEvents.SoundPauseButton -= PlaySoundPauseButton;
@@ -72,11 +80,10 @@ public class SoundManager : MonoBehaviour
     {
         if (playCarLoop)
         {
-            float newPitch = ((player.position.y + pitchOffset) / defaultLevitateY) * (1 - pitchDamping) + pitchDamping;
+            float newPitch = (player.position.y - defaultLevitateY + pitchOffset) * (1 - pitchDamping) + 1;
             if (carLoop.pitch == newPitch) return;
 
             carLoop.pitch = newPitch;
-            Debug.Log("pitchChange");
         }
     }
 
@@ -107,6 +114,13 @@ public class SoundManager : MonoBehaviour
     private void PlayGameOverSound()
     {
         if (playGameOverSound) gameOverSound.Play();
+    }
+
+    private void StopCarLoop() => carLoop.Stop();
+
+    private void PlayCarLoop()
+    {
+        if (playCarLoop) carLoop.Play();
     }
 
     private void PlayCoinCollectSound()

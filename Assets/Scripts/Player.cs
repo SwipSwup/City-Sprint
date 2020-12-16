@@ -9,8 +9,11 @@ public class Player : MonoBehaviour
     [Tooltip("Positions of the lanes the players moves between")]
     [SerializeField] private Transform[] lanes = new Transform[2];
 
-    [Tooltip("The Transform of the Model of the player")]
+    [Tooltip("The Transform of the model of the player")]
     [SerializeField] private Transform playerModel;
+
+    [Tooltip("The hover effect of the model of the player")]
+    [SerializeField] private ParticleSystem hoverEffect;
 
     [Space]
     [Header("Movement Settings")]
@@ -54,7 +57,6 @@ public class Player : MonoBehaviour
     public bool controlsLocked = false;
 
     private Rigidbody playerRigidbody;
-    //private CapsuleCollider playerCollider;
     private float playerBoxColliderHeight;
 
     private int curLane;
@@ -78,7 +80,6 @@ public class Player : MonoBehaviour
     void Start()
     {
         playerRigidbody = GetComponent<Rigidbody>();
-        //playerCollider = GetComponent<CapsuleCollider>();
         logicModelPositionDifference = playerModel.position - transform.position;
         logicModelRotationDifference = playerModel.eulerAngles - transform.eulerAngles;
 
@@ -92,7 +93,8 @@ public class Player : MonoBehaviour
         curLane = (lanes.Length - 1) / 2;
         transform.position = lanes[curLane].position + Vector3.up * 3;
         movementTarget = transform.position;
-        //roadPosY = lanes[curLane].position.y;
+
+        hoverEffect.Play();
 
         PlayerInput.OnSwipeLeft += MoveLeft;
         PlayerInput.OnSwipeRight += MoveRight;
@@ -379,6 +381,8 @@ public class Player : MonoBehaviour
         playerRigidbody.angularVelocity += new Vector3(0, 0, 1);
         controlsLocked = true;
         applyGravity = false;
+
+        hoverEffect.Stop();
     }
 
     private bool CheckGrounded()
