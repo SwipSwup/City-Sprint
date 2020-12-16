@@ -54,7 +54,7 @@ MonoBehaviour:
   playCarLoop: 1
   carLoop: {fileID: 1230132028805684385}
   player: {fileID: 0}
-  defaultLevitateY: 1.84
+  defaultLevitateY: -0.5099999
   pitchDamping: 0.93
   pitchOffset: 0
   playGameOverSound: 1
@@ -62,7 +62,8 @@ MonoBehaviour:
   playCoinCollectSound: 1
   coinCollectSound: {fileID: 522614536605670441}
   playAmbientSounds: 1
-  ambientSoundChancePerSec: 0.1
+  ambientSoundDelaySec: 5
+  ambientSoundChancePerDelay: 0.2
   ambientSounds:
   - {fileID: 7382130509245958064}
   playButtonSounds: 1
