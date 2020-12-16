@@ -26,12 +26,6 @@ public class TrackManagerEditor : Editor
     private SerializedProperty stopDownIntervalProp;
     private SerializedProperty stopDownStepTimeProp;
     
-    private SerializedProperty maxBuildingsProp;
-    private SerializedProperty buildingPrefabsProp;
-    private SerializedProperty leftBuildingProp;
-    private SerializedProperty rightBuildingProp;
-
-
     private bool showSettings = true;
 
     private void OnEnable()
@@ -67,11 +61,6 @@ public class TrackManagerEditor : Editor
 
         stopDownIntervalProp = serializedObject.FindProperty("stopDownInterval");
         stopDownStepTimeProp = serializedObject.FindProperty("stopDownStepTime");
-
-        maxBuildingsProp = serializedObject.FindProperty("maxBuildings");
-        buildingPrefabsProp = serializedObject.FindProperty("buildingPrefabs");
-        leftBuildingProp = serializedObject.FindProperty("leftBuilding");
-        rightBuildingProp = serializedObject.FindProperty("rightBuilding");
     }
 
     private void DrawInfo()
@@ -112,21 +101,6 @@ public class TrackManagerEditor : Editor
         showSettings = EditorGUILayout.Foldout(showSettings, "Settings", true);
         if (showSettings)
         {
-            EditorGUILayout.BeginHorizontal();
-            GUILayout.Label("Left building spawn location");
-            GUILayout.Label("Right building spawn location");
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.PropertyField(leftBuildingProp, new GUIContent(string.Empty));
-            EditorGUILayout.PropertyField(rightBuildingProp, new GUIContent(string.Empty));
-            EditorGUILayout.EndHorizontal();
-
-            EditorGUILayout.PropertyField(maxBuildingsProp, new GUIContent("Max amount of Buildings"));
-            EditorGUILayout.PropertyField(buildingPrefabsProp, new GUIContent("Building prefabs"));
-
-            GUILayout.Space(10);
-
             EditorGUILayout.BeginHorizontal();
             GUILayout.Label("Max tiles");
             GUILayout.Label("Max tile speed");

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using TMPro;
 
@@ -22,6 +23,13 @@ public class InGameUIHandler : MonoBehaviour
 
     private void UpdateScore(int score) => this.score.text = score.ToString();
     private void UpdateCoins(int coins) => this.coins.text = "Coins: " + coins;
+
+    public static Action OnPause;
+    public void Pause()
+    {
+        Debug.Log("paused");
+        OnPause?.Invoke();
+    }
 
     private void SubscribeToEvents()
     {

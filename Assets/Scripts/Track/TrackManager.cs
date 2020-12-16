@@ -13,13 +13,8 @@ public class TrackManager : MonoBehaviour
     public List<Tile> activeBuildings;
     public GameObject[] trackTilePrefabs;
     public GameObject[] menuTilePrefabs;
-    public GameObject[] buildingPrefabs;
     public GameObject startTile;
     public GameObject tileSpacer;
-
-    public int maxBuildings = 10;
-    public Transform leftBuilding;
-    public Transform rightBuilding;
 
     public int maxTiles = 10;
     public float maxTileSpeed = 25f;
@@ -31,6 +26,8 @@ public class TrackManager : MonoBehaviour
 
     public float stopDownInterval = 1f;
     public float stopDownStepTime = .01f;
+
+    private bool paused = false;
 
     private void Start()
     {
@@ -47,20 +44,20 @@ public class TrackManager : MonoBehaviour
     private void SubscribeToEvents()
     {
         MainMenuUIHandler.OnPlay += StartTrack;
-        TileDestroyer.OnBuildingDelete += ReactOnBuildingDestroyed;
         Player.OnGameOver += ReactOnGameOver;
         Player.OnObstacleCollision += ReactOnObstacleHit;
+        InGameUIHandler.OnPause += ReactOnPause;
     }
     
     private void UnSubscribeToEvents()
     {
         MainMenuUIHandler.OnPlay -= StartTrack; 
         GameManager.OnTick -= ReactOnTickUpdate;
-        TileDestroyer.OnBuildingDelete -= ReactOnBuildingDestroyed;
         TileDestroyer.OnTileDelete -= ReactOnTileDestroyedInRun;
         TileDestroyer.OnTileDelete -= ReactOnTileDestroyedInMenu;
         Player.OnGameOver -= ReactOnGameOver;
         Player.OnObstacleCollision -= ReactOnObstacleHit;
+        InGameUIHandler.OnPause -= ReactOnPause;
     }
 
     public void SetTileSpeedMultiplyer(float tileSpeedMultiplyer) => this.tileSpeedMultiplyer = tileSpeedMultiplyer;
@@ -158,12 +155,6 @@ public class TrackManager : MonoBehaviour
         activeTiles.Remove(tile);
     }
 
-    private void ReactOnBuildingDestroyed(Tile tile)
-    {
-        activeBuildings.Remove(tile);
-
-    }
-
     private void ReactOnTileDestroyedInMenu(Tile tile)
     {
         if (tile.isSpacer)
@@ -181,6 +172,21 @@ public class TrackManager : MonoBehaviour
     {
         GameManager.OnTick -= ReactOnTickUpdate;
         StartCoroutine(SmoothStopTrack());
+    }
+
+    private void ReactOnPause()
+    {
+        if(paused)
+        {
+            paused = false;
+            OnUpdateTileSpeed?.Invoke(tileSpeed);
+            GameManager.OnTick += ReactOnTickUpdate;
+        } else
+        {
+            paused = true;
+            OnUpdateTileSpeed?.Invoke(0f);
+            GameManager.OnTick -= ReactOnTickUpdate;
+        }
     }
 
     /// <summary>
@@ -220,23 +226,5 @@ public class TrackManager : MonoBehaviour
         activeTiles.Add(newTile.GetComponent<Tile>());
     }
 
-    private void SpawnRandomBuildingLeft()
-    {
-        GameObject newBuilding = Instantiate(buildingPrefabs[(int)UnityEngine.Random.Range(0f, buildingPrefabs.Length)], leftBuilding.position, leftBuilding.rotation);
-
-        Tile tile = newBuilding.AddComponent<Tile>();
-        tile.tileSpeed = tileSpeed;
-        tile.isSpacer = true;
-        activeBuildings.Add(tile);
-    }
-
-    private void SpawnRandomBuildingRight()
-    {
-        GameObject newBuilding = Instantiate(buildingPrefabs[(int)UnityEngine.Random.Range(0f, buildingPrefabs.Length)], rightBuilding.position, rightBuilding.rotation);
-
-        Tile tile = newBuilding.AddComponent<Tile>();
-        tile.tileSpeed = tileSpeed;
-        tile.isSpacer = true;
-        activeBuildings.Add(tile);
-    }
+   
 }

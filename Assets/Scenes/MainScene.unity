@@ -942,6 +942,12 @@ Transform:
   m_Father: {fileID: 591958517}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!198 &1618034388 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3596655479270268271, guid: 9d38b4673b9834d47a0c1c25ee78d928,
+    type: 3}
+  m_PrefabInstance: {fileID: 7248388071883122453}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1971852107
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -949,11 +955,21 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 522614536605670441, guid: 79a7aa7dd2fba1f429dcbadabb2fe7a0,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.506
+      objectReference: {fileID: 0}
     - target: {fileID: 1230132028805684384, guid: 79a7aa7dd2fba1f429dcbadabb2fe7a0,
         type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1290355782}
+    - target: {fileID: 1230132028805684385, guid: 79a7aa7dd2fba1f429dcbadabb2fe7a0,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.017
+      objectReference: {fileID: 0}
     - target: {fileID: 1230132028805684386, guid: 79a7aa7dd2fba1f429dcbadabb2fe7a0,
         type: 3}
       propertyPath: m_Name
@@ -1023,6 +1039,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Volume
       value: 0.298
+      objectReference: {fileID: 0}
+    - target: {fileID: 9002919073945189944, guid: 79a7aa7dd2fba1f429dcbadabb2fe7a0,
+        type: 3}
+      propertyPath: m_Volume
+      value: 0.067
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 79a7aa7dd2fba1f429dcbadabb2fe7a0, type: 3}
@@ -1287,7 +1308,7 @@ PrefabInstance:
     - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
       propertyPath: trackTilePrefabs.Array.size
-      value: 4
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
@@ -1324,7 +1345,7 @@ PrefabInstance:
         type: 3}
       propertyPath: trackTilePrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 8247469614432269322, guid: 9828fa364291bf548affb0f617206de0,
+      objectReference: {fileID: 2485553212232298323, guid: 9b723c015aa89a04dbc5f85728dd779c,
         type: 3}
     - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
@@ -1570,6 +1591,11 @@ PrefabInstance:
       propertyPath: sneakDistToGround
       value: 0.25
       objectReference: {fileID: 0}
+    - target: {fileID: 5384147578879730631, guid: 9d38b4673b9834d47a0c1c25ee78d928,
+        type: 3}
+      propertyPath: hoverEffect
+      value: 
+      objectReference: {fileID: 1618034388}
     - target: {fileID: 6160527702226577852, guid: 9d38b4673b9834d47a0c1c25ee78d928,
         type: 3}
       propertyPath: m_Name
