@@ -27,7 +27,6 @@ public class InGameUIHandler : MonoBehaviour
     public static Action OnPause;
     public void Pause()
     {
-        Debug.Log("paused");
         OnPause?.Invoke();
     }
 
