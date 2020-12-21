@@ -11,10 +11,6 @@ public class TileEditor : Editor
 {
     private Tile tile;
     private List<GameObject> tileParts;
-    private GameObject tilePartPrefab;
-
-
-    private BoxCollider collider;
 
     private SerializedProperty endPointProp;
     private SerializedProperty startPointProp;
@@ -22,15 +18,13 @@ public class TileEditor : Editor
     private SerializedProperty tileSizeProp;
     private SerializedProperty tilePrefabProp;
     private SerializedProperty tilePartsProp;
+    private SerializedProperty tilePartSizeProp;
 
-    private float tilePartSize;
 
     private bool showSettings = true;
     private bool changeSize = true;
 
-    private GameObject GetLastTilePart() => tileParts[tileParts.Count - 1];
-    private GameObject GetFirstTilePart() => tileParts[0];
-    private Vector3 GetNewTilePartPosition() => GetLastTilePart().transform.position + new Vector3(tilePartSize, 0, 0);
+   
 
     private void OnEnable()
     {
@@ -55,16 +49,14 @@ public class TileEditor : Editor
         endPointProp = serializedObject.FindProperty("endPoint");
         isSpacerProp = serializedObject.FindProperty("isSpacer");
         tileSizeProp = serializedObject.FindProperty("tileSize");
+        tilePartSizeProp = serializedObject.FindProperty("tilePartSize");
 
         tileParts = tile.tileParts;
         if(!tileParts.Contains(tile.transform.GetChild(0).GetChild(0).gameObject)) 
             tileParts.Add(tile.transform.GetChild(0).GetChild(0).gameObject);
 
-        collider = tile.GetComponent<BoxCollider>();
-        tilePartSize = 3f;
-
-        UpdateCollider();
-        UpdateStartAndEndPoint();
+        tile.UpdateCollider();
+        tile.UpdateStartAndEndPoint();
     }
 
     private void DrawTileInfo()
@@ -90,58 +82,14 @@ public class TileEditor : Editor
         if(showSettings)
         {
             EditorGUILayout.PropertyField(tilePrefabProp, new GUIContent("Tilepart prefab"));
-            tilePartPrefab = tilePrefabProp.objectReferenceValue as GameObject;
 
             EditorGUILayout.BeginHorizontal();
-            tilePartSize = EditorGUILayout.FloatField("Part size", tilePartSize);
+            EditorGUILayout.PropertyField(tilePartSizeProp, new GUIContent("Tile part size"));
             EditorGUILayout.PropertyField(isSpacerProp, new GUIContent("Is spacer"));
             EditorGUILayout.EndHorizontal();
 
-            EditorGUILayout.IntSlider(tileSizeProp, 1, 30, new GUIContent("Tile size"));
-            if (EditorGUI.EndChangeCheck()) UpdateTileSize();
+           EditorGUILayout.IntSlider(tileSizeProp, 1, 60, new GUIContent("Tile size"));
+            if (EditorGUI.EndChangeCheck()) tile.UpdateTileSize();
         }
-    }
-
-    private void UpdateTileSize()
-    {
-        if (tile.tileSize == tileParts.Count) return;
-        if (tile.tileSize > tileParts.Count) AddTileParts();
-        else if (tile.tileSize < tileParts.Count) RemoveTileParts();
-        UpdateCollider();
-        UpdateStartAndEndPoint();
-    }
-
-    private Vector3 CalculateMidPoint() => 
-        (tileParts[tileParts.Count - 1].transform.localPosition + tileParts[0].transform.localPosition) / 2;
-    private void UpdateCollider()
-    {
-        collider.center = CalculateMidPoint();
-        collider.size = new Vector3(tilePartSize * tileParts.Count, 0f, 8f);
-    }
-
-    private void UpdateStartAndEndPoint()
-    {
-        tile.startPoint.position = GetLastTilePart().transform.position + new Vector3(tilePartSize / 2f, 0f, 0f);
-        tile.endPoint.position = GetFirstTilePart().transform.position + new Vector3(-tilePartSize / 2f, 0f, 0f);
-    }
-
-    private void AddTileParts()
-    {
-        while(tile.tileSize >= tileParts.Count)
-        {
-            GameObject newTilePart = Instantiate(tilePartPrefab, GetNewTilePartPosition(), tile.transform.rotation);
-            tileParts.Add(newTilePart);
-            newTilePart.transform.parent = tile.transform.GetChild(0);
-        }
-    }
-
-    private void RemoveTileParts()
-    {
-        while (tile.tileSize < tileParts.Count)
-        {
-            GameObject lastTilePart = GetLastTilePart();
-            DestroyImmediate(lastTilePart);
-            tileParts.Remove(lastTilePart);
-        }
-    }
+    }   
 }
