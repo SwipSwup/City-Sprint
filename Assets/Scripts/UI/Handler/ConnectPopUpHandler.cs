@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
 using UnityEngine;
 using TMPro;
 using System.Text.RegularExpressions;
@@ -44,7 +42,7 @@ public class ConnectPopUpHandler : MonoBehaviour
     }
 
     public static Action<string, string> OnUserRegister;
-    async public void Register()
+    public void Register()
     {
         if (!IsEmailValid(registerEmail.text))
             SetRegisterErrorMsg("Email address is invalid.");

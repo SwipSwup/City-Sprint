@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using TMPro;
 
 public class LeaderboardEntry : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI place;
-    [SerializeField] private TextMeshProUGUI name;
+    [SerializeField] private new TextMeshProUGUI name;
     [SerializeField] private TextMeshProUGUI score;
 
     public void SetEntryData(int place, string name, string score)
@@ -15,5 +13,4 @@ public class LeaderboardEntry : MonoBehaviour
         this.name.text = name;
         this.score.text = score;
     }
-
 }

@@ -3634,8 +3634,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -130.00006}
-  m_SizeDelta: {x: 1080, y: 259.99988}
+  m_AnchoredPosition: {x: 0, y: -225}
+  m_SizeDelta: {x: 1080, y: 450}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &715462728
 GameObject:
@@ -8926,6 +8926,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mainMenuCanvas: {fileID: 339296398}
   playerData: {fileID: 11400000, guid: 9113d08f2acb99d42b1a7da9e193b029, type: 2}
+  upperBar: {fileID: 709833627}
   highscore_value: {fileID: 1495977400}
   lastScore_value: {fileID: 586958585}
   coins_value: {fileID: 143945580}

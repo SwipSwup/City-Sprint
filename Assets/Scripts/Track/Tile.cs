@@ -18,7 +18,7 @@ public class Tile : MonoBehaviour
     public List<GameObject> tileParts = new List<GameObject>();
     private GameObject tilePartPrefab;
 
-    private BoxCollider collider;
+    private new BoxCollider collider;
 
     public float tileSpeed;
     private void UpdatedTileSpeed(float tileSpeed) => this.tileSpeed = tileSpeed;

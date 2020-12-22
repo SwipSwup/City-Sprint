@@ -20,11 +20,7 @@ public class TileEditor : Editor
     private SerializedProperty tilePartsProp;
     private SerializedProperty tilePartSizeProp;
 
-
     private bool showSettings = true;
-    private bool changeSize = true;
-
-   
 
     private void OnEnable()
     {

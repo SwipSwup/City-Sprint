@@ -11,10 +11,12 @@ public class MainMenuUIHandler : MonoBehaviour
     public Canvas mainMenuCanvas;
 
     [SerializeField] private PlayerData playerData;
+    [SerializeField] private GameObject upperBar;
 
     [SerializeField] private TextMeshProUGUI highscore_value;
     [SerializeField] private TextMeshProUGUI lastScore_value;
     [SerializeField] private TextMeshProUGUI coins_value;
+
 
     public void OnEnable()
     {
@@ -34,9 +36,10 @@ public class MainMenuUIHandler : MonoBehaviour
         OnPlay?.Invoke();
         DisableMenuUI();
         GetComponent<InGameUIHandler>().EnableInGameUI();
+        LeanTween.moveZ(upperBar, 200f, 1);
     }
 
-    private void DisableMenuUI() => mainMenuCanvas.enabled = false;
+    private void DisableMenuUI() => mainMenuCanvas.enabled = true;
 
     private void EnableMenuUI() => mainMenuCanvas.enabled = true;
 

@@ -8,7 +8,6 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField]
     private PlayerData playerData;
-    private bool runActive = false;
 
     [SerializeField]
     private const float TICK_SEC_INTERVAL = 0.2f;
@@ -23,8 +22,6 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
         tManager = GetComponent<TrackManager>();
         SubscribeToEvents();
-
-
     }
 
     private void OnDestroy() => UnSubscribeToEvents();
