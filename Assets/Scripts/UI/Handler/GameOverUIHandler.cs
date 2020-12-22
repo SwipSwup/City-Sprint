@@ -39,17 +39,11 @@ public class GameOverUIHandler : MonoBehaviour
     {
         ChangeScore(0);
 
-        int lastScore = data.lastScore;
-        int tmp = 0;
-        Debug.Log(lastScore);
-        yield return new WaitForSeconds(.5f);
-        while(tmp < data.lastScore)
+        yield return new WaitForSeconds(.1f);
+        for (int i = 0; i < data.lastScore; i += data.lastScore / 20)
         {
-          //  ChangeScore(tmp %= lastScore);
-            lastScore /= 5;
-            Debug.Log(lastScore);
-
-            yield return new WaitForSeconds(.1f);
+            ChangeScore(i);
+            yield return new WaitForSeconds(.05f);
         }
         yield return new WaitForSeconds(1f);
         showCoins();
