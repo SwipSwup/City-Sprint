@@ -39,7 +39,7 @@ public class MainMenuUIHandler : MonoBehaviour
         LeanTween.moveZ(upperBar, 200f, 1);
     }
 
-    private void DisableMenuUI() => mainMenuCanvas.enabled = true;
+    private void DisableMenuUI() => mainMenuCanvas.enabled = false;
 
     private void EnableMenuUI() => mainMenuCanvas.enabled = true;
 
