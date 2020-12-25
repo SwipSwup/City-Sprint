@@ -112,6 +112,8 @@ Transform:
   - {fileID: 3973325938549881274}
   - {fileID: 5114310936662658531}
   - {fileID: 6763348227072698092}
+  - {fileID: 6869141226644810595}
+  - {fileID: 459582983272768092}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -381,3 +383,183 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!1001 &4559833601607974819
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6513461822092053396}
+    m_Modifications:
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.013
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.174
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.928
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2303
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2303
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2303
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450565, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_Name
+      value: Hover ripple effect round
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 703acba36e224d346a9aab31c043a132, type: 3}
+--- !u!4 &6869141226644810595 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+    type: 3}
+  m_PrefabInstance: {fileID: 4559833601607974819}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &7382274195248756380
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 6513461822092053396}
+    m_Modifications:
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.013
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.174
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.932
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -90
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.2303
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.2303
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.2303
+      objectReference: {fileID: 0}
+    - target: {fileID: 6923122300411450565, guid: 703acba36e224d346a9aab31c043a132,
+        type: 3}
+      propertyPath: m_Name
+      value: Hover ripple effect round (1)
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 703acba36e224d346a9aab31c043a132, type: 3}
+--- !u!4 &459582983272768092 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6923122300411450560, guid: 703acba36e224d346a9aab31c043a132,
+    type: 3}
+  m_PrefabInstance: {fileID: 7382274195248756380}
+  m_PrefabAsset: {fileID: 0}
