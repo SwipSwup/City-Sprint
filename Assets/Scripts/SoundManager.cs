@@ -25,13 +25,11 @@ public class SoundManager : MonoBehaviour
     [Header("Game Over")]
     [SerializeField] private bool playGameOverSound = true;
     public AudioSource gameOverSound;
-    public bool knoardPlayGameOver = false;
 
     [Space]
     [Header("Coin Collect")]
     [SerializeField] private bool playCoinCollectSound = true;
     public AudioSource coinCollectSound;
-    public bool knoardPlayCoinCollect = false;
 
     [Space]
     [Header("Ambient Sounds")]
@@ -40,7 +38,11 @@ public class SoundManager : MonoBehaviour
     private float delayLeft;
     [SerializeField] private float ambientSoundChancePerDelay = 0.2f;
     public AudioSource[] ambientSounds;
-    public bool knoardPlayAmbientSound = false;
+
+    [Space]
+    [Header("City Sounds")]
+    [SerializeField] private bool playCitySounds = true;
+    public AudioSource citySounds;
 
     [Space]
     [Header("UI Button Sounds")]
@@ -49,6 +51,27 @@ public class SoundManager : MonoBehaviour
     public AudioSource generalButtonSound;
     public AudioSource pauseButtonSound;
     public AudioSource startGameButtonSound;
+    public AudioSource fanFareSound;
+    public AudioSource scoreCountSound;
+
+    [Space]
+    [Header("Knoard Testing")]
+    public bool knoardPlayGameOver = false;
+    public bool knoardPlayCoinCollect = false;
+
+    [Space]
+    public bool knoardPlayCarPassingBy = false;
+    public bool knoardPlayCitySounds = false;
+    public bool knoardPlaySirens = false;
+
+    [Space]
+    public bool knoardPlayContinueButton = false;
+    public bool knoardPlayGeneralButton = false;
+    public bool knoardPlayPauseButton = false;
+    public bool knoardPlayStartGame = false;
+    public bool knoardPlayFanFare = false;
+    public bool knoardPlayScoreCount = false;
+
 
     void Start()
     {
@@ -97,11 +120,8 @@ public class SoundManager : MonoBehaviour
             if (carLoop.pitch != newPitch) carLoop.pitch = newPitch;
         }
 
-        if (knoardPlayAmbientSound)
-        {
-            knoardPlayAmbientSound = false;
-            ambientSounds[Random.Range(0, ambientSounds.Length - 1)].Play();
-        }
+
+
         if (knoardPlayCoinCollect)
         {
             knoardPlayCoinCollect = false;
@@ -111,6 +131,57 @@ public class SoundManager : MonoBehaviour
         {
             knoardPlayGameOver = false;
             PlayGameOverSound();
+        }
+
+
+
+        if (knoardPlayCarPassingBy)
+        {
+            knoardPlayCarPassingBy = false;
+            ambientSounds[0].Play();
+        }
+        if (knoardPlaySirens)
+        {
+            knoardPlaySirens = false;
+            ambientSounds[1].Play();
+        }
+        if (knoardPlayCitySounds)
+        {
+            knoardPlayCitySounds = false;
+            citySounds.Play();
+        }
+
+
+
+        if (knoardPlayContinueButton)
+        {
+            knoardPlayContinueButton = false;
+            continueButtonSound.Play();
+        }
+        if (knoardPlayGeneralButton)
+        {
+            knoardPlayGeneralButton = false;
+            generalButtonSound.Play();
+        }
+        if (knoardPlayPauseButton)
+        {
+            knoardPlayPauseButton = false;
+            pauseButtonSound.Play();
+        }
+        if (knoardPlayStartGame)
+        {
+            knoardPlayStartGame = false;
+            startGameButtonSound.Play();
+        }
+        if (knoardPlayFanFare)
+        {
+            knoardPlayFanFare = false;
+            fanFareSound.Play();
+        }
+        if (knoardPlayScoreCount)
+        {
+            knoardPlayScoreCount = false;
+            scoreCountSound.Play();
         }
     }
 
