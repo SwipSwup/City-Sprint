@@ -3,10 +3,6 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    [Range(0f, 1000f)]
-    [Tooltip("Distance after wich swipe is detected")]
-    public float swipeDetection = 50f;
-
     [Range(0f, 100f)]
     [Tooltip("Distance up to wich it still counts as a tab")]
     public float tabDistance = 10f;
