@@ -206,6 +206,14 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    private void stopAllAmbientSounds()
+    {
+        foreach (AudioSource source in ambientSounds)
+        {
+            source.Stop();
+        }
+    }
+
     private void PlayGameOverSound()
     {
         if (playGameOverSound && playSounds) gameOverSound.Play();
