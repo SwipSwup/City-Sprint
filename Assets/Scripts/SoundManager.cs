@@ -13,6 +13,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource carLoop;
     [SerializeField] private Transform player;
     [SerializeField] private float defaultLevitateY = 1.84f;
+    [SerializeField] private float carLoopWithSilencer = 0.5f;
     [Space]
     [Tooltip("Controls the maximum altitude the pitch can change in")]
     [Range(0f, 1f)]
@@ -94,6 +95,8 @@ public class SoundManager : MonoBehaviour
         UISoundEvents.SoundGeneralButton += PlaySoundGeneralButton;
         UISoundEvents.SoundStartGameButton += PlaySoundStartGameButton;
         UISoundEvents.SoundStartGameButton += StopCitySoundsLoop;
+        UISoundEvents.SoundStartGameButton += stopAllAmbientSounds;
+        UISoundEvents.SoundStartGameButton += MakeCarLoopLoud;
 
         InGameUIHandler.OnPause += TogglePause;
     }
@@ -111,6 +114,8 @@ public class SoundManager : MonoBehaviour
         UISoundEvents.SoundGeneralButton -= PlaySoundGeneralButton;
         UISoundEvents.SoundStartGameButton -= PlaySoundStartGameButton;
         UISoundEvents.SoundStartGameButton -= StopCitySoundsLoop;
+        UISoundEvents.SoundStartGameButton -= stopAllAmbientSounds;
+        UISoundEvents.SoundStartGameButton -= MakeCarLoopLoud;
 
         InGameUIHandler.OnPause -= TogglePause;
     }
@@ -219,11 +224,23 @@ public class SoundManager : MonoBehaviour
         if (playGameOverSound && playSounds) gameOverSound.Play();
     }
 
-    private void StopCarLoop() => carLoop.Stop();
+    private void StopCarLoop()
+    {
+        carLoop.Stop();
+    }
 
     private void PlayCarLoop()
     {
-        if (playCarLoop && playSounds) carLoop.Play();
+        if (playCarLoop && playSounds)
+        {
+            carLoop.Play();
+            carLoop.volume = carLoopWithSilencer;
+        }
+    }
+
+    private void MakeCarLoopLoud()
+    {
+        carLoop.volume = 1;
     }
 
     private void StopCitySoundsLoop()
