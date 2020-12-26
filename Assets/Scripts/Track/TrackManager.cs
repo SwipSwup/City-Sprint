@@ -111,11 +111,7 @@ public class TrackManager : MonoBehaviour
         UpdateTileSpeed(tileSpeed);
     }
 
-    private GameObject GetRandomTile(GameObject[] tileList)
-    {
-        Debug.Log((int)UnityEngine.Random.Range(0f, tileList.Length));
-        return tileList[(int)UnityEngine.Random.Range(0f, tileList.Length)];
-    }
+    private GameObject GetRandomTile(GameObject[] tileList) => tileList[(int)UnityEngine.Random.Range(0f, tileList.Length)];
 
     private IEnumerator IncreaseTrackSpeed()
     {
