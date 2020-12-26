@@ -68,10 +68,9 @@ MonoBehaviour:
   playCoinCollectSound: 1
   coinCollectSound: {fileID: 6875615976337723057}
   playAmbientSounds: 1
-  ambientSoundDelaySec: 5
-  ambientSoundChancePerDelay: 0.2
+  ambientSoundDelaySec: 7
+  ambientSoundChancePerDelay: 0.5
   ambientSounds:
-  - {fileID: 7382130509245958064}
   - {fileID: 7007632005884555338}
   playCitySounds: 1
   citySounds: {fileID: 7322435330574426480}
