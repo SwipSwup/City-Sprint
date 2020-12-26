@@ -89,6 +89,7 @@ public class SoundManager : MonoBehaviour
 
         Player.OnGameOver += StopCarLoop;
         PlayerInput.OnScreenTab += PlayCitySoundsLoop;
+        PlayerInput.OnScreenTab += MakeCarLoopSilent;
         PlayerInput.OnScreenTab += PlayCarLoop;
 
         UISoundEvents.SoundContinueButton += PlaySoundContinueButton;
@@ -108,6 +109,7 @@ public class SoundManager : MonoBehaviour
 
         Player.OnGameOver -= StopCarLoop;
         PlayerInput.OnScreenTab -= PlayCitySoundsLoop;
+        PlayerInput.OnScreenTab -= MakeCarLoopSilent;
         PlayerInput.OnScreenTab -= PlayCarLoop;
 
         UISoundEvents.SoundContinueButton -= PlaySoundContinueButton;
@@ -231,11 +233,12 @@ public class SoundManager : MonoBehaviour
 
     private void PlayCarLoop()
     {
-        if (playCarLoop && playSounds)
-        {
-            carLoop.Play();
-            carLoop.volume = carLoopWithSilencer;
-        }
+        if (playCarLoop && playSounds) carLoop.Play();
+    }
+
+    private void MakeCarLoopSilent()
+    {
+        carLoop.volume = carLoopWithSilencer;
     }
 
     private void MakeCarLoopLoud()
