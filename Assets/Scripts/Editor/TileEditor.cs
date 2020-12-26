@@ -84,7 +84,7 @@ public class TileEditor : Editor
             EditorGUILayout.PropertyField(isSpacerProp, new GUIContent("Is spacer"));
             EditorGUILayout.EndHorizontal();
 
-           EditorGUILayout.IntSlider(tileSizeProp, 1, 60, new GUIContent("Tile size"));
+           EditorGUILayout.IntSlider(tileSizeProp, 1, 100, new GUIContent("Tile size"));
             if (EditorGUI.EndChangeCheck()) tile.UpdateTileSize();
         }
     }   
