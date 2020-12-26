@@ -31,7 +31,11 @@ public class PlayerInput : MonoBehaviour
             if (Math.Abs(deltaPosition.x) > Math.Abs(maxDelta)) maxDelta = deltaPosition.x;
             if (Math.Abs(deltaPosition.y) > Math.Abs(maxDelta)) maxDelta = deltaPosition.y;
 
-            if (maxDelta <= tabDistance) OnScreenTab?.Invoke();
+            if (maxDelta <= tabDistance)
+            {
+                OnScreenTab?.Invoke();
+                return;
+            }
 
             if (maxDelta == deltaPosition.x && maxDelta > 0)
             {
