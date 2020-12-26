@@ -80,17 +80,14 @@ public class SoundManager : MonoBehaviour
         carLoop.loop = true;
         citySounds.loop = true;
 
+        MakeCarLoopSilent();
         PlayCitySoundsLoop();
         PlayCarLoop();
         InvokeRepeating("PlayAmbientSound", 1f, 1f);
 
         Player.OnCollectCoin += PlayCoinCollectSound;
         Player.OnGameOver += PlayGameOverSound;
-
         Player.OnGameOver += StopCarLoop;
-        PlayerInput.OnScreenTab += PlayCitySoundsLoop;
-        PlayerInput.OnScreenTab += MakeCarLoopSilent;
-        PlayerInput.OnScreenTab += PlayCarLoop;
 
         UISoundEvents.SoundContinueButton += PlaySoundContinueButton;
         UISoundEvents.SoundGeneralButton += PlaySoundGeneralButton;
@@ -106,11 +103,7 @@ public class SoundManager : MonoBehaviour
     {
         Player.OnCollectCoin -= PlayCoinCollectSound;
         Player.OnGameOver -= PlayGameOverSound;
-
         Player.OnGameOver -= StopCarLoop;
-        PlayerInput.OnScreenTab -= PlayCitySoundsLoop;
-        PlayerInput.OnScreenTab -= MakeCarLoopSilent;
-        PlayerInput.OnScreenTab -= PlayCarLoop;
 
         UISoundEvents.SoundContinueButton -= PlaySoundContinueButton;
         UISoundEvents.SoundGeneralButton -= PlaySoundGeneralButton;
