@@ -1073,7 +1073,7 @@ PrefabInstance:
     - target: {fileID: 1230132028805684384, guid: 79a7aa7dd2fba1f429dcbadabb2fe7a0,
         type: 3}
       propertyPath: playButtonSounds
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1230132028805684384, guid: 79a7aa7dd2fba1f429dcbadabb2fe7a0,
         type: 3}
