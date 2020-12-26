@@ -88,10 +88,10 @@ public class SoundManager : MonoBehaviour
 
         UISoundEvents.SoundContinueButton += PlaySoundContinueButton;
         UISoundEvents.SoundGeneralButton += PlaySoundGeneralButton;
-        UISoundEvents.SoundPauseButton += PlaySoundPauseButton;
+        //UISoundEvents.SoundPauseButton += PlaySoundPauseButton;
         UISoundEvents.SoundStartGameButton += PlaySoundStartGameButton;
 
-        InGameUIHandler.OnPause += ToggleMuteAllSounds;
+        InGameUIHandler.OnPause += TogglePause;
     }
 
     private void OnDestroy()
@@ -104,10 +104,10 @@ public class SoundManager : MonoBehaviour
 
         UISoundEvents.SoundContinueButton -= PlaySoundContinueButton;
         UISoundEvents.SoundGeneralButton -= PlaySoundGeneralButton;
-        UISoundEvents.SoundPauseButton -= PlaySoundPauseButton;
+        //UISoundEvents.SoundPauseButton -= PlaySoundPauseButton;
         UISoundEvents.SoundStartGameButton -= PlaySoundStartGameButton;
 
-        InGameUIHandler.OnPause -= ToggleMuteAllSounds;
+        InGameUIHandler.OnPause -= TogglePause;
     }
 
     void Update()
@@ -243,17 +243,19 @@ public class SoundManager : MonoBehaviour
         if (playButtonSounds && playSounds) startGameButtonSound.Play();
     }
 
-    public void ToggleMuteAllSounds()
+    public void TogglePause()
     {
         if (playSounds)
         {
-            playSounds = false;
             StopCarLoop();
+            PlaySoundPauseButton();
+            playSounds = false;
         }
         else
         {
             playSounds = true;
             PlayCarLoop();
+            PlaySoundContinueButton();
         }
     }
 }
