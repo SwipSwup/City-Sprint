@@ -79,8 +79,8 @@ public class SoundManager : MonoBehaviour
         carLoop.loop = true;
         citySounds.loop = true;
 
-        PlayCarLoop();
         PlayCitySoundsLoop();
+        PlayCarLoop();
         InvokeRepeating("PlayAmbientSound", 1f, 1f);
 
         Player.OnCollectCoin += PlayCoinCollectSound;
