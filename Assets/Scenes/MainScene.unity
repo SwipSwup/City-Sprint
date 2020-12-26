@@ -1174,6 +1174,11 @@ PrefabInstance:
       propertyPath: playCarLoop
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1230132028805684384, guid: 79a7aa7dd2fba1f429dcbadabb2fe7a0,
+        type: 3}
+      propertyPath: carLoopWithSilencer
+      value: 0.4
+      objectReference: {fileID: 0}
     - target: {fileID: 1230132028805684385, guid: 79a7aa7dd2fba1f429dcbadabb2fe7a0,
         type: 3}
       propertyPath: m_Volume
