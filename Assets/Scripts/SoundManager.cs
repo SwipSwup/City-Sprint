@@ -13,6 +13,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource carLoop;
     [SerializeField] private Transform player;
     [SerializeField] private float defaultLevitateY = 1.84f;
+    [SerializeField] private float carLoopWithSilencer = 0.5f;
     [Space]
     [Tooltip("Controls the maximum altitude the pitch can change in")]
     [Range(0f, 1f)]
@@ -34,13 +35,14 @@ public class SoundManager : MonoBehaviour
     [Space]
     [Header("Ambient Sounds")]
     [SerializeField] private bool playAmbientSounds = true;
+    private bool ambientSoundsActive = true;
     [SerializeField] private float ambientSoundDelaySec = 5f;
     private float delayLeft;
     [SerializeField] private float ambientSoundChancePerDelay = 0.2f;
     public AudioSource[] ambientSounds;
 
     [Space]
-    [Header("City Sounds")]
+    [Header("City Sounds Loop")]
     [SerializeField] private bool playCitySounds = true;
     public AudioSource citySounds;
 
@@ -76,38 +78,41 @@ public class SoundManager : MonoBehaviour
     void Start()
     {
         carLoop.loop = true;
+        citySounds.loop = true;
 
+        MakeCarLoopSilent();
+        PlayCitySoundsLoop();
         PlayCarLoop();
         InvokeRepeating("PlayAmbientSound", 1f, 1f);
 
         Player.OnCollectCoin += PlayCoinCollectSound;
         Player.OnGameOver += PlayGameOverSound;
-
         Player.OnGameOver += StopCarLoop;
-        PlayerInput.OnScreenTab += PlayCarLoop;
 
         UISoundEvents.SoundContinueButton += PlaySoundContinueButton;
         UISoundEvents.SoundGeneralButton += PlaySoundGeneralButton;
-        UISoundEvents.SoundPauseButton += PlaySoundPauseButton;
         UISoundEvents.SoundStartGameButton += PlaySoundStartGameButton;
+        UISoundEvents.SoundStartGameButton += StopCitySoundsLoop;
+        UISoundEvents.SoundStartGameButton += stopAllAmbientSounds;
+        UISoundEvents.SoundStartGameButton += MakeCarLoopLoud;
 
-        InGameUIHandler.OnPause += ToggleMuteAllSounds;
+        InGameUIHandler.OnPause += TogglePause;
     }
 
     private void OnDestroy()
     {
         Player.OnCollectCoin -= PlayCoinCollectSound;
         Player.OnGameOver -= PlayGameOverSound;
-
         Player.OnGameOver -= StopCarLoop;
-        PlayerInput.OnScreenTab -= PlayCarLoop;
 
         UISoundEvents.SoundContinueButton -= PlaySoundContinueButton;
         UISoundEvents.SoundGeneralButton -= PlaySoundGeneralButton;
-        UISoundEvents.SoundPauseButton -= PlaySoundPauseButton;
         UISoundEvents.SoundStartGameButton -= PlaySoundStartGameButton;
+        UISoundEvents.SoundStartGameButton -= StopCitySoundsLoop;
+        UISoundEvents.SoundStartGameButton -= stopAllAmbientSounds;
+        UISoundEvents.SoundStartGameButton -= MakeCarLoopLoud;
 
-        InGameUIHandler.OnPause -= ToggleMuteAllSounds;
+        InGameUIHandler.OnPause -= TogglePause;
     }
 
     void Update()
@@ -185,27 +190,27 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    private float GetGroundY()
-    {
-        RaycastHit hit;
-
-        if (Physics.Raycast(player.position, Vector3.down, out hit, 100))
-            return hit.point.y;
-
-        return player.position.y;
-    }
-
     private void PlayAmbientSound()
     {
+        if (!ambientSoundsActive || !playAmbientSounds || !playSounds || ambientSounds.Length < 1) return;
+
         if (delayLeft > 0)
         {
             delayLeft--;
             return;
         }
         delayLeft = ambientSoundDelaySec;
-        if (playAmbientSounds && playSounds && ambientSounds.Length > 0 && Random.value > 1 - ambientSoundChancePerDelay)
+        if (Random.value < ambientSoundChancePerDelay)
         {
             ambientSounds[Random.Range(0, ambientSounds.Length - 1)].Play();
+        }
+    }
+
+    private void stopAllAmbientSounds()
+    {
+        foreach (AudioSource source in ambientSounds)
+        {
+            source.Stop();
         }
     }
 
@@ -214,11 +219,39 @@ public class SoundManager : MonoBehaviour
         if (playGameOverSound && playSounds) gameOverSound.Play();
     }
 
-    private void StopCarLoop() => carLoop.Stop();
+    private void StopCarLoop()
+    {
+        carLoop.Stop();
+    }
 
     private void PlayCarLoop()
     {
         if (playCarLoop && playSounds) carLoop.Play();
+    }
+
+    private void MakeCarLoopSilent()
+    {
+        carLoop.volume = carLoopWithSilencer;
+    }
+
+    private void MakeCarLoopLoud()
+    {
+        carLoop.volume = 1;
+    }
+
+    private void StopCitySoundsLoop()
+    {
+        citySounds.Stop();
+        ambientSoundsActive = false;
+    }
+
+    private void PlayCitySoundsLoop()
+    {
+        if (!carLoop.isPlaying && playCitySounds && playSounds)
+        {
+            citySounds.Play();
+            ambientSoundsActive = true;
+        }
     }
 
     private void PlayCoinCollectSound()
@@ -243,17 +276,19 @@ public class SoundManager : MonoBehaviour
         if (playButtonSounds && playSounds) startGameButtonSound.Play();
     }
 
-    public void ToggleMuteAllSounds()
+    public void TogglePause()
     {
         if (playSounds)
         {
-            playSounds = false;
             StopCarLoop();
+            PlaySoundPauseButton();
+            playSounds = false;
         }
         else
         {
             playSounds = true;
             PlayCarLoop();
+            PlaySoundContinueButton();
         }
     }
 }
