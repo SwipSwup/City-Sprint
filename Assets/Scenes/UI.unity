@@ -9753,7 +9753,8 @@ MonoBehaviour:
   coins: {fileID: 258825480}
   pauseMassage: {fileID: 495293722}
   inGameUICanvas: {fileID: 1084425825}
-  pauseMassages: []
+  pauseMassages:
+  - Don't stop now!
 --- !u!114 &1821208067
 MonoBehaviour:
   m_ObjectHideFlags: 0
