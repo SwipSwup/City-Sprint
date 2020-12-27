@@ -2,6 +2,12 @@
 
 public class SoundManager : MonoBehaviour
 {
+    [Header("Sound Track")]
+    [SerializeField] private bool playSoundTrack = true;
+    public AudioSource soundTrack;
+    [SerializeField] private float soundTrackWithSilencer = 0.5f;
+
+
     [Space]
     [Header("General")]
     [SerializeField] private bool playSounds = true;
@@ -88,11 +94,13 @@ public class SoundManager : MonoBehaviour
         Player.OnCollectCoin += PlayCoinCollectSound;
         Player.OnGameOver += PlayGameOverSound;
         Player.OnGameOver += StopCarLoop;
+        Player.OnGameOver += StopSoundTrack;
 
         UISoundEvents.SoundContinueButton += PlaySoundContinueButton;
         UISoundEvents.SoundGeneralButton += PlaySoundGeneralButton;
         UISoundEvents.SoundStartGameButton += PlaySoundStartGameButton;
         UISoundEvents.SoundStartGameButton += StopCitySoundsLoop;
+        UISoundEvents.SoundStartGameButton += PlaySoundTrack;
         UISoundEvents.SoundStartGameButton += stopAllAmbientSounds;
         UISoundEvents.SoundStartGameButton += MakeCarLoopLoud;
 
@@ -101,14 +109,18 @@ public class SoundManager : MonoBehaviour
 
     private void OnDestroy()
     {
+        StopSoundTrack();
+
         Player.OnCollectCoin -= PlayCoinCollectSound;
         Player.OnGameOver -= PlayGameOverSound;
         Player.OnGameOver -= StopCarLoop;
+        Player.OnGameOver -= StopSoundTrack;
 
         UISoundEvents.SoundContinueButton -= PlaySoundContinueButton;
         UISoundEvents.SoundGeneralButton -= PlaySoundGeneralButton;
         UISoundEvents.SoundStartGameButton -= PlaySoundStartGameButton;
         UISoundEvents.SoundStartGameButton -= StopCitySoundsLoop;
+        UISoundEvents.SoundStartGameButton -= PlaySoundTrack;
         UISoundEvents.SoundStartGameButton -= stopAllAmbientSounds;
         UISoundEvents.SoundStartGameButton -= MakeCarLoopLoud;
 
@@ -252,6 +264,18 @@ public class SoundManager : MonoBehaviour
             citySounds.Play();
             ambientSoundsActive = true;
         }
+    }
+
+    private void StopSoundTrack() => soundTrack.Stop();
+
+    private void SilenceSoundTrack()
+    {
+        soundTrack.volume = soundTrackWithSilencer;
+    }
+
+    private void PlaySoundTrack()
+    {
+        if (!carLoop.isPlaying && playCitySounds && playSounds) soundTrack.Play();
     }
 
     private void PlayCoinCollectSound()
