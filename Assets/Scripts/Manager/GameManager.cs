@@ -17,6 +17,8 @@ public class GameManager : MonoBehaviour
     private int score;
     private int coins;
 
+    private bool paused = false;
+
     private void Start()
     {
         SceneManager.LoadSceneAsync("UI", LoadSceneMode.Additive);
@@ -51,6 +53,7 @@ public class GameManager : MonoBehaviour
         Player.OnCollectCoin += UpdateCoins;
         Player.OnGameOver += GameOver;
         ConnectPopUpHandler.OnUserRegister += CreateNewPlayer;
+        InGameUIHandler.OnPause += ReactOnPause;
     }
 
     private void UnSubscribeToEvents()
@@ -61,6 +64,21 @@ public class GameManager : MonoBehaviour
         Player.OnGameOver -= GameOver;
         PlayerInput.OnScreenTab -= EndRun;
         ConnectPopUpHandler.OnUserRegister -= CreateNewPlayer;
+        InGameUIHandler.OnPause -= ReactOnPause;
+    }
+
+    private void ReactOnPause()
+    {
+        if (paused)
+        {
+            paused = false;
+            OnTick += UpdateScore;
+        }
+        else
+        {
+            paused = true;
+            OnTick -= UpdateScore;
+        }
     }
 
     private void StartRun()
@@ -68,7 +86,7 @@ public class GameManager : MonoBehaviour
         OnTick += UpdateScore;
     }
 
-    private void EndRun()
+    public static void EndRun()
     {
         PlayerInput.OnScreenTab -= EndRun;
         SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex, LoadSceneMode.Single);

@@ -10,6 +10,7 @@ public class InGameUIHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI coins;
     [SerializeField] private Canvas inGameUICanvas;
 
+
     private void Start()
     {
         SubscribeToEvents();
@@ -30,6 +31,11 @@ public class InGameUIHandler : MonoBehaviour
         OnPause?.Invoke();
     }
 
+    public void B2M()
+    {
+        GameManager.EndRun();
+    }
+
     private void SubscribeToEvents()
     {
         GameManager.OnScoreUpdate += UpdateScore;
@@ -43,6 +49,7 @@ public class InGameUIHandler : MonoBehaviour
         GameManager.OnCoinUpdate -= UpdateCoins;
         Player.OnGameOver -= DisableInGameUI;
     }
+
 
     private void ResetUI()
     {
