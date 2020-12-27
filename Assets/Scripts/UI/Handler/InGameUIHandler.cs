@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System;
 using UnityEngine;
 using TMPro;
 
@@ -8,6 +9,7 @@ public class InGameUIHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI score;
     [SerializeField] private TextMeshProUGUI coins;
     [SerializeField] private Canvas inGameUICanvas;
+
 
     private void Start()
     {
@@ -20,8 +22,19 @@ public class InGameUIHandler : MonoBehaviour
     public void EnableInGameUI() => inGameUICanvas.enabled = true;
     public void DisableInGameUI() => inGameUICanvas.enabled = false;
 
-    private void UpdateScore(int score) => this.score.text = "Score: " + score;
+    private void UpdateScore(int score) => this.score.text = score.ToString();
     private void UpdateCoins(int coins) => this.coins.text = "Coins: " + coins;
+
+    public static Action OnPause;
+    public void Pause()
+    {
+        OnPause?.Invoke();
+    }
+
+    public void B2M()
+    {
+        GameManager.EndRun();
+    }
 
     private void SubscribeToEvents()
     {
@@ -36,6 +49,7 @@ public class InGameUIHandler : MonoBehaviour
         GameManager.OnCoinUpdate -= UpdateCoins;
         Player.OnGameOver -= DisableInGameUI;
     }
+
 
     private void ResetUI()
     {

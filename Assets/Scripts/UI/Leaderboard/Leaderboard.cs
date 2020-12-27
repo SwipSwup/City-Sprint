@@ -1,12 +1,10 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Leaderboard : MonoBehaviour
 {
     [SerializeField] private GameObject leaderboardEntryField;
     [SerializeField] private GameObject leaderboardEntryPrefab;
-    [SerializeField] private int maxEntries;
+    [SerializeField] private int maxEntries = 0;
 
     [SerializeField] private PlayerData playerData;
 

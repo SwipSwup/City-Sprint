@@ -3,82 +3,73 @@ using UnityEngine;
 
 public class PlayerInput : MonoBehaviour
 {
-    [Range(0f, 1000f)]
-    [Tooltip("Distance after wich swipe is detected")]
-    public float swipeDetection = 50f;
-
     [Range(0f, 100f)]
     [Tooltip("Distance up to wich it still counts as a tab")]
     public float tabDistance = 10f;
 
-    private bool inputValid = false;
     private Touch touch;
     private Vector2 startTouch;
     private Vector2 deltaPosition;
 
     void Update()
     {
-        ManagePlayerInput();
+        ManageTouchInput();
+        ManageKeyboardInput();
     }
 
-    private void ManagePlayerInput()
+    private void ManageTouchInput()
     {
-        if (Input.touches.Length < 1)
-        {
-            inputValid = false;
-            return;
-        }
+        if (Input.touches.Length < 1) return;
+        
         touch = Input.touches[0];
 
         if (touch.phase == TouchPhase.Canceled || touch.phase == TouchPhase.Ended)
         {
-            if (deltaPosition.x < tabDistance && deltaPosition.x > -tabDistance &&
-                deltaPosition.y < tabDistance && deltaPosition.y > -tabDistance &&
-                inputValid) OnScreenTab?.Invoke();
+            deltaPosition = startTouch - touch.position;
+            float maxDelta = 0;
 
-            inputValid = false;
-            return;
-        }
+            if (Math.Abs(deltaPosition.x) > Math.Abs(maxDelta)) maxDelta = deltaPosition.x;
+            if (Math.Abs(deltaPosition.y) > Math.Abs(maxDelta)) maxDelta = deltaPosition.y;
 
-        if (touch.phase == TouchPhase.Began)
-        {
-            startTouch = touch.position;
-            inputValid = true;
-            return;
-        }
+            if (maxDelta <= tabDistance)
+            {
+                OnScreenTab?.Invoke();
+                return;
+            }
 
-        if (touch.phase == TouchPhase.Moved && inputValid)
-        {
-            deltaPosition = touch.position - startTouch;
-
-            if (deltaPosition.x < -swipeDetection)
+            if (maxDelta == deltaPosition.x && maxDelta > 0)
             {
                 OnSwipeLeft?.Invoke();
-                inputValid = false;
-                return;
             }
-
-            if (deltaPosition.x > swipeDetection)
+            else if (maxDelta == deltaPosition.x && maxDelta < 0)
             {
                 OnSwipeRight?.Invoke();
-                inputValid = false;
-                return;
             }
-
-            if (deltaPosition.y > swipeDetection)
+            else if (maxDelta == deltaPosition.y && maxDelta < 0)
             {
                 OnSwipeUp?.Invoke();
-                inputValid = false;
-                return;
             }
-
-            if (deltaPosition.y < -swipeDetection)
+            else if (maxDelta == deltaPosition.y && maxDelta > 0)
             {
                 OnSwipeDown?.Invoke();
-                inputValid = false;
-                return;
             }
+
+            return;
         }
+
+        if (touch.phase == TouchPhase.Began) startTouch = touch.position;
+    }
+
+    private void ManageKeyboardInput()
+    {
+        if (Input.GetKeyDown(KeyCode.LeftArrow)) OnSwipeLeft?.Invoke();
+        if (Input.GetKeyDown(KeyCode.RightArrow)) OnSwipeRight?.Invoke();
+
+        if (Input.GetKeyDown(KeyCode.UpArrow)) OnSwipeUp?.Invoke();
+
+        if (Input.GetKeyDown(KeyCode.DownArrow)) OnSwipeDown?.Invoke();
+
+        if (Input.GetKeyDown(KeyCode.Mouse0)) OnScreenTab?.Invoke();
     }
 
     public static Action OnSwipeUp;

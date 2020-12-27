@@ -13,6 +13,7 @@ public class TrackManagerEditor : Editor
     private SerializedProperty startTileProp;
     private SerializedProperty tileSpacerProp;
     private SerializedProperty tilePrefabsProp;
+    private SerializedProperty menuTilePrefabsProp;
 
     private SerializedProperty maxTilesProp;
     private SerializedProperty maxTileSpeedProp;
@@ -24,7 +25,7 @@ public class TrackManagerEditor : Editor
 
     private SerializedProperty stopDownIntervalProp;
     private SerializedProperty stopDownStepTimeProp;
-
+    
     private bool showSettings = true;
 
     private void OnEnable()
@@ -48,6 +49,7 @@ public class TrackManagerEditor : Editor
         startTileProp = serializedObject.FindProperty("startTile");
         tileSpacerProp = serializedObject.FindProperty("tileSpacer");
         tilePrefabsProp = serializedObject.FindProperty("trackTilePrefabs");
+        menuTilePrefabsProp = serializedObject.FindProperty("menuTilePrefabs");
 
         maxTilesProp = serializedObject.FindProperty("maxTiles");
         maxTileSpeedProp = serializedObject.FindProperty("maxTileSpeed");
@@ -63,6 +65,7 @@ public class TrackManagerEditor : Editor
 
     private void DrawInfo()
     {
+       
         EditorGUILayout.BeginHorizontal();
         GUILayout.Label("Current tile speed");
         GUILayout.Label("Current amount of tiles");
@@ -87,6 +90,7 @@ public class TrackManagerEditor : Editor
         GUILayout.Space(10);
 
         EditorGUILayout.PropertyField(tilePrefabsProp, new GUIContent("Tile prefabs"));
+        EditorGUILayout.PropertyField(menuTilePrefabsProp, new GUIContent("Menu tile prefabs"));
         EditorGUILayout.PropertyField(activeTilesProp, new GUIContent("Active tiles"));
 
         GUILayout.Space(10);

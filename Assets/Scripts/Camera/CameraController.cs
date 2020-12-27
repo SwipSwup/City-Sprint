@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using Cinemachine;
 
 public class CameraController : MonoBehaviour
@@ -19,7 +17,6 @@ public class CameraController : MonoBehaviour
 
     private void blendToV1()
     {
-        Debug.Log("blend");
         vcam1.enabled = true;
     }
 

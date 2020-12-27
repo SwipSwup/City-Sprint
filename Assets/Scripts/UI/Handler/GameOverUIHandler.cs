@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
 public class GameOverUIHandler : MonoBehaviour
 {
@@ -31,10 +29,26 @@ public class GameOverUIHandler : MonoBehaviour
     private void OpenGameOverMenu()
     {
         gameOverCanvas.enabled = true;
-        ChangeScore(data.lastScore);
+        StartCoroutine(ShowInfo());
         ChangeCoins(data.lastCoins);
     }
 
+    private IEnumerator ShowInfo()
+    {
+        ChangeScore(0);
+
+        yield return new WaitForSeconds(.1f);
+        for (int i = 0; i < data.lastScore; i += data.lastScore / 20)
+        {
+            ChangeScore(i);
+            yield return new WaitForSeconds(.05f);
+        }
+            ChangeScore(data.lastScore);
+        yield return new WaitForSeconds(.5f);
+        showCoins();
+    }
+
+    private void showCoins() => coins.enabled = true;
     private void ChangeScore(int score) => this.score.text = "Score: " + score;
     private void ChangeCoins(int coins) => this.coins.text = "Coins: " + data.lastCoins;
 }
