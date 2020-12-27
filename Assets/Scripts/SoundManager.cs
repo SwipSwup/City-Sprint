@@ -90,6 +90,10 @@ public class SoundManager : MonoBehaviour
         MakeCarLoopSilent();
         PlayCitySoundsLoop();
         PlayCarLoop();
+
+        //SilenceSoundTrack();
+        //soundTrack.Play();
+
         InvokeRepeating("PlayAmbientSound", 1f, 1f);
 
         Player.OnCollectCoin += PlayCoinCollectSound;
@@ -101,7 +105,10 @@ public class SoundManager : MonoBehaviour
         UISoundEvents.SoundGeneralButton += PlaySoundGeneralButton;
         UISoundEvents.SoundStartGameButton += PlaySoundStartGameButton;
         UISoundEvents.SoundStartGameButton += StopCitySoundsLoop;
+
+        UISoundEvents.SoundStartGameButton += LoudenSoundTrack;
         UISoundEvents.SoundStartGameButton += PlaySoundTrack;
+
         UISoundEvents.SoundStartGameButton += stopAllAmbientSounds;
         UISoundEvents.SoundStartGameButton += MakeCarLoopLoud;
 
@@ -121,7 +128,10 @@ public class SoundManager : MonoBehaviour
         UISoundEvents.SoundGeneralButton -= PlaySoundGeneralButton;
         UISoundEvents.SoundStartGameButton -= PlaySoundStartGameButton;
         UISoundEvents.SoundStartGameButton -= StopCitySoundsLoop;
+
+        UISoundEvents.SoundStartGameButton -= LoudenSoundTrack;
         UISoundEvents.SoundStartGameButton -= PlaySoundTrack;
+
         UISoundEvents.SoundStartGameButton -= stopAllAmbientSounds;
         UISoundEvents.SoundStartGameButton -= MakeCarLoopLoud;
 
@@ -274,6 +284,11 @@ public class SoundManager : MonoBehaviour
         soundTrack.volume = soundTrackWithSilencer;
     }
 
+    private void LoudenSoundTrack()
+    {
+        soundTrack.volume = 1;
+    }
+
     private void PlaySoundTrack()
     {
         if (playSoundTrack && playSounds) soundTrack.Play();
@@ -307,6 +322,7 @@ public class SoundManager : MonoBehaviour
         {
             StopCarLoop();
             PlaySoundPauseButton();
+            SilenceSoundTrack();
             playSounds = false;
         }
         else
@@ -314,6 +330,7 @@ public class SoundManager : MonoBehaviour
             playSounds = true;
             PlayCarLoop();
             PlaySoundContinueButton();
+            soundTrack.volume = 1;
         }
     }
 }
