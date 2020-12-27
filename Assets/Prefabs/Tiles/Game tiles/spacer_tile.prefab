@@ -6006,7 +6006,7 @@ PrefabInstance:
         type: 3}
       propertyPath: obstacleVariants.Array.data[2]
       value: 
-      objectReference: {fileID: 3131932266975362571, guid: a7317ca26c5df224086b508d25396353,
+      objectReference: {fileID: 8704162219432613423, guid: b9a576c314c592344896b2f0b4f0fc5f,
         type: 3}
     - target: {fileID: 2918828861542381736, guid: 472ef40e702520c49b8dc0ea0e35caaa,
         type: 3}
@@ -6020,6 +6020,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7406082395947972644, guid: a37535c4e763adb4a96fd509d811203a,
         type: 3}
+    - target: {fileID: 2918828861542381736, guid: 472ef40e702520c49b8dc0ea0e35caaa,
+        type: 3}
+      propertyPath: rdmRotation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2918828861542381737, guid: 472ef40e702520c49b8dc0ea0e35caaa,
         type: 3}
       propertyPath: m_Name
@@ -6116,7 +6121,7 @@ PrefabInstance:
         type: 3}
       propertyPath: obstacleVariants.Array.data[2]
       value: 
-      objectReference: {fileID: 3131932266975362571, guid: a7317ca26c5df224086b508d25396353,
+      objectReference: {fileID: 8704162219432613423, guid: b9a576c314c592344896b2f0b4f0fc5f,
         type: 3}
     - target: {fileID: 2918828861542381736, guid: 472ef40e702520c49b8dc0ea0e35caaa,
         type: 3}
@@ -6130,6 +6135,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7406082395947972644, guid: a37535c4e763adb4a96fd509d811203a,
         type: 3}
+    - target: {fileID: 2918828861542381736, guid: 472ef40e702520c49b8dc0ea0e35caaa,
+        type: 3}
+      propertyPath: rdmRotation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2918828861542381737, guid: 472ef40e702520c49b8dc0ea0e35caaa,
         type: 3}
       propertyPath: m_Name
@@ -6301,7 +6311,7 @@ PrefabInstance:
         type: 3}
       propertyPath: obstacleVariants.Array.data[2]
       value: 
-      objectReference: {fileID: 3131932266975362571, guid: a7317ca26c5df224086b508d25396353,
+      objectReference: {fileID: 8704162219432613423, guid: b9a576c314c592344896b2f0b4f0fc5f,
         type: 3}
     - target: {fileID: 2918828861542381736, guid: 472ef40e702520c49b8dc0ea0e35caaa,
         type: 3}
@@ -6315,6 +6325,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7406082395947972644, guid: a37535c4e763adb4a96fd509d811203a,
         type: 3}
+    - target: {fileID: 2918828861542381736, guid: 472ef40e702520c49b8dc0ea0e35caaa,
+        type: 3}
+      propertyPath: rdmRotation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2918828861542381737, guid: 472ef40e702520c49b8dc0ea0e35caaa,
         type: 3}
       propertyPath: m_Name
@@ -6411,7 +6426,7 @@ PrefabInstance:
         type: 3}
       propertyPath: obstacleVariants.Array.data[2]
       value: 
-      objectReference: {fileID: 3131932266975362571, guid: a7317ca26c5df224086b508d25396353,
+      objectReference: {fileID: 8704162219432613423, guid: b9a576c314c592344896b2f0b4f0fc5f,
         type: 3}
     - target: {fileID: 2918828861542381736, guid: 472ef40e702520c49b8dc0ea0e35caaa,
         type: 3}
@@ -6425,6 +6440,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7406082395947972644, guid: a37535c4e763adb4a96fd509d811203a,
         type: 3}
+    - target: {fileID: 2918828861542381736, guid: 472ef40e702520c49b8dc0ea0e35caaa,
+        type: 3}
+      propertyPath: rdmRotation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2918828861542381737, guid: 472ef40e702520c49b8dc0ea0e35caaa,
         type: 3}
       propertyPath: m_Name
@@ -6602,7 +6622,7 @@ PrefabInstance:
         type: 3}
       propertyPath: obstacleVariants.Array.data[2]
       value: 
-      objectReference: {fileID: 3131932266975362571, guid: a7317ca26c5df224086b508d25396353,
+      objectReference: {fileID: 8704162219432613423, guid: b9a576c314c592344896b2f0b4f0fc5f,
         type: 3}
     - target: {fileID: 2918828861542381736, guid: 472ef40e702520c49b8dc0ea0e35caaa,
         type: 3}
@@ -6616,6 +6636,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7406082395947972644, guid: a37535c4e763adb4a96fd509d811203a,
         type: 3}
+    - target: {fileID: 2918828861542381736, guid: 472ef40e702520c49b8dc0ea0e35caaa,
+        type: 3}
+      propertyPath: rdmRotation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2918828861542381737, guid: 472ef40e702520c49b8dc0ea0e35caaa,
         type: 3}
       propertyPath: m_Name
@@ -6712,7 +6737,7 @@ PrefabInstance:
         type: 3}
       propertyPath: obstacleVariants.Array.data[2]
       value: 
-      objectReference: {fileID: 3131932266975362571, guid: a7317ca26c5df224086b508d25396353,
+      objectReference: {fileID: 8704162219432613423, guid: b9a576c314c592344896b2f0b4f0fc5f,
         type: 3}
     - target: {fileID: 2918828861542381736, guid: 472ef40e702520c49b8dc0ea0e35caaa,
         type: 3}
@@ -6726,6 +6751,11 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7406082395947972644, guid: a37535c4e763adb4a96fd509d811203a,
         type: 3}
+    - target: {fileID: 2918828861542381736, guid: 472ef40e702520c49b8dc0ea0e35caaa,
+        type: 3}
+      propertyPath: rdmRotation
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2918828861542381737, guid: 472ef40e702520c49b8dc0ea0e35caaa,
         type: 3}
       propertyPath: m_Name
