@@ -9751,7 +9751,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   score: {fileID: 99600727}
   coins: {fileID: 258825480}
+  pauseMassage: {fileID: 495293722}
   inGameUICanvas: {fileID: 1084425825}
+  pauseMassages: []
 --- !u!114 &1821208067
 MonoBehaviour:
   m_ObjectHideFlags: 0

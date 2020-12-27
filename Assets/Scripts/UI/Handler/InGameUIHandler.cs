@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using System;
 using UnityEngine;
 using TMPro;
@@ -8,8 +7,10 @@ public class InGameUIHandler : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI score;
     [SerializeField] private TextMeshProUGUI coins;
+    [SerializeField] private TextMeshProUGUI pauseMassage;
     [SerializeField] private Canvas inGameUICanvas;
 
+    [SerializeField] private string[] pauseMassages;
 
     private void Start()
     {
@@ -29,6 +30,7 @@ public class InGameUIHandler : MonoBehaviour
     public void Pause()
     {
         OnPause?.Invoke();
+        pauseMassage.text = pauseMassages[UnityEngine.Random.Range(0, pauseMassages.Length)];
     }
 
     public void B2M()
