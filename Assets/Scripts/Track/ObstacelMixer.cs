@@ -10,10 +10,8 @@ public class ObstacelMixer : MonoBehaviour
     {
         GameObject obstacle = obstacleVariants[(int)Random.Range(0f, obstacleVariants.Length)];
         GameObject obj = Instantiate(obstacle == null ? new GameObject() : obstacle, transform);
-        Debug.Log(obj.name);
         if (rdmRotation && Random.Range(0, 2) == 0)
         {
-            Debug.Log("rotate");
             obj.transform.Rotate(0f, 180f, 0f);
         }
     }
