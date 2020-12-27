@@ -57,7 +57,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playSoundTrack: 1
-  soundTrack: {fileID: 0}
+  soundTrack: {fileID: 5316489788821768560}
   soundTrackWithSilencer: 0.5
   playSounds: 1
   logPlayerY: 0
