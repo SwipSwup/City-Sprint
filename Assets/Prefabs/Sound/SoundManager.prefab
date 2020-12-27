@@ -59,6 +59,8 @@ MonoBehaviour:
   playSoundTrack: 1
   soundTrack: {fileID: 5316489788821768560}
   soundTrackWithSilencer: 0.5
+  soundTrackMixer: {fileID: 392525658311665707, guid: e6a7a24435149834b839a2206c57d1b8,
+    type: 2}
   playSounds: 1
   logPlayerY: 0
   playCarLoop: 0
