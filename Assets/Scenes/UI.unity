@@ -9755,6 +9755,7 @@ MonoBehaviour:
   inGameUICanvas: {fileID: 1084425825}
   pauseMassages:
   - Don't stop now!
+  - Don't give up yet!
 --- !u!114 &1821208067
 MonoBehaviour:
   m_ObjectHideFlags: 0
