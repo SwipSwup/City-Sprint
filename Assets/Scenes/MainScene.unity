@@ -1179,6 +1179,18 @@ PrefabInstance:
       propertyPath: carLoopWithSilencer
       value: 0.4
       objectReference: {fileID: 0}
+    - target: {fileID: 1230132028805684384, guid: 79a7aa7dd2fba1f429dcbadabb2fe7a0,
+        type: 3}
+      propertyPath: soundTrackMixerWithEffect
+      value: 
+      objectReference: {fileID: 392525658311665707, guid: e6a7a24435149834b839a2206c57d1b8,
+        type: 2}
+    - target: {fileID: 1230132028805684384, guid: 79a7aa7dd2fba1f429dcbadabb2fe7a0,
+        type: 3}
+      propertyPath: soundTrackMixerNoEffect
+      value: 
+      objectReference: {fileID: -1251611507385939534, guid: e6a7a24435149834b839a2206c57d1b8,
+        type: 2}
     - target: {fileID: 1230132028805684385, guid: 79a7aa7dd2fba1f429dcbadabb2fe7a0,
         type: 3}
       propertyPath: m_Volume
@@ -1288,8 +1300,7 @@ PrefabInstance:
         type: 3}
       propertyPath: OutputAudioMixerGroup
       value: 
-      objectReference: {fileID: 392525658311665707, guid: e6a7a24435149834b839a2206c57d1b8,
-        type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 6875615976337723057, guid: 79a7aa7dd2fba1f429dcbadabb2fe7a0,
         type: 3}
       propertyPath: OutputAudioMixerGroup

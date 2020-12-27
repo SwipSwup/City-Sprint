@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundManager : MonoBehaviour
 {
@@ -6,6 +7,8 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private bool playSoundTrack = true;
     public AudioSource soundTrack;
     [SerializeField] private float soundTrackWithSilencer = 0.5f;
+    [SerializeField] private AudioMixerGroup soundTrackMixerWithEffect;
+    [SerializeField] private AudioMixerGroup soundTrackMixerNoEffect;
 
 
     [Space]
@@ -91,6 +94,8 @@ public class SoundManager : MonoBehaviour
         PlayCitySoundsLoop();
         PlayCarLoop();
 
+        //soundTrack.outputAudioMixerGroup;
+        LoudenSoundTrack();
         //SilenceSoundTrack();
         //soundTrack.Play();
 
@@ -281,11 +286,13 @@ public class SoundManager : MonoBehaviour
 
     private void SilenceSoundTrack()
     {
+        soundTrack.outputAudioMixerGroup = soundTrackMixerWithEffect;
         soundTrack.volume = soundTrackWithSilencer;
     }
 
     private void LoudenSoundTrack()
     {
+        soundTrack.outputAudioMixerGroup = soundTrackMixerNoEffect;
         soundTrack.volume = 1;
     }
 
@@ -330,7 +337,7 @@ public class SoundManager : MonoBehaviour
             playSounds = true;
             PlayCarLoop();
             PlaySoundContinueButton();
-            soundTrack.volume = 1;
+            LoudenSoundTrack();
         }
     }
 }
