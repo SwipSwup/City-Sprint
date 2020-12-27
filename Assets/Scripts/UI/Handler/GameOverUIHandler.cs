@@ -1,8 +1,6 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
 public class GameOverUIHandler : MonoBehaviour
 {
@@ -45,15 +43,12 @@ public class GameOverUIHandler : MonoBehaviour
             ChangeScore(i);
             yield return new WaitForSeconds(.05f);
         }
+            ChangeScore(data.lastScore);
         yield return new WaitForSeconds(.5f);
         showCoins();
     }
 
-    private void showCoins()
-    {
-        coins.enabled = true;
-    }
-
+    private void showCoins() => coins.enabled = true;
     private void ChangeScore(int score) => this.score.text = "Score: " + score;
     private void ChangeCoins(int coins) => this.coins.text = "Coins: " + data.lastCoins;
 }

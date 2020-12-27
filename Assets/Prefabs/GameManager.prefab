@@ -46,8 +46,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerData: {fileID: 11400000, guid: 9113d08f2acb99d42b1a7da9e193b029, type: 2}
-  TICK_SEC_INTERVAL: 0.2
-  tManager: {fileID: 1785714898321872001}
 --- !u!114 &1785714898321872001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,15 +60,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxTickCount: 5
   activeTiles: []
-  trackTilePrefabs: []
-  menuTilePrefabs: []
+  activeBuildings: []
+  trackTilePrefabs:
+  - {fileID: 769056062990162867, guid: f90a2d5f15574e54ab913ab3ea75e5cf, type: 3}
+  - {fileID: 7760548807251136689, guid: abbd765dfd4ad6a4c90ec35aa58b5a61, type: 3}
+  - {fileID: 8923562900827108913, guid: 6ac417b39ef33bd458547b7a8dc36089, type: 3}
+  - {fileID: 2123546705657743230, guid: c2ffe7fa6be534844bc92992bb6849d6, type: 3}
+  - {fileID: 6407047315027404789, guid: 0fa88715d743b034d9259b272e1cfd22, type: 3}
+  - {fileID: 896357001466368319, guid: eb7829cf8824ca1488b41dbe2222997b, type: 3}
+  - {fileID: 7199359314537599074, guid: f1265fea2dc94924890a0cf866332050, type: 3}
+  - {fileID: 395497867731239174, guid: 995fc6f4f60443845a1523e4412bd7bc, type: 3}
+  - {fileID: 8301218810199009316, guid: 7890827571647454bac5a434056e863a, type: 3}
+  - {fileID: 7170129743286606697, guid: 3abee4ba533617d4e9a109262c906e85, type: 3}
+  menuTilePrefabs:
+  - {fileID: 5034016771471608090, guid: 5d219f74248cafb468d4fbc10ff9e6cd, type: 3}
   startTile: {fileID: 0}
-  tileSpacer: {fileID: 2046737294625241968, guid: 78232cbc631270d409765369a99fe99e,
+  tileSpacer: {fileID: 5376709080196084117, guid: 44dd0c261904a604285a7d8501813d32,
     type: 3}
-  maxTiles: 30
-  maxTileSpeed: 30
+  maxTiles: 11
+  maxTileSpeed: 33
   tileSpeed: 5
-  tileSpeedMultiplyer: 2
+  tileSpeedMultiplyer: 1.01
   hitMultiplyer: 5
   hitStep: 0.5
   stopDownInterval: 1
@@ -87,3 +97,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 421f565c7eede1848bcaa4b669b01e73, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tabDistance: 25

@@ -48,10 +48,10 @@ public class TrackManager : MonoBehaviour
         Player.OnObstacleCollision += ReactOnObstacleHit;
         InGameUIHandler.OnPause += ReactOnPause;
     }
-    
+
     private void UnSubscribeToEvents()
     {
-        MainMenuUIHandler.OnPlay -= StartTrack; 
+        MainMenuUIHandler.OnPlay -= StartTrack;
         GameManager.OnTick -= ReactOnTickUpdate;
         TileDestroyer.OnTileDelete -= ReactOnTileDestroyedInRun;
         TileDestroyer.OnTileDelete -= ReactOnTileDestroyedInMenu;
@@ -111,11 +111,7 @@ public class TrackManager : MonoBehaviour
         UpdateTileSpeed(tileSpeed);
     }
 
-    private GameObject GetRandomTile(GameObject[] tileList)
-    {
-        Debug.Log((int)UnityEngine.Random.Range(0f, tileList.Length));
-        return tileList[(int)UnityEngine.Random.Range(0f, tileList.Length)];
-    }
+    private GameObject GetRandomTile(GameObject[] tileList) => tileList[(int)UnityEngine.Random.Range(0f, tileList.Length)];
 
     private IEnumerator IncreaseTrackSpeed()
     {
@@ -180,12 +176,13 @@ public class TrackManager : MonoBehaviour
 
     private void ReactOnPause()
     {
-        if(paused)
+        if (paused)
         {
             paused = false;
             OnUpdateTileSpeed?.Invoke(tileSpeed);
             GameManager.OnTick += ReactOnTickUpdate;
-        } else
+        }
+        else
         {
             paused = true;
             OnUpdateTileSpeed?.Invoke(0f);
@@ -200,8 +197,18 @@ public class TrackManager : MonoBehaviour
     /// <returns> The new tracktile position</returns>
     private Vector3 GetNewTrackTilePosition(GameObject prefab)
     {
-        Vector3 lastBackPoint = activeTiles[activeTiles.Count - 1].endPoint.position;
-        return new Vector3(lastBackPoint.x + (prefab.transform.position.x - prefab.GetComponent<Tile>().startPoint.position.x), lastBackPoint.y, lastBackPoint.z);
+        try
+        {
+            Vector3 lastBackPoint = activeTiles[activeTiles.Count - 1].endPoint.position;
+            return new Vector3(lastBackPoint.x + (prefab.transform.position.x - prefab.GetComponent<Tile>().startPoint.position.x), lastBackPoint.y, lastBackPoint.z);
+
+        }
+        catch
+        {
+            Debug.LogError(prefab.name);
+        }
+        return new Vector3();
+
     }
 
     /// <summary>
@@ -215,7 +222,7 @@ public class TrackManager : MonoBehaviour
         SpawnTile(newTilePrefab, GetNewTrackTilePosition(newTilePrefab), transform.rotation);
     }
 
-   
+
 
     /// <summary>
     /// Spawns a tileprefab at given position and with the given rotation
@@ -230,5 +237,5 @@ public class TrackManager : MonoBehaviour
         activeTiles.Add(newTile.GetComponent<Tile>());
     }
 
-   
+
 }
