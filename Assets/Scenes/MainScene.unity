@@ -1592,9 +1592,20 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
+      propertyPath: trackTilePrefabs.Array.size
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
+        type: 3}
       propertyPath: startTile
       value: 
       objectReference: {fileID: 334328943}
+    - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
+        type: 3}
+      propertyPath: trackTilePrefabs.Array.data[9]
+      value: 
+      objectReference: {fileID: 3010844928640408924, guid: 3abee4ba533617d4e9a109262c906e85,
+        type: 3}
     - target: {fileID: 1785714898321872002, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
       propertyPath: m_Name
