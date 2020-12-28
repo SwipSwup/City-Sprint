@@ -2444,7 +2444,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "fkldsjfsdlkfjsdal\xF6fjdsal\xF6fdjsalf\xF6sjafasdfjasd\xF6lfkjdsafdsla\xF6fdsajfdasfkjas"
+  m_text: This feature is currently not working!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f0bc607c97ad1b04d912e3341aa6989e, type: 2}
   m_sharedMaterial: {fileID: -7135944201856887642, guid: f0bc607c97ad1b04d912e3341aa6989e,
@@ -5531,7 +5531,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Chris stinkz
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: f0bc607c97ad1b04d912e3341aa6989e, type: 2}
   m_sharedMaterial: {fileID: -3371062433815390450, guid: 14ec4ab992dca1649977f611824a1562,

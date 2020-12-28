@@ -1541,7 +1541,7 @@ PrefabInstance:
         type: 3}
       propertyPath: trackTilePrefabs.Array.data[0]
       value: 
-      objectReference: {fileID: 2123546705657743230, guid: c2ffe7fa6be534844bc92992bb6849d6,
+      objectReference: {fileID: 2871437133820390625, guid: e53b500b3e1863a4393f1c8a39d0ffbe,
         type: 3}
     - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
