@@ -111,7 +111,7 @@ public class TrackManagerEditor : Editor
             EditorGUILayout.PropertyField(maxTileSpeedProp, new GUIContent(string.Empty));
             EditorGUILayout.EndHorizontal();
 
-            EditorGUILayout.Slider(tileSpeedMultiplyerProp, 1f, 2f, new GUIContent("Tile speed Multiplyer"));
+            EditorGUILayout.Slider(tileSpeedMultiplyerProp, 0f, 1f, new GUIContent("Tile speed Multiplyer"));
 
             GUILayout.Space(10);
 

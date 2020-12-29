@@ -201,14 +201,12 @@ public class TrackManager : MonoBehaviour
         {
             Vector3 lastBackPoint = activeTiles[activeTiles.Count - 1].endPoint.position;
             return new Vector3(lastBackPoint.x + (prefab.transform.position.x - prefab.GetComponent<Tile>().startPoint.position.x), lastBackPoint.y, lastBackPoint.z);
-
         }
         catch
         {
             Debug.LogError(prefab.name);
         }
         return new Vector3();
-
     }
 
     /// <summary>

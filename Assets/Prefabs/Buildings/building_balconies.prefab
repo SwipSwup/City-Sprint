@@ -52,19 +52,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chance: 10
---- !u!114 &8734572021870620073
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6272945111172487908}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 604300c516895864aa8da762a6bd56af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chance: 10
 --- !u!1 &5480658657835908554
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,6 +141,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!114 &8734572021870620073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6272945111172487908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 604300c516895864aa8da762a6bd56af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  chance: 10
 --- !u!114 &917747805290955408
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -178,6 +178,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: weirdplayer (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1223045401564648908, guid: 63c3a1927adbbf74c8aed5f190bcce8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1995923651842527094, guid: 63c3a1927adbbf74c8aed5f190bcce8e,
         type: 3}
@@ -275,6 +280,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: weirdplayer (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 1223045401564648908, guid: 63c3a1927adbbf74c8aed5f190bcce8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1995923651842527094, guid: 63c3a1927adbbf74c8aed5f190bcce8e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -370,6 +380,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: weirdplayer (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 1223045401564648908, guid: 63c3a1927adbbf74c8aed5f190bcce8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1995923651842527094, guid: 63c3a1927adbbf74c8aed5f190bcce8e,
         type: 3}
@@ -467,6 +482,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: weirdplayer (5)
       objectReference: {fileID: 0}
+    - target: {fileID: 1223045401564648908, guid: 63c3a1927adbbf74c8aed5f190bcce8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1995923651842527094, guid: 63c3a1927adbbf74c8aed5f190bcce8e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -563,6 +583,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: weirdplayer (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 1223045401564648908, guid: 63c3a1927adbbf74c8aed5f190bcce8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1995923651842527094, guid: 63c3a1927adbbf74c8aed5f190bcce8e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -658,6 +683,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: weirdplayer
+      objectReference: {fileID: 0}
+    - target: {fileID: 1223045401564648908, guid: 63c3a1927adbbf74c8aed5f190bcce8e,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1995923651842527094, guid: 63c3a1927adbbf74c8aed5f190bcce8e,
         type: 3}
