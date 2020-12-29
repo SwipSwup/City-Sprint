@@ -1470,7 +1470,7 @@ PrefabInstance:
     - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
       propertyPath: trackTilePrefabs.Array.size
-      value: 3
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
@@ -1541,7 +1541,7 @@ PrefabInstance:
         type: 3}
       propertyPath: trackTilePrefabs.Array.data[3]
       value: 
-      objectReference: {fileID: 6486072268047805527, guid: a1f01dfe8d433c3499be57bd444c7b43,
+      objectReference: {fileID: 2983491222363487947, guid: a96666aab5300ca4e80b3adf2cdcdfc2,
         type: 3}
     - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
@@ -1559,6 +1559,12 @@ PrefabInstance:
       propertyPath: rightBuilding
       value: 
       objectReference: {fileID: 461399553}
+    - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
+        type: 3}
+      propertyPath: trackTilePrefabs.Array.data[4]
+      value: 
+      objectReference: {fileID: 3521298835561505139, guid: b3c30bccb588ef64e9ac1fd7f27bd434,
+        type: 3}
     - target: {fileID: 1785714898321872002, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
       propertyPath: m_Name
