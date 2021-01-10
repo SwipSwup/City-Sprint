@@ -37,6 +37,8 @@ public class GameManager : MonoBehaviour
     }
     private void CreateNewPlayer(string email, string username)
     {
+        playerData = ScriptableObject.CreateInstance<PlayerData>();
+
         playerData.email = email;
         playerData.displayName = username;
 
