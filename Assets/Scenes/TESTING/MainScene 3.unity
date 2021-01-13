@@ -1470,7 +1470,7 @@ PrefabInstance:
     - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
       propertyPath: trackTilePrefabs.Array.size
-      value: 5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
@@ -1529,20 +1529,17 @@ PrefabInstance:
         type: 3}
       propertyPath: trackTilePrefabs.Array.data[1]
       value: 
-      objectReference: {fileID: 6821570255884758300, guid: 48d94d7b4120f6c49b243b57deab5856,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
       propertyPath: trackTilePrefabs.Array.data[2]
       value: 
-      objectReference: {fileID: 5159166048610126865, guid: 9dd9940fd4a818c4b8bee122a094e763,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
       propertyPath: trackTilePrefabs.Array.data[3]
       value: 
-      objectReference: {fileID: 2983491222363487947, guid: a96666aab5300ca4e80b3adf2cdcdfc2,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 1785714898321872001, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
       propertyPath: buildingPrefabs.Array.data[0]
@@ -1563,8 +1560,7 @@ PrefabInstance:
         type: 3}
       propertyPath: trackTilePrefabs.Array.data[4]
       value: 
-      objectReference: {fileID: 3521298835561505139, guid: b3c30bccb588ef64e9ac1fd7f27bd434,
-        type: 3}
+      objectReference: {fileID: 0}
     - target: {fileID: 1785714898321872002, guid: bebe7fd820a60014aa5f6f0448b89a43,
         type: 3}
       propertyPath: m_Name
