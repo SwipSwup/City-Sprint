@@ -43,9 +43,9 @@ public class GameOverUIHandler : MonoBehaviour
             ChangeScore(i);
             yield return new WaitForSeconds(.05f);
         }
-            ChangeScore(data.lastScore);
+        ChangeScore(data.lastScore);
         yield return new WaitForSeconds(.5f);
-        showCoins();
+        //showCoins();
     }
 
     private void showCoins() => coins.enabled = true;
